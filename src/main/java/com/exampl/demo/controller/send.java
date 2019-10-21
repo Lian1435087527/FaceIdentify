@@ -13,7 +13,7 @@ public class send {
 	public String getimg(@RequestParam("pic") String pic) {
 		//File f = new File("E:"+"face"+".jpg");
 		//ImageIO.write(imgbuff, "jpg", f);
-		System.out.println(11111);
+		System.out.println(1111122222);
 		System.out.println(pic);
 		return pic;
 		}
