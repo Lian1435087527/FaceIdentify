@@ -14,7 +14,7 @@
 	        {
 	           
 	           
-	                 var url="picup.jsp";
+	                 var url="faceDetect.html";
 	                 window.location.href=url;
 	           
 	        }
@@ -24,11 +24,11 @@
 		<div class="topmenu cbody1">
 			<ul class="menu">
 				<li class="thisclass">
-					
+					<A href="#" onclick="">down</A>
 				</li>
 				
 				<li>
-					<A href="#" onclick="picup()">uploading</A>
+					<A href="#" onclick="picup()">up</A>
 				</li>
 				
 				
