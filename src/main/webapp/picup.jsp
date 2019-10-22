@@ -57,7 +57,7 @@
 
 	           alert("error");
 	        }}) ;
-	        document.test.test1.value="4567r7r";
+	        document.test.test1.value="7r7r";
   }
     
  </script>
