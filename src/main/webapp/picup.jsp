@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="UTF-8">
@@ -10,10 +11,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <div><input type="file"><br>
 <img src="" height="200" alt="Image preview area..." title="preview-img">
-
-<form name="test">
-<input type="text" name="test1" value="fdsahtjdasf">
-</form>
 </div>
 <script>
   var fileInput = document.querySelector('input[type=file]'),
@@ -47,21 +44,25 @@
 	        	 "pic":previewImg.src
 	         },
 
-	         success :function(data) {
-
-	             alert("OK");
-
+	         success :function(picret) {
+	        	 //var result= "1";
+	        	 //document.getElementById('div').innerHTML =result ;
+	        	 $("#ImagePic").attr("src","data:image/gif;base64,"+picret);
+                 
 	         },
 
 	       error :function(e) {
 
 	           alert("error");
-	        }}) ;
-	        document.test.test1.value="7r7r";
+	        }}) 
   }
     
  </script>
  <button type="button" onclick="myFunction()">calaulate</button>
+<div id="div">
+<img id="ImagePic" src="" height="800" alt="Image return">
+</div>
+
 </body>
 </html>
 
