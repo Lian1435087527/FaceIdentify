@@ -14,7 +14,7 @@
 	        {
 	           
 	           
-	                 var url="picup.jsp";
+	                 var url="faceDetect.html";
 	                 window.location.href=url;
 	           
 	        }
