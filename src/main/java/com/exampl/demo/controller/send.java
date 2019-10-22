@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exampl.demo.faceidentify.BaseFunctions;
 import com.exampl.demo.faceidentify.Normalimage;
+import com.exampl.demo.faceidentify_i.BaseFunctions_I;
+import com.exampl.demo.faceidentify_i.Normalimage_I;
 
 
 
@@ -23,9 +25,9 @@ public class send {
 		//File f = new File("E:"+"face"+".jpg");
 		//ImageIO.write(imgbuff, "jpg", f);
 		pic=pic.substring(pic.indexOf(",")+1);
-		com.exampl.demo.faceidentify_i.BaseFunctions_I temp=new BaseFunctions();
+		BaseFunctions_I temp=new BaseFunctions();
 		System.out.println(temp.ISExistFace(pic));
-		com.exampl.demo.faceidentify_i.Normalimage_I A=new Normalimage();
+		Normalimage_I A=new Normalimage();
 	 picret=(A.SignFace(pic));
 		//System.out.println(pic);
 		return picret;
