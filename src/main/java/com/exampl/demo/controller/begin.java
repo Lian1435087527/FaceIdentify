@@ -11,5 +11,5 @@ public class begin {
 		return "index";
 		
 	}
-
+	
 }

@@ -10,6 +10,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <div><input type="file"><br>
 <img src="" height="200" alt="Image preview area..." title="preview-img">
+
+<form name="test">
+<input type="text" name="test1" value="fdsahtjdasf">
+</form>
 </div>
 <script>
   var fileInput = document.querySelector('input[type=file]'),
@@ -49,10 +53,11 @@
 
 	         },
 
-	       /* error :function(e) {
+	       error :function(e) {
 
 	           alert("error");
-	        }*/}) 
+	        }}) ;
+	        document.test.test1.value="4567r7r";
   }
     
  </script>
