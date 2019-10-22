@@ -24,9 +24,11 @@ public class send {
 		//ImageIO.write(imgbuff, "jpg", f);
 		pic=pic.substring(pic.indexOf(",")+1);
 		com.exampl.demo.faceidentify_i.BaseFunctions_I temp=new BaseFunctions();
-		System.out.println(temp.ISExistFace(pic));
+		//System.out.println(temp.ISExistFace(pic));
+		if(temp.ISExistFace(pic)==1) {
 		com.exampl.demo.faceidentify_i.Normalimage_I A=new Normalimage();
-	 picret=(A.SignFace(pic));
+	    picret=(A.SignFace(pic));}
+		else {picret="error";}
 		//System.out.println(pic);
 		return picret;
 		}

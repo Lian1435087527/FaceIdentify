@@ -19,6 +19,7 @@
 	  
       var file = this.files[0];
       var reader = new FileReader();
+      $("#ImagePic").attr("src","");
       // 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
       reader.addEventListener("load", function () {
           previewImg.src = reader.result;
@@ -43,18 +44,18 @@
 	         data:{
 	        	 "pic":previewImg.src
 	         },
-
-	         success :function(picret) {
-	        	 //var result= "1";
-	        	 //document.getElementById('div').innerHTML =result ;
-	        	 $("#ImagePic").attr("src","data:image/gif;base64,"+picret);
-                 
-	         },
-
-	       error :function(e) {
-
-	           alert("error");
-	        }}) 
+	         success:function(data){
+	        	                 if(data=="error"){
+	        	                     alert("没有检测到人脸");
+	        	                 
+	        	                 }else{
+	        	                 $("#ImagePic").attr("src","data:image/gif;base64,"+data);
+	        	                      }
+	        	             }
+	       }
+	        	
+	        	
+	         ) 
   }
     
  </script>
