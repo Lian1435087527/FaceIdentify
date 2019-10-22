@@ -19,7 +19,7 @@ public class send {
 	private String picret;
 	@RequestMapping("/picup")
 	@ResponseBody
-	public String getimg(@RequestParam("pic") String pic) {
+	public ModelMap getimg(@RequestParam("pic") String pic) {
 		//File f = new File("E:"+"face"+".jpg");
 		//ImageIO.write(imgbuff, "jpg", f);
 		pic=pic.substring(pic.indexOf(",")+1);
@@ -29,8 +29,10 @@ public class send {
 		com.exampl.demo.faceidentify_i.Normalimage_I A=new Normalimage();
 	    picret=(A.SignFace(pic));}
 		else {picret="error";}
+		ModelMap Return=new ModelMap();
 		//System.out.println(pic);
-		return picret;
+		Return.put("picret", picret);
+		return Return;
 		}
 	
 	
