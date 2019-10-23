@@ -3,80 +3,75 @@
 
 <html lang="en">
 <head>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-    <meta charset="UTF-8">
-    <title>SmartCloud智能云</title>
-    <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
+<meta charset="UTF-8">
+<title>SmartCloud智能云</title>
+<link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-    <div id="main-body">
-        <div class="select-show-img">
-            <div class="img-frame">
-             
-                <img class="src-img" src= ""  alt="图片预览区" title="预览图片" id="ImagePic" height="260" width="260">
-            </div>
-            
-            <div class="select-img">
-                <div class="select-img-area">
-                     <input type="text" spellcheck="false" alt="图片URL输入框" placeholder="请输入图片URL" class="input-url">
-                     <button class="image-button">检测</button>
-                     <div class="image-text">或</div>
-                    <label class="image-local">
+	<div id="main-body">
+		<div class="select-show-img">
+			<div class="img-frame">
 
-                        <button class="select-img-btn" type="button" onclick="document.getElementById('upload').click();">上传图片</button>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <input type="file" id="upload"  ><br>
-<script>
-  var fileInput = document.querySelector('input[type=file]'),
-          previewImg = document.querySelector('img');
-  fileInput.addEventListener('change', function () {
-	  
-      var file = this.files[0];
-      var reader = new FileReader();
-      $("#ImagePic").attr("src","");
-      // 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
-      reader.addEventListener("load", function () {
-          previewImg.src = reader.result;
-    	  $.ajax({
- 	         type:'POST',
+				<img class="src-img" src="" alt="图片预览区" title="预览图片" id="ImagePic"
+					height="260" width="260">
+			</div>
 
- 	         //data:JSON.stringify(reader.readAsDataURL(file)),
- 	           
- 	        
+			<div class="select-img">
+				<div class="select-img-area">
+					<input type="text" spellcheck="false" alt="图片URL输入框"
+						placeholder="请输入图片URL" class="input-url">
+					<button class="image-button">检测</button>
+					<div class="image-text">或</div>
+					<label class="image-local">
 
- 	         url :'/picup',
- 	         data:{
- 	        	 "pic":previewImg.src
- 	         },
- 	         success:function(data){
- 	        	                 if(data=="error"){
- 	        	                     alert("没有检测到人脸");
- 	        	                 
- 	        	                 }else{
- 	        	                 $("#ImagePic").attr("src","data:image/gif;base64,"+data.picret);
- 	        	 
- 	        	                      }
- 	        	             }
- 	       }
- 	        	
- 	        	
- 	         ) 
-      }, false);
-      
-      // 调用reader.readAsDataURL()方法，把图片转成base64
-     reader.readAsDataURL(file);
-    
-        
-  }, false);
-  
- 
-    
- </script>
+						<button class="select-img-btn" type="button"
+							onclick="document.getElementById('upload').click();">上传图片</button>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="file" id="upload">
+	<br>
+	<script>
+		var fileInput = document.querySelector('input[type=file]'), previewImg = document
+				.querySelector('img');
+		fileInput.addEventListener('change', function() {
+
+			var file = this.files[0];
+			var reader = new FileReader();
+			$("#ImagePic").attr("src", "");
+			// 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
+			reader.addEventListener("load", function() {
+				previewImg.src = reader.result;
+				$.ajax({
+					type : 'POST',
+					url : '/picup',
+					data : {
+						"pic" : previewImg.src
+					},
+					success : function(data) {
+						if (data.state == 1) {
+							$("#ImagePic").attr("src",
+									"data:image/gif;base64," + data.picret);
+						} else {
+							alert("错误码："+data.state+",没有检测到人脸");
+
+						}
+					}
+				}
+
+				)
+			}, false);
+
+			// 调用reader.readAsDataURL()方法，把图片转成base64
+			reader.readAsDataURL(file);
+
+		}, false);
+	</script>
 </body>
 </html>

@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -36,19 +36,20 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 	@Override
 	public String SignFace(String imageB64, int num) {
 		// TODO Auto-generated method stub
+
 		JSONArray locations = getlocations(imageB64, num);
 
 		// Base64转化为image
 		BufferedImage Image = Base642Image(imageB64);
-
+		
 		// 画框
 		for (int i = 0; i < locations.length(); i++) {
-
+			
 			JSONObject location = locations.getJSONObject(i).getJSONObject("location");
-
+			
 			// 获得画框边界参数
 			int[] Squre = getSqure(location);
-
+			
 			// 画框
 			try {
 
@@ -57,8 +58,8 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			} catch (NullPointerException e) {
 				continue;
 			}
+			
 		}
-
 		// 将图片转化为BASE64
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		String Signedimage = "0";
@@ -71,6 +72,7 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			 * ImageIO.write(Image, "jpg", f);
 			 */
 			Signedimage = com.baidu.aip.util.Base64Util.encode(bos.toByteArray());
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,10 +121,9 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 
 	private JSONArray getlocations(String imageB64, int num) {
 		// 设置人数
-		HashMap<String, String> map = new HashMap<>();
-		map.put("max_face_num", new Integer(num).toString());
-		// 人脸检测检测 获取脸的location
-		JSONObject res = client.detect(imageB64, "BASE64", map);
+		
+		//获取返回结果
+		JSONObject res =BaseFunctions.getDetect_Baidu();
 
 		// 处理location
 
@@ -221,7 +222,17 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			return false;
 		}		
 	}
-
+	
+	private int times=0;
+	/**
+	 * 测试运行时间
+	 */
+	@SuppressWarnings("deprecation")
+	private void Testtime() {
+		Date date = new Date();
+		times++;
+		System.out.println(this.getClass().getName()+" "+new Integer(times).toString()+"->"+date.getMinutes()+":"+date.getSeconds());
+	}
 	
 
 }
