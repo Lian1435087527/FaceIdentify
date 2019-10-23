@@ -25,10 +25,16 @@
 .src-img {
     display: block;
     position: relative;
+    width: 265px;
+    height: 265px;
     margin: 0 auto;
     top: 50%;
     transform: translateY(-50%);
-    top; -25px;
+   
+}
+
+#upload{
+	display: none;
 }
 
 .select-img {
