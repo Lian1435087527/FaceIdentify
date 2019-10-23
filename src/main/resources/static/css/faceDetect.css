@@ -12,8 +12,9 @@
     background-color: white;
     display: block;
     position: relative;
-    width: 270px;
-    height: 270px;
+    width: auto;
+    max-width: 40%;
+    height: 80%;
     border: 4px solid black;
     box-shadow: 10px 10px 12px #242424;
     margin: 10px auto;
@@ -25,8 +26,9 @@
 .src-img {
     display: block;
     position: relative;
-    width: 265px;
-    height: 265px;
+    width: auto;
+    height: 95%;
+    max-height:95%;
     margin: 0 auto;
     top: 50%;
     transform: translateY(-50%);

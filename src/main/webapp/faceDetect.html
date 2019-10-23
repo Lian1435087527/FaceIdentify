@@ -13,11 +13,10 @@
 <body>
 
 	<div id="main-body">
-		<div class="select-show-img">
-			<div class="img-frame">
-
+		<div class="select-show-img" id="Imagediv">
+			<div class="img-frame" >
 				<img class="src-img" src="" alt="图片预览区" title="预览图片" id="ImagePic"
-					height="260" width="260">
+					height="260" width="260" >
 			</div>
 
 			<div class="select-img">
@@ -40,8 +39,8 @@
 	<script>
 		var fileInput = document.querySelector('input[type=file]'), previewImg = document
 				.querySelector('img');
+		
 		fileInput.addEventListener('change', function() {
-
 			var file = this.files[0];
 			var reader = new FileReader();
 			$("#ImagePic").attr("src", "");

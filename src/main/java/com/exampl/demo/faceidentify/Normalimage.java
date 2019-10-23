@@ -1,7 +1,10 @@
 package com.exampl.demo.faceidentify;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
@@ -41,15 +44,15 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 
 		// Base64转化为image
 		BufferedImage Image = Base642Image(imageB64);
-		
+
 		// 画框
 		for (int i = 0; i < locations.length(); i++) {
-			
+
 			JSONObject location = locations.getJSONObject(i).getJSONObject("location");
-			
+
 			// 获得画框边界参数
 			int[] Squre = getSqure(location);
-			
+
 			// 画框
 			try {
 
@@ -58,7 +61,7 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			} catch (NullPointerException e) {
 				continue;
 			}
-			
+
 		}
 		// 将图片转化为BASE64
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -72,7 +75,7 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			 * ImageIO.write(Image, "jpg", f);
 			 */
 			Signedimage = com.baidu.aip.util.Base64Util.encode(bos.toByteArray());
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,9 +124,9 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 
 	private JSONArray getlocations(String imageB64, int num) {
 		// 设置人数
-		
-		//获取返回结果
-		JSONObject res =BaseFunctions.getDetect_Baidu();
+
+		// 获取返回结果
+		JSONObject res = BaseFunctions.getDetect_Baidu();
 
 		// 处理location
 
@@ -131,23 +134,38 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 		return locations;
 	}
 
+//	//旧的标记脸方法
+//	 private BufferedImage Signup(BufferedImage image, int[] Squre) throws NullPointerException {
+//		int up = Squre[0], down = Squre[1], left = Squre[2], right = Squre[3];
+//		// TODO Auto-generated method stub
+//		// 绘制竖线 利用重复来将框加粗
+//		for (int i = up; i <= down; i++) {
+//			//加粗线条循环
+//			for(int lineWidth=0;lineWidth<image.getWidth()/50;lineWidth++) {
+//			
+//			image.setRGB(left-image.getWidth()/25+lineWidth, i, Color.blue.getRGB());
+//			image.setRGB(right-image.getWidth()/25+lineWidth, i, Color.blue.getRGB());			
+//			}
+//		}
+//		// 绘制横线
+//		for (int i = left; i <= right; i++) {
+//		//加粗线条循环
+//			for(int lineHeight=0;lineHeight<image.getHeight()/50;lineWidth++) {
+//			image.setRGB(i, up-image.getHeight()/25+lineHeight, Color.blue.getRGB());	
+//			image.setRGB(i, down-image.getHeight()/25+lineHeight, Color.blue.getRGB());		
+//			}
+//		}
+//		return image;
+//	}
 	private BufferedImage Signup(BufferedImage image, int[] Squre) throws NullPointerException {
 		int up = Squre[0], down = Squre[1], left = Squre[2], right = Squre[3];
 		// TODO Auto-generated method stub
 		// 绘制竖线 利用重复来将框加粗
-		for (int i = up; i <= down; i++) {
-			image.setRGB(left+1, i, Color.blue.getRGB());
-			image.setRGB(left, i, Color.blue.getRGB());
-			image.setRGB(right+1, i, Color.blue.getRGB());
-			image.setRGB(right, i, Color.blue.getRGB());
-		}
-		// 绘制横线
-		for (int i = left; i <= right; i++) {
-			image.setRGB(i, up+1, Color.blue.getRGB());
-			image.setRGB(i, up, Color.blue.getRGB());
-			image.setRGB(i, down+1, Color.blue.getRGB());
-			image.setRGB(i, down, Color.blue.getRGB());
-		}
+		Graphics2D Grap = (Graphics2D) image.getGraphics();
+		Stroke stroke = new BasicStroke(5.0f);// 设置线宽为3.0
+		Grap.setStroke(stroke);
+		Grap.setColor(Color.green);
+		Grap.drawRect(left, up, right - left, down - up);
 		return image;
 	}
 
@@ -166,24 +184,26 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			return null;
 		}
 	}
+
 	@Override
 	public int CutoutFace(String imageB64, String savepath) {
 		// TODO Auto-generated method stub
-		
-		return CutoutFace(imageB64, savepath,2);
+
+		return CutoutFace(imageB64, savepath, 2);
 	}
+
 	@Override
-	public int CutoutFace(String imageB64, String savepath,int num) {
+	public int CutoutFace(String imageB64, String savepath, int num) {
 		// TODO Auto-generated method stub
 		JSONArray locations = getlocations(imageB64, num);
-		//总计输入人脸数目
-		int Facesum=0;
+		// 总计输入人脸数目
+		int Facesum = 0;
 		// Base64转化为image
 		BufferedImage Image = Base642Image(imageB64);
 
 		// 输出人脸
 		for (int i = 0; i < locations.length(); i++) {
-		
+
 			JSONObject location = locations.getJSONObject(i).getJSONObject("location");
 
 			// 获得画框边界参数
@@ -192,7 +212,7 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 			// 输出人脸文件
 			try {
 
-				if(Saveface(Image, Squre,savepath,Facesum))
+				if (Saveface(Image, Squre, savepath, Facesum))
 					Facesum++;
 			} catch (NullPointerException e) {
 				continue;
@@ -201,29 +221,30 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 		return Facesum;
 	}
 
-	private boolean Saveface(BufferedImage image, int[] Squre, String savepath,int Facesum) {
+	private boolean Saveface(BufferedImage image, int[] Squre, String savepath, int Facesum) {
 		// TODO Auto-generated method stub
 		int up = Squre[0], down = Squre[1], left = Squre[2], right = Squre[3];
-		BufferedImage imageout=new BufferedImage(right-left+1,down-up+1,BufferedImage.TYPE_INT_RGB);
+		BufferedImage imageout = new BufferedImage(right - left + 1, down - up + 1, BufferedImage.TYPE_INT_RGB);
 		// 抠出人脸
 		for (int i = up; i <= down; i++) {
 			for (int j = left; j <= right; j++) {
-				imageout.setRGB(j-left, i-up ,image.getRGB(j, i));
+				imageout.setRGB(j - left, i - up, image.getRGB(j, i));
 			}
-		}	
-		//输出图片		
+		}
+		// 输出图片
 		try {
-			File f = new File(savepath+"face"+Facesum+".jpg");
+			File f = new File(savepath + "face" + Facesum + ".jpg");
 			ImageIO.write(imageout, "jpg", f);
 			return true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}		
+		}
 	}
-	
-	private int times=0;
+
+	private int times = 0;
+
 	/**
 	 * 测试运行时间
 	 */
@@ -231,8 +252,8 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 	private void Testtime() {
 		Date date = new Date();
 		times++;
-		System.out.println(this.getClass().getName()+" "+new Integer(times).toString()+"->"+date.getMinutes()+":"+date.getSeconds());
+		System.out.println(this.getClass().getName() + " " + new Integer(times).toString() + "->" + date.getMinutes()
+				+ ":" + date.getSeconds());
 	}
-	
 
 }
