@@ -10,14 +10,14 @@ import com.baidu.aip.face.AipFace;
 
 import com.exampl.demo.faceidentify_i.BaseFunctions_I;
 
-public class BaseFunctions implements BaseFunctions_I {
+public class BaseFunctionsBaidu implements BaseFunctions_I {
 	private static AipFace client;
 	private static JSONObject Detect_Baidu;
 	public static final String APP_ID = "17500318";
 	public static final String API_KEY = "aT4Z4jLrrxNNz86yOWGtwaA0";
 	public static final String SECRET_KEY = "MaQC5FIEzCQTUs2XfifYn2FMisybXPby";
 
-	public BaseFunctions() {
+	public BaseFunctionsBaidu() {
 		// 初始化一个AipFace
 		client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
 	}

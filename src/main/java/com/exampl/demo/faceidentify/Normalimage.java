@@ -24,13 +24,6 @@ import com.baidu.aip.face.AipFace;
 
 public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I {
 
-	private AipFace client;
-
-	public Normalimage() {
-		// 获取AipFace
-		client = BaseFunctions.getClient();
-	}
-
 	@Override
 	public String SignFace(String imageB64) {
 		return SignFace(imageB64, 2);
@@ -40,15 +33,18 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 	public String SignFace(String imageB64, int num) {
 		// TODO Auto-generated method stub
 
-		JSONArray locations = getlocations(imageB64, num);
+		JSONArray locations = getlocationsbyBaidu(imageB64, num);
 
 		// Base64转化为image
 		BufferedImage Image = Base642Image(imageB64);
 
 		// 画框
-		for (int i = 0; i < locations.length(); i++) {
-
+		for (int i = 0; i < (num<locations.length()?num:locations.length()); i++) {
+			//XXX 两种算法差别1
+			//使用百度
 			JSONObject location = locations.getJSONObject(i).getJSONObject("location");
+			//使用Azure
+			//JSONObject location = locations.getJSONObject(i).getJSONObject("faceRectangle");
 
 			// 获得画框边界参数
 			int[] Squre = getSqure(location);
@@ -99,8 +95,11 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 		l_left = location.getInt("left");
 		l_width = location.getInt("width");
 		l_height = location.getInt("height");
+		//XXX 两种算法差别2
+		//百度才有rotation参数
 		l_rotation = location.getInt("rotation") * Math.PI / 180;
-
+		//Azure设置为0
+		//l_rotation = 0;
 		// 计算方框相关参数 按识别出的脸部角度计算边界
 		int up, down, left, right;
 		if (l_rotation < 0 && l_rotation > -90) {
@@ -122,15 +121,23 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 
 	}
 
-	private JSONArray getlocations(String imageB64, int num) {
+	private JSONArray getlocationsbyBaidu(String imageB64, int num) {
 		// 设置人数
 
 		// 获取返回结果
-		JSONObject res = BaseFunctions.getDetect_Baidu();
+		JSONObject res = BaseFunctionsBaidu.getDetect_Baidu();
 
 		// 处理location
 
 		JSONArray locations = res.getJSONObject("result").getJSONArray("face_list");
+		return locations;
+	}
+	private JSONArray getlocationsbyAzure(String imageB64, int num) {
+		// 设置人数
+
+		// 获取返回结果
+
+		JSONArray locations = BaseFunctionsAzure.getDetect_Azure();
 		return locations;
 	}
 
@@ -195,7 +202,7 @@ public class Normalimage implements com.exampl.demo.faceidentify_i.Normalimage_I
 	@Override
 	public int CutoutFace(String imageB64, String savepath, int num) {
 		// TODO Auto-generated method stub
-		JSONArray locations = getlocations(imageB64, num);
+		JSONArray locations = getlocationsbyBaidu(imageB64, num);
 		// 总计输入人脸数目
 		int Facesum = 0;
 		// Base64转化为image

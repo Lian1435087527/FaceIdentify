@@ -1,38 +1,50 @@
-package com.exampl.demo.codeTest;
-//This sample uses Apache HttpComponents:
-
-//http://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/
-//https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/
+package com.exampl.demo.faceidentify;
 
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TestAzureFace {
-	// Replace <Subscription Key> with your valid subscription key.
+import com.baidu.aip.face.AipFace;
+
+import com.exampl.demo.faceidentify_i.BaseFunctions_I;
+
+public class BaseFunctionsAzure implements BaseFunctions_I {
+	private static AipFace client;
+	private static JSONArray Detect_Azure;
 	private static final String subscriptionKey = "e1707f2aa66a4302a579e546a18e241c";
 
 	private static final String uriBase = "https://facetestface.cognitiveservices.azure.com/face/v1.0/detect";
 
-	private static final String faceAttributes = "";
+	private static String faceAttributes = "";
+	private CloseableHttpClient httpclient;
 
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args) {
-		HttpClient httpclient = HttpClientBuilder.create().build();
+	public BaseFunctionsAzure() {
+		// 初始化一个AipFace清楚
+		httpclient = HttpClientBuilder.create().build();
 
+		
+	}
+
+	@SuppressWarnings("finally")
+	@Override
+	public int ISExistFace(String imageB64) {
+		// TODO Auto-generated method stub
+		// 人脸检测
 		try {
 			URIBuilder builder = new URIBuilder(uriBase);
 
@@ -49,21 +61,15 @@ public class TestAzureFace {
 			request.setHeader("Content-Type", "application/octet-stream");
 			request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
 
-			// Request body.
-			String pathToLocalImage = "E:\\大学\\学习\\驭光实习\\测试图片\\2b365aedb6d48100.jpg";
-			byte[] imageByteArray;
-			File rawImage = new File(pathToLocalImage);
-			imageByteArray = Files.readAllBytes(rawImage.toPath());
+			// Request body.将Base64编码转化为byte		
+			byte[] imageByteArray= com.baidu.aip.util.Base64Util.decode(imageB64);
 			ByteArrayEntity req = new ByteArrayEntity(imageByteArray);
 			request.setEntity(req);
 
-			Date date = new Date();
-			System.out.println("->" + date.getMinutes() + ":" + date.getSeconds());
 			// Execute the REST API call and get the response entity.
 			HttpResponse response = httpclient.execute(request);
 			HttpEntity entity = response.getEntity();
-			Date date2 = new Date();
-			System.out.println("->" + date2.getMinutes() + ":" + date2.getSeconds());
+			
 			if (entity != null) {
 				// Format and display the JSON response.
 				System.out.println("REST Response:\n");
@@ -71,17 +77,50 @@ public class TestAzureFace {
 				String jsonString = EntityUtils.toString(entity).trim();
 				if (jsonString.charAt(0) == '[') {
 					JSONArray jsonArray = new JSONArray(jsonString);
-					System.out.println(jsonArray.toString(2));
+					Detect_Azure=jsonArray;
+					return 1;
+					
 				} else if (jsonString.charAt(0) == '{') {
-					JSONObject jsonObject = new JSONObject(jsonString);
-					System.out.println(jsonObject.toString(2));
+					JSONObject json=new JSONObject(jsonString);
+					JSONArray temp=new JSONArray();
+					temp.put(0, json);
+					Detect_Azure = temp;
+					return 1;
 				} else {
-					System.out.println(jsonString);
+					return 0;
 				}
 			}
+			return -1;
 		} catch (Exception e) {
 			// Display error message.
-			System.out.println(e.getMessage());
-		}
+			return -1;
+		}		
+	}
+
+	public static AipFace getClient() {
+
+		return client;
+	}
+
+	private int times = 0;
+
+	/**
+	 * 测试运行时间
+	 */
+	@SuppressWarnings("deprecation")
+	private void Testtime() {
+		Date date = new Date();
+		times++;
+		System.out.println(this.getClass().getName() + " " + new Integer(times).toString() + "->" + date.getMinutes()
+				+ ":" + date.getSeconds());
+	}
+
+	/**
+	 * 获得Baidu人脸检测返回结果
+	 * 
+	 * @return
+	 */
+	public static JSONArray getDetect_Azure() {
+		return Detect_Azure;
 	}
 }
