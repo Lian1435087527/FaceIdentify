@@ -1,4 +1,4 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,11 +9,19 @@
 </head>
 
      <script type="text/javascript">
-            function picup()
+            function factdetect()
 	        {
 	           
 	           
 	                 var url="faceDetect.html";
+	                 window.location.href=url;
+	           
+	        }
+            function picup()
+	        {
+	           
+	           
+	                 var url="picup.html";
 	                 window.location.href=url;
 	           
 	        }
@@ -23,11 +31,11 @@
 		<div class="topmenu cbody1">
 			<ul class="menu">
 				<li class="thisclass">
-					<A href="#" onclick="">down</A>
+					<A href="#" onclick="picup()">上传数据</A>
 				</li>
 				
 				<li>
-					<A href="#" onclick="picup()">up</A>
+					<A href="#" onclick="facedetect()">在线人脸检测</A>
 				</li>
 				
 				
