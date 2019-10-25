@@ -32,13 +32,14 @@
 			<ul class="menu">
 				<li class="thisclass">
 
-					<A href="#" onclick="picup()">上传数据</A>
+					<A href="#" onclick="picup()">456</A>
 
 				</li>
 				
 				<li>
 
-					<A href="#" onclick="facedetect()">在线人脸检测</A>
+					<A href="#" onclick="facedetect()">775
+					测</A>
 
 				</li>
 				
