@@ -31,11 +31,15 @@
 		<div class="topmenu cbody1">
 			<ul class="menu">
 				<li class="thisclass">
-					<A href="#" onclick="picup()">0 0</A>
+
+					<A href="#" onclick="picup()">上传数据</A>
+
 				</li>
 				
 				<li>
-					<A href="#" onclick="facedetect()">11</A>
+
+					<A href="#" onclick="facedetect()">在线人脸检测</A>
+
 				</li>
 				
 				
