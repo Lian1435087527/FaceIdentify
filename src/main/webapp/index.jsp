@@ -9,7 +9,7 @@
 </head>
 
      <script type="text/javascript">
-            function factdetect()
+            function facedetect()
 	        {
 	           
 	           
