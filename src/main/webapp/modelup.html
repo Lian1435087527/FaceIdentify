@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+	
+	
+	function modelup(){
+			
+			$.ajax({
+				type : 'POST',
+				url : "https://testfaas1.azurewebsites.net/api/HttpTrigger",
+				dataType:"jsonp",
+				jsonp:'callbacks',
+				data : {
+					
+					//"code" : "tq1E1zDNnsRkiEbgShrkIa7S/3LfPlzQjaCRgPEDzp1gqVRaay6f1A==",
+					"name" : "111",
+				},
+				success : function(data) {
+					if(data==null){
+						alert("error");}
+					 else {
+						alert(data);
+
+					}
+				}
+			}
+
+			)
+		}
+
+	
+
+	
+</script>
+<title>Insert title here</title>
+</head>
+<body>
+<button id="func-up" onclick="modelup()" >submit</button>
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</body>
+</html>
