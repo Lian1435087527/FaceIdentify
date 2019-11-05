@@ -13,7 +13,10 @@ import com.exampl.demo.faceidentify.BaseFunctionsBaidu;
 import com.exampl.demo.faceidentify.Normalimage;
 import com.exampl.demo.faceidentify_i.BaseFunctions_I;
 import com.exampl.demo.faceidentify_i.Normalimage_I;
-
+import org.python.core.PyFunction;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 
 @Controller
 public class send {
@@ -42,16 +45,9 @@ public class send {
 		return Return;
 
 		}
-	private int times=0;
-	/**
-	 * 测试运行时间
-	 */
 	
-	@SuppressWarnings("deprecation")
-	private void Testtime() {
-		Date date = new Date();
-		times++;
-		System.out.println(this.getClass().getName()+" "+new Integer(times).toString()+"->"+date.getMinutes()+":"+date.getSeconds());
-	}
 	
+
+
+
 }

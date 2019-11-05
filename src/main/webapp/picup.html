@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
     <body>
-        <button id="create-button" hidden=hidden>Create Container</button>
+        <button id="create-button" >Create Container</button>
 
         <input type="file" id="fileinput" multiple/>
         <button id="upload-button">Upload</button>
@@ -9,13 +10,15 @@
         <button id="list-button">List</button>
         
         <button id="delete-button" hidden=hidden>Delete</button>
+        <button id="download-button" onclick="downloadImg()">Down</button>
     </body>
     <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
     <script>
-        // Blob-related code goes here
+    
+    let downloadlink=new Array(5).fill(0);//[0,0,0,0,0]
         const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-10-25T12:52:43Z&st=2019-10-25T04:52:43Z&spr=https&sig=%2BJHuBRpuwdfUxg5TFaL9oD7y3ggYk7U8NZMosT9xeoA%3D"
+    name: "dlsg2te1",
+    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-10-30T15:04:29Z&st=2019-10-30T07:04:29Z&spr=https&sig=2QOKkPih6v%2BTm%2BNtAWOsKDSNI50hVrU2z8Ddd2BkkSE%3D"
 };
 
 const blobUri = 'https://' + account.name + '.blob.core.windows.net';
@@ -32,12 +35,12 @@ const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.
     54667894153475616
 
 });*/
-document.getElementById('upload-button').addEventListener('click', () => {
+document.getElementById('upload-button').addEventListener('click', () =>{
     var len=document.getElementById('fileinput').files.length;
 	for(i=0;i<len;i++){
     var file = document.getElementById('fileinput').files[i];
 
-    blobService.createBlockBlobFromBrowserFile('mycontainer', 
+    blobService.createBlockBlobFromBrowserFile('myblob1', 
                                                 file.name, 
                                                 file, 
                                                 (error, result) => {
@@ -51,7 +54,7 @@ document.getElementById('upload-button').addEventListener('click', () => {
 	}});
 document.getElementById('list-button').addEventListener('click', () => {
 
-    blobService.listBlobsSegmented('mycontainer', null, (error, results) => {
+    blobService.listBlobsSegmented('myblob1', null, (error, results) => {
         if (error) {
             // Handle list blobs error
         } else {
@@ -62,6 +65,31 @@ document.getElementById('list-button').addEventListener('click', () => {
     });
     
 });
+
+ function downloadImg(){
+        
+	 blobService.listBlobsSegmented('mycontainer', null, (error, results) => {
+	        if (error) {
+	            // Handle list blobs error
+	        } else {
+                    for (var i = 0, blob; blob = results.entries[i]; i++) {
+                                
+                                downloadlink[i]= blobService.getUrl('mycontainer', blob.name);
+                                console.log( downloadlink[0]);
+                            };}
+	        });
+                    let url = "https://"+"cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/mycontainer/人脸素材.rar";               
+                    let a = document.createElement("a");          // 创建一个a节点插入的document
+                    let event = new MouseEvent("click");           // 模拟鼠标click点击事件
+                    a.download = 'tepic';                  // 设置a节点的download属性值
+                    a.href = url;                                 // 将图片的src赋值给a节点的href
+                    a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
+                 }
+
+           
+    
+    
+
 /*document.getElementById('delete-button').addEventListener('click', () => {
 
     var blobName = YOUR_BLOB_NAME;

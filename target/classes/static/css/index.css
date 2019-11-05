@@ -32,7 +32,7 @@ a.channel:active {color: #000000;}
 .topmenu { height: 45px;}
 .cbody1 {margin: 0px auto; height:49px; width: 966px; background-color: #292929;}
 /* general styles */
-.menu, .menu ul {
+.menu, .menu ul {zz
     list-style: none;
     padding: 0;
     margin: 0;
