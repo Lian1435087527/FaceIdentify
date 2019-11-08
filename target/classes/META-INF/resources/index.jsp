@@ -9,7 +9,6 @@
 <title>3d智能云</title>
 </head>
 
-<<<<<<< Upstream, based on origin/master
      <script type="text/javascript">
             function facedetect()
 	        {
@@ -51,40 +50,6 @@
      
   }
             </script>
-=======
-<script type="text/javascript">
-	function facedetect() {
-
-		var url = "faceDetect.html";
-		window.location.href = url;
-
-	}
-	function picup() {
-
-		var url = "picup.html";
-		window.location.href = url;
-
-	}
-	function picdown() {
-
-		var url = "pidown.html";
-		window.location.href = url;
-
-	}
-	function modelup() {
-
-		var url = "modelup.html";
-		window.location.href = url;
-
-	}
-	function login() {
-
-		var url = "login.html";
-		window.location.href = url;
-
-	}
-</script>
->>>>>>> 26e8f26 test
 <link href="/css/index.css" type="text/css" rel="stylesheet" />
 <body>
 	<div class="topmenu cbody1">
