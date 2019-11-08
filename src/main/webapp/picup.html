@@ -18,7 +18,7 @@
     let downloadlink=new Array(5).fill(0);//[0,0,0,0,0]
         const account = {
     name: "dlsg2te1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-10-30T15:04:29Z&st=2019-10-30T07:04:29Z&spr=https&sig=2QOKkPih6v%2BTm%2BNtAWOsKDSNI50hVrU2z8Ddd2BkkSE%3D"
+    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-30T15:58:10Z&st=2019-11-06T07:58:10Z&spr=https&sig=xF0KNlkHAzMKu7deJMd9CyM8j9OhW9UJW8KRgE8rjdU%3D"
 };
 
 const blobUri = 'https://' + account.name + '.blob.core.windows.net';
@@ -68,17 +68,9 @@ document.getElementById('list-button').addEventListener('click', () => {
 
  function downloadImg(){
         
-	 blobService.listBlobsSegmented('mycontainer', null, (error, results) => {
-	        if (error) {
-	            // Handle list blobs error
-	        } else {
-                    for (var i = 0, blob; blob = results.entries[i]; i++) {
-                                
-                                downloadlink[i]= blobService.getUrl('mycontainer', blob.name);
-                                console.log( downloadlink[0]);
-                            };}
-	        });
-                    let url = "https://"+"cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/mycontainer/人脸素材.rar";               
+	                var downloadLink = blobService.getUrl('myblob1', 'timg.jpg');
+	                console.log(downloadLink);
+                    let url =downloadLink;               
                     let a = document.createElement("a");          // 创建一个a节点插入的document
                     let event = new MouseEvent("click");           // 模拟鼠标click点击事件
                     a.download = 'tepic';                  // 设置a节点的download属性值

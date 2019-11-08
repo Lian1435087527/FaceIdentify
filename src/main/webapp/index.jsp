@@ -29,7 +29,7 @@
 	        {
 	           
 	           
-	                 var url="pidown.html";
+	                 var url="picdown.html";
 	                 window.location.href=url;
 	           
 	        } 

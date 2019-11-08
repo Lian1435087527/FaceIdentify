@@ -10,6 +10,33 @@
     <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-ddd
+<button id="list-button" >list</button>
+<p id="file">
+文件列表：
+</p>
 </body>
+<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+<script>
+const account = {
+		    name: "cs1f9abf47a9b73x49c3x9c1",
+		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+		};
+	
+const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+document.getElementById('list-button').addEventListener('click', () => {
+
+	    blobService.listBlobsSegmented('modelblob1', null, (error, results) => {
+	        if (error) {
+	            // Handle list blobs error
+	        } else {
+	            results.entries.forEach(blob => {
+	            	var downloadLink = blobService.getUrl('modelblob1',blob.name );
+	            	document.getElementById("file").innerHTML=downloadLink;
+	            });
+	        }
+	    });
+	    
+	});
+	</script>
 </html>

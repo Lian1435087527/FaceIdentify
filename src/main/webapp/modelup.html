@@ -4,57 +4,119 @@
 <meta charset="UTF-8">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script>
+<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+
+	
+	
+	
+
+<link href="/css/modalDialog.css" type="text/css" rel="stylesheet" />
+<title>model up</title>
+</head>
+<body>
+
+	<div id="upload-model-dialog" >
+    <div id="dialog-title">上传模型</div>
+        <div id="upload-model-content">
+            <div class="content">
+                <div class="label model-name">试验名字:</div>
+                <input type="text" id="input-model-name" placeholder="请输入模型的名称">
+            </div>
+            <div class="content">
+                <div class="label model-folder">模型:</div>
+                <input type="file" id="select-model" multiple>
+                
+                
+            </div>
+            <div class="content">
+                <div class="label entry-file">入口文件：</div>
+                <input type="text" id="input-entry-file" placeholder="请输入入口文件的名称">
+            </div>
+            <div class="content">
+                <div class="label train-data">参数文件：</div>
+                <input type="text" accept="" id="input-train-data" placeholder="请选择训练数据">
+                
+            </div>
+            
+            <div class="content">
+                <div class="label config-file">依赖环境：</div>
+                <select id="label config-file">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="content">
+                <div class="label frame-name">使用框架：</div>
+                <select id="select-frame-name">
+                    <option value="1">sk-learn</option>
+                    <option value="2">tensorflow</option>
+                    <option value="3">pytorch</option>
+                </select>
+            </div>
+            <div class="content" style="margin-left: 440px; margin-top: 70px">
+                <button class="option-btn" id="modelup"  onclick="modelup()">上传</button>
+                <button class="option-btn" >取消</button>
+            </div>
+        </div>
+</div>
+<div id="black-cloth" class="hidden" onclick="hiddenUploadModelDialog()"></div>
+</body>
+<script charset="UTF-8">
 	
 	
 	function modelup(){
 			
 			$.ajax({
 				type : 'POST',
-				url : "https://testfaas1.azurewebsites.net/api/HttpTrigger",
-				dataType:"jsonp",
-				jsonp:'callbacks',
-				data : {
-					
-					//"code" : "tq1E1zDNnsRkiEbgShrkIa7S/3LfPlzQjaCRgPEDzp1gqVRaay6f1A==",
-					"name" : "111",
-				},
-				success : function(data) {
-					if(data==null){
-						alert("error");}
-					 else {
-						alert(data);
-
-					}
-				}
+				url : "/modelup",
+				dataType:"json",
+				contentType:"application/json;charset=utf-8;",
+				data:{
+					"试验名字":"1",
+					"模型文件压缩包":"1",
+					"入口文件":"1",
+					"参数文件":"1",
+					"使用框架":"1",
+					"依赖环境":"1"},
+				
+			success : function(data) {
+				if(data==null){alert("done")
+				
 			}
+					else{
+						alert("errorr")
+					}}}
 
-			)
-		}
-
+			)}
+		
+	const account = {
+		    name: "cs1f9abf47a9b73x49c3x9c1",
+		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+		};
 	
-
-	
-</script>
-<title>Insert title here</title>
-</head>
-<body>
-<button id="func-up" onclick="modelup()" >submit</button>
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-</body>
+	const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+	const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+	document.getElementById('modelup').addEventListener('click', () =>{
+	    var len=document.getElementById('select-model').files.length;
+		for(i=0;i<len;i++){
+	    var file = document.getElementById('select-model').files[i];
+        
+	    blobService.createBlockBlobFromBrowserFile('modelblob1', 
+	                                                file.name, 
+	                                                file, 
+	                                                (error, result) => {
+	                                                    if(error) {
+	                                                        // Handle blob error
+	                                                    } else {
+	                                                    	
+	                                                        console.log(file.name);
+	                                                    }
+	                                                });
+	    var downloadLink = blobService.getUrl('modelblob1',file.name );
+	    console.log(downloadLink);
+	    
+       
+		}});
+	</script>
 </html>
