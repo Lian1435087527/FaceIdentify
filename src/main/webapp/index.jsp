@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +9,7 @@
 <title>3d智能云</title>
 </head>
 
+<<<<<<< Upstream, based on origin/master
      <script type="text/javascript">
             function facedetect()
 	        {
@@ -49,31 +51,56 @@
      
   }
             </script>
+=======
+<script type="text/javascript">
+	function facedetect() {
+
+		var url = "faceDetect.html";
+		window.location.href = url;
+
+	}
+	function picup() {
+
+		var url = "picup.html";
+		window.location.href = url;
+
+	}
+	function picdown() {
+
+		var url = "pidown.html";
+		window.location.href = url;
+
+	}
+	function modelup() {
+
+		var url = "modelup.html";
+		window.location.href = url;
+
+	}
+	function login() {
+
+		var url = "login.html";
+		window.location.href = url;
+
+	}
+</script>
+>>>>>>> 26e8f26 test
 <link href="/css/index.css" type="text/css" rel="stylesheet" />
 <body>
-		<div class="topmenu cbody1">
-			<ul class="menu">
-				<li class="thisclass">
-					<A href="#" onclick="picup()">上传数据</A>
-				</li>
-				
-				<li>
+	<div class="topmenu cbody1">
+		<ul class="menu">
+			<li class="thisclass"><A href="#" onclick="picup()">上传数据</A></li>
 
-					<A href="#" onclick="factdetect()">在线人脸检测</A>
-				</li>
-				<li>
-					<A href="#" onclick="picdown()">下载数据</A>
-				</li>
-				<li>
-					<A href="#" onclick="modelup()">上传模型</A>
-				</li>
-				
-				
-				
-			</ul>	
-		</div>
-		<div class="foot">
+			<li><A href="#" onclick="facedetect()">在线人脸检测</A></li>
+			<li><A href="#" onclick="picdown()">下载数据</A></li>
+			<li><A href="#" onclick="modelup()">上传模型</A></li>
+
+
+
+		</ul>
+	</div>
+	<div class="foot">
 		<A href="#" onclick="login()">登录</A>
-		</div>
+	</div>
 </body>
 </html>
