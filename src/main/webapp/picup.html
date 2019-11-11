@@ -40,7 +40,7 @@ document.getElementById('upload-button').addEventListener('click', () =>{
 	for(i=0;i<len;i++){
     var file = document.getElementById('fileinput').files[i];
 
-    blobService.createBlockBlobFromBrowserFile('myblob1', 
+    blobService.createBlockBlobFromBrowserFile('modelblob1', 
                                                 file.name, 
                                                 file, 
                                                 (error, result) => {
@@ -54,7 +54,7 @@ document.getElementById('upload-button').addEventListener('click', () =>{
 	}});
 document.getElementById('list-button').addEventListener('click', () => {
 
-    blobService.listBlobsSegmented('myblob1', null, (error, results) => {
+    blobService.listBlobsSegmented('modelblob1', null, (error, results) => {
         if (error) {
             // Handle list blobs error
         } else {
