@@ -21,9 +21,9 @@ public class TestSSH {
     //@Test
     public void test2() {
         List<String> result = new ArrayList<>();
-        int ret = ShellUtils.shellExecute(IP, PORT, USERNAME, PASSWORD, COMMAND, result);
+        int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, COMMAND, result);
         if (ret == 0) {
-            logger.info(result.toString());
+            System.out.print(result.toString());
         }
     }
     public static void main(String[] args) {
