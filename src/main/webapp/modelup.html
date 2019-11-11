@@ -30,21 +30,17 @@
             </div>
             <div class="content">
                 <div class="label entry-file">入口文件：</div>
-                <input type="text" id="input-entry-file" placeholder="请输入入口文件的名称">
+                <input type="text" id="input-entry-file" placeholder="请输入入口文件的名称（默认值train.py）">
             </div>
             <div class="content">
                 <div class="label train-data">参数文件：</div>
-                <input type="text" accept="" id="input-train-data" placeholder="请选择训练数据">
+                <input type="text" accept="" id="input-train-data" placeholder="请输入参数文件名（默认值params.json）">
                 
             </div>
             
             <div class="content">
                 <div class="label config-file">依赖环境：</div>
-                <select id="label config-file">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
+                <input type="text" accept="" id="input-train-data" placeholder="系统默认运行环境若可以正常运行，则无需填写">
             </div>
             <div class="content">
                 <div class="label frame-name">使用框架：</div>
@@ -52,6 +48,13 @@
                     <option value="1">sk-learn</option>
                     <option value="2">tensorflow</option>
                     <option value="3">pytorch</option>
+                </select>
+            </div>
+             <div class="content">
+                <div class="label frame-name">使用虚拟机：</div>
+                <select id="select-frame-name">
+                    <option value="1">CPU</option>
+                    <option value="2">GPU</option>
                 </select>
             </div>
             <div class="content" style="margin-left: 440px; margin-top: 70px">
