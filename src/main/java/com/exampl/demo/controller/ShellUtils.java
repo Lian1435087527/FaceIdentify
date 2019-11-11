@@ -57,11 +57,20 @@ public class ShellUtils {
 			 //使用PrintWriter流的目的就是为了使用println这个方法
 	        //好处就是不需要每次手动给字符串加\n
 			PrintWriter printWriter = new PrintWriter(outputStream);
+<<<<<<< Upstream, based on origin/master
 			String cmd = "sudo -i";
 	        printWriter.println(cmd);
 	        
 	        String cmd2 ="cd /home/MLmodel/test";
+=======
+			String cmd1 ="sudo -i" ;
+	        printWriter.println(cmd1);
+			String cmd = "cd /home/MLmodel";
+	        printWriter.println(cmd);  
+	        String cmd2 ="tree -a" ;
+>>>>>>> f39210c 2019-11-11 02整合
 	        printWriter.println(cmd2);
+<<<<<<< Upstream, based on origin/master
 	        String cmd3 ="wget "+dOWNLOADLINK;
 	        printWriter.println(cmd3);
 	        String cmd4;
@@ -77,21 +86,47 @@ public class ShellUtils {
 	        printWriter.println(cmd5);
 	        
 	        printWriter.println("exit");//加上个就是为了，结束本次交互
+=======
+	        printWriter.println("exit");
+	        printWriter.println("exit");//加上个就是为了，结束本次交互，因为进入了root所以要exit两次
+>>>>>>> f39210c 2019-11-11 02整合
 	        printWriter.flush();
 	
 			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 
 			String msg = null;
 			int start=0;
+<<<<<<< Upstream, based on origin/master
 			
+=======
+>>>>>>> f39210c 2019-11-11 02整合
 			while ((msg = in.readLine()) != null) {
+<<<<<<< Upstream, based on origin/master
 				
 				if(msg.startsWith("root@3dformodel:/home/MLmodel/test# ls -f")) start=1;
 				if(start==1)System.out.println(msg);
 				if(msg.contains(eNTERFILE)){
 					return 1;
+=======
+<<<<<<< Upstream, based on origin/master
+				if(start==1) {System.out.println(msg);
+					if(msg.contains(eNTERFILE)){
+						return 1;
+						
+					}
+					else  return 0;
+>>>>>>> 20671fc 2019-11-11 02整合
 				}
+<<<<<<< Upstream, based on origin/master
 				else  return 0;}
+=======
+				else if(msg.startsWith("root@3dformodel:")) start=1;
+=======
+				if(start==1)System.out.println(msg);
+				else if(msg.startsWith("azureuser")) start=1;
+>>>>>>> f39210c 2019-11-11 02整合
+			}
+>>>>>>> 20671fc 2019-11-11 02整合
 		
 
 			in.close();
