@@ -1,18 +1,27 @@
 package com.exampl.demo.controller;
 
+
+import com.jcraft.jsch.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Properties;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
-
 
 @Controller
 public class pyrun {
-	
+	private static final Logger logger = LoggerFactory.getLogger(ShellUtils.class);
 	@RequestMapping("/modelup")
 	@ResponseBody
 	/**
@@ -21,88 +30,66 @@ public class pyrun {
 	 * If everything works fine, you will get the shell prompt. Output may
 	 * be ugly because of lacks of terminal-emulation, but you can issue commands.
 	 */
-	   public void conn() {
-		   final String USER="azureuser";
-		    final String PASSWORD="Ll1111111111";
-		    final String HOST="207.46.136.243";
-		    final int DEFAULT_SSH_PORT=22;
-	        try{
-	            JSch jsch=new JSch();
-	            Session session = jsch.getSession(USER,HOST,DEFAULT_SSH_PORT);
-	            session.setPassword(PASSWORD);
-	 
-	            UserInfo userInfo = new UserInfo() {
-	                @Override
-	                public String getPassphrase() {
-	                    System.out.println("getPassphrase");
-	                    return null;
-	                }
-	                @Override
-	                public String getPassword() {
-	                    System.out.println("getPassword");
-	                    return null;
-	                }
-	                @Override
-	                public boolean promptPassword(String s) {
-	                    System.out.println("promptPassword:"+s);
-	                    return false;
-	                }
-	                @Override
-	                public boolean promptPassphrase(String s) {
-	                    System.out.println("promptPassphrase:"+s);
-	                    return false;
-	                }
-	                @Override
-	                public boolean promptYesNo(String s) {
-	                    System.out.println("promptYesNo:"+s);
-	                    return true;//notice here!
-	                }
-	                @Override
-	                public void showMessage(String s) {
-	                    System.out.println("showMessage:"+s);
-	                }
-	            };
-	 
-	            session.setUserInfo(userInfo);
-	            session.setConfig("StrictHostKeyChecking", "no");
-	            // It must not be recommended, but if you want to skip host-key check,
-	            // invoke following,
-	            // session.setConfig("StrictHostKeyChecking", "no");
-	 
-	            //session.connect();
-	            session.connect(30000);   // making a connection with timeout.
-	 
-	            Channel channel=session.openChannel("shell");
-	 
-	            // Enable agent-forwarding.
-	            //((ChannelShell)channel).setAgentForwarding(true);
-	 
-	            channel.setInputStream(System.in);
-	      /*
-	      // a hack for MS-DOS prompt on Windows.
-	      channel.setInputStream(new FilterInputStream(System.in){
-	          public int read(byte[] b, int off, int len)throws IOException{
-	            return in.read(b, off, (len>1024?1024:len));
-	          }
-	        });
-	       */
-	 
-	            channel.setOutputStream(System.out);
-	 
-	      /*
-	      // Choose the pty-type "vt102".
-	      ((ChannelShell)channel).setPtyType("vt102");
-	      */
-	 
-	      /*
-	      // Set environment variable "LANG" as "ja_JP.eucJP".
-	      ((ChannelShell)channel).setEnv("LANG", "ja_JP.eucJP");
-	      */
-	 
-	            //channel.connect();
-	            channel.connect(3*1000);
-	        }
-	        catch(Exception e){
-	            System.out.println(e);
-	        }}
+	
+
+
+	public static int TestShell(String ip, Integer port, String username, String password, String command,
+			List<String> stdout) {
+		// String S_PATH_FILE_PRIVATE_KEY = "C:/Users/hdwang/.ssh/known_hosts";
+		int returnCode = 0;
+		JSch jsch = new JSch();
+
+		Session session = null;
+		try {
+			// 创建session并且打开连接，因为创建session之后要主动打开连接
+
+			session = jsch.getSession(username, ip, port);
+
+			session.setPassword(password);
+
+			// 关闭主机密钥检查，否则会导致连接失败，重要！！！
+			Properties config = new Properties();
+			config.put("StrictHostKeyChecking", "no");
+			session.setConfig(config);
+
+			logger.info("连接服务器" + session.getHost());
+			// 开启session
+			session.connect();
+			// 连接channelshell
+			ChannelShell channel = (ChannelShell) session.openChannel("shell");
+			//channel.setPty(true);
+			channel.setPty(true);
+			
+			channel.connect();
+			InputStream inputStream = channel.getInputStream();//从远程端到达的所有数据都能从这个流中读取到
+			OutputStream outputStream = channel.getOutputStream();//写入该流的所有数据都将发送到远程端
+			
+			 //使用PrintWriter流的目的就是为了使用println这个方法
+	        //好处就是不需要每次手动给字符串加\n
+			PrintWriter printWriter = new PrintWriter(outputStream);
+			String cmd = "/bin/bash -c echo Ll1111111111 |sudo -S ls";
+	        printWriter.println(cmd);
+	        
+	        String cmd2 ="Ll1111111111" ;
+	        printWriter.println(cmd2);
+	        printWriter.println("exit");//加上个就是为了，结束本次交互
+	        printWriter.flush();
+	
+			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+
+			String msg = null;
+			while ((msg = in.readLine()) != null) {
+				System.out.println(msg);
+			}
+			in.close();
+
+			// 关闭session
+			session.disconnect();
+		} catch (JSchException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

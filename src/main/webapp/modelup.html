@@ -40,7 +40,7 @@
             
             <div class="content">
                 <div class="label config-file">依赖环境：</div>
-                <input type="text" accept="" id="input-train-data" placeholder="系统默认运行环境若可以正常运行，则无需填写">
+                <input type="text" accept="" id="input-train-env" placeholder="系统默认运行环境若可以正常运行，则无需填写">
             </div>
             <div class="content">
                 <div class="label frame-name">使用框架：</div>
@@ -51,15 +51,15 @@
                 </select>
             </div>
              <div class="content">
-                <div class="label frame-name">使用虚拟机：</div>
-                <select id="select-frame-name">
+                <div class="label com-name">使用虚拟机：</div>
+                <select id="select-com-name">
                     <option value="1">CPU</option>
                     <option value="2">GPU</option>
                 </select>
             </div>
             <div class="content" style="margin-left: 440px; margin-top: 70px">
                 <button class="option-btn" id="modelup"  onclick="modelup()">上传</button>
-                <button class="option-btn" >取消</button>
+                <button class="option-btn" onclick="identify()">取消</button>
             </div>
         </div>
 </div>
@@ -68,30 +68,7 @@
 <script charset="UTF-8">
 	
 	
-	function modelup(){
-			
-			$.ajax({
-				type : 'POST',
-				url : "/modelup",
-				dataType:"json",
-				contentType:"application/json;charset=utf-8;",
-				data:{
-					"试验名字":"1",
-					"模型文件压缩包":"1",
-					"入口文件":"1",
-					"参数文件":"1",
-					"使用框架":"1",
-					"依赖环境":"1"},
-				
-			success : function(data) {
-				if(data==null){alert("done")
-				
-			}
-					else{
-						alert("errorr")
-					}}}
-
-			)}
+	
 		
 	const account = {
 		    name: "cs1f9abf47a9b73x49c3x9c1",
@@ -100,8 +77,13 @@
 	
 	const blobUri = 'https://' + account.name + '.blob.core.windows.net';
 	const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
-	document.getElementById('modelup').addEventListener('click', () =>{
-	    var len=document.getElementById('select-model').files.length;
+	var DOWNLOADLINK=null;
+	var FILENAME=null;
+	    
+       
+	
+	function identify(){
+		var len=document.getElementById('select-model').files.length;
 		for(i=0;i<len;i++){
 	    var file = document.getElementById('select-model').files[i];
         
@@ -116,10 +98,55 @@
 	                                                        console.log(file.name);
 	                                                    }
 	                                                });
-	    var downloadLink = blobService.getUrl('modelblob1',file.name );
-	    console.log(downloadLink);
-	    
-       
-		}});
+	    FILENAME=file.name;
+	    DOWNLOADLINK = blobService.getUrl('modelblob1',file.name );
+	    console.log(DOWNLOADLINK);}
+		var EXPERIMENTSNAME=document.getElementById('input-model-name').value;
+		var ENTERFILE=document.getElementById('input-entry-file').value;
+		var PARAMSFILE=document.getElementById('input-train-data').value;
+		//var DOWNLOADLINK=downloadLink;
+		
+			$.ajax({
+				type : 'POST',
+				url : "/identify",
+				dataType:"json",
+				contentType:"application/json;charset=utf-8;",
+				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,DOWNLOADLINK: DOWNLOADLINK,FILENAME: FILENAME}),
+				
+			success : function(data) {
+				if(data.state == 1){alert("done")
+				
+			}
+					else{
+						alert("error")
+					}}}
+
+			)}
+	function modelup(){
+		var EXPERIMENTSNAME=document.getElementById('input-model-name');
+		var ENTERFILE=document.getElementById('input-entry-file');
+		var PARAMSFILE=document.getElementById('input-train-data');
+		
+		var UESDFRAME=document.getElementById('input-train-env');
+		var options1=$("#select-frame-name option:selected");//获取当前选择项.
+		var PIP_PACKAGES=options1.text();//获取当前选择项的文本.
+		var options2=$("#select-com-name option:selected");
+		var COMPUTERTARGER=options2.text();
+			$.ajax({
+				type : 'POST',
+				url : "/modelup",
+				dataType:"json",
+				contentType:"application/json;charset=utf-8;",
+				data:JSON.stringify({id: "0002",name:"lkj",password: "123456"}),
+				
+			success : function(data) {
+				if(data==null){alert("done")
+				
+			}
+					else{
+						alert("errorr")
+					}}}
+
+			)}
 	</script>
 </html>
