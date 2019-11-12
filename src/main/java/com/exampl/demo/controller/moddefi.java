@@ -35,24 +35,6 @@ public class moddefi {
 	
 	private static final Logger logger = LoggerFactory.getLogger(moddefi.class);
 
-    private String IP = "207.46.136.243";
-    private Integer PORT = 22;
-    private String USERNAME = "azureuser";
-    private String PASSWORD = "Ll1111111111";
-    
-		
-		@RequestMapping("/identify")
-		@ResponseBody
-		public ModelMap upload(@RequestBody Map<String,Object> map) {
-		
-			ModelMap Return=new ModelMap();
-		List<String> result = new ArrayList<>();
-        int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD,map,result);
-        
-        if (ret == 0) {
-        	Return.put("state", 0);}
-        
-        else {Return.put("state", 1);}
 	private String IP = "207.46.136.243";
 	private Integer PORT = 22;
 	private String USERNAME = "azureuser";
