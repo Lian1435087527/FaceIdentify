@@ -48,8 +48,7 @@ public class moddefi {
 			ModelMap Return=new ModelMap();
 		List<String> result = new ArrayList<>();
         int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD,map,result);
-        System.out.println(ret);
-        int state=0;
+        
         if (ret == 0) {
         	Return.put("state", 0);}
         

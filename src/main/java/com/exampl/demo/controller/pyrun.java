@@ -11,85 +11,41 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.exampl.demo.controller.ShellUtils;
 
 @Controller
 public class pyrun {
-	private static final Logger logger = LoggerFactory.getLogger(ShellUtils.class);
-	@RequestMapping("/modelup")
+	private String IP = "207.46.136.243";
+    private Integer PORT = 22;
+    private String USERNAME = "azureuser";
+    private String PASSWORD = "Ll1111111111";
+    
+	@RequestMapping("/model")
 	@ResponseBody
-	/**
-	 * This program enables you to connect to sshd server and get the shell prompt.
-	 * You will be asked username, hostname and passwd.
-	 * If everything works fine, you will get the shell prompt. Output may
-	 * be ugly because of lacks of terminal-emulation, but you can issue commands.
-	 */
+	public ModelMap upload_1(@RequestBody Map<String,Object> map1) {
+		
+		ModelMap Return=new ModelMap();
+	List<String> result = new ArrayList<>();
+    int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD,map1,result);
+   
+    if (ret == 0) {
+    	Return.put("state", 0);}
+    
+    else {Return.put("state", 1);}
+    
+    return Return;
+}}
 	
 
 
-	public static int TestShell(String ip, Integer port, String username, String password, String command,
-			List<String> stdout) {
-		// String S_PATH_FILE_PRIVATE_KEY = "C:/Users/hdwang/.ssh/known_hosts";
-		int returnCode = 0;
-		JSch jsch = new JSch();
-
-		Session session = null;
-		try {
-			// 创建session并且打开连接，因为创建session之后要主动打开连接
-
-			session = jsch.getSession(username, ip, port);
-
-			session.setPassword(password);
-
-			// 关闭主机密钥检查，否则会导致连接失败，重要！！！
-			Properties config = new Properties();
-			config.put("StrictHostKeyChecking", "no");
-			session.setConfig(config);
-
-			logger.info("连接服务器" + session.getHost());
-			// 开启session
-			session.connect();
-			// 连接channelshell
-			ChannelShell channel = (ChannelShell) session.openChannel("shell");
-			//channel.setPty(true);
-			channel.setPty(true);
-			
-			channel.connect();
-			InputStream inputStream = channel.getInputStream();//从远程端到达的所有数据都能从这个流中读取到
-			OutputStream outputStream = channel.getOutputStream();//写入该流的所有数据都将发送到远程端
-			
-			 //使用PrintWriter流的目的就是为了使用println这个方法
-	        //好处就是不需要每次手动给字符串加\n
-			PrintWriter printWriter = new PrintWriter(outputStream);
-			String cmd = "/bin/bash -c echo Ll1111111111 |sudo -S ls";
-	        printWriter.println(cmd);
-	        
-	        String cmd2 ="Ll1111111111" ;
-	        printWriter.println(cmd2);
-	        printWriter.println("exit");//加上个就是为了，结束本次交互
-	        printWriter.flush();
 	
-			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-
-			String msg = null;
-			while ((msg = in.readLine()) != null) {
-				System.out.println(msg);
-			}
-			in.close();
-
-			// 关闭session
-			session.disconnect();
-		} catch (JSchException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-}

@@ -58,8 +58,8 @@
                 </select>
             </div>
             <div class="content" style="margin-left: 440px; margin-top: 70px">
-                <button class="option-btn" id="modelup"  onclick="modelup()">上传</button>
-                <button class="option-btn" onclick="identify()">取消</button>
+                <button class="option-btn" id="modelup"  onclick="identify()">上传</button>
+                <button class="option-btn" onclick="modelup()">确定</button>
             </div>
         </div>
 </div>
@@ -123,21 +123,21 @@
 
 			)}
 	function modelup(){
-		var EXPERIMENTSNAME=document.getElementById('input-model-name');
-		var ENTERFILE=document.getElementById('input-entry-file');
-		var PARAMSFILE=document.getElementById('input-train-data');
+		var EXPERIMENTSNAME=document.getElementById('input-model-name').value;
+		var ENTERFILE=document.getElementById('input-entry-file').value;
+		var PARAMSFILE=document.getElementById('input-train-data').value;
 		
-		var UESDFRAME=document.getElementById('input-train-env');
+		var UESDFRAME=document.getElementById('input-train-env').value;
 		var options1=$("#select-frame-name option:selected");//获取当前选择项.
 		var PIP_PACKAGES=options1.text();//获取当前选择项的文本.
 		var options2=$("#select-com-name option:selected");
 		var COMPUTERTARGER=options2.text();
 			$.ajax({
 				type : 'POST',
-				url : "/modelup",
+				url : "/model",
 				dataType:"json",
 				contentType:"application/json;charset=utf-8;",
-				data:JSON.stringify({id: "0002",name:"lkj",password: "123456"}),
+				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,UESDFRAME: UESDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
 				
 			success : function(data) {
 				if(data==null){alert("done")
