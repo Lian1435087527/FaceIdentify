@@ -1,4 +1,5 @@
 package com.exampl.demo.controller;
+
 import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,21 +15,15 @@ import java.util.Map;
 import java.util.Properties;
 
 public class ShellUtils {
+	// 测试时用户名统一为admin
+	private static String Username = "admin";
+	private static final Logger logger = LoggerFactory.getLogger(ShellUtils.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(ShellUtils.class);
 
-   
-
-	public static int TestShell(String ip, Integer port, String username, String password, 
-			Map<String,Object> map, List<String> stdout) {
-		// String S_PATH_FILE_PRIVATE_KEY = "C:/Users/hdwang/.ssh/known_hosts";
-		int returnCode = 0;
+	public static int TestShell(String ip, Integer port, String username, String password, Map<String, Object> map,
+			int method) {
+		int retstate = -1;
 		JSch jsch = new JSch();
-		String eXPERIMENTSNAME=(String) map.get("EXPERIMENTSNAME");
-		String eNTERFILE=(String) map.get("ENTERFILE");
-		String pARAMSFILE=(String) map.get("PARAMSFILE");
-		String dOWNLOADLINK=(String) map.get("DOWNLOADLINK");
-		String fILENAME=(String) map.get("FILENAME");
 		Session session = null;
 		try {
 			// 创建session并且打开连接，因为创建session之后要主动打开连接
@@ -54,10 +49,13 @@ public class ShellUtils {
 			InputStream inputStream = channel.getInputStream();//从远程端到达的所有数据都能从这个流中读取到
 			OutputStream outputStream = channel.getOutputStream();//写入该流的所有数据都将发送到远程端
 			
-			 //使用PrintWriter流的目的就是为了使用println这个方法
-	        //好处就是不需要每次手动给字符串加\n
-			PrintWriter printWriter = new PrintWriter(outputStream);
+			 			// 执行命令
+			if (method == 0)
+				retstate = upload(map, inputStream, outputStream);
+			else
+				retstate = create(map, inputStream, outputStream);
 
+<<<<<<< Upstream, based on origin/master
 			String cmd = "sudo -i";
 	        printWriter.println(cmd);
 	        
@@ -120,6 +118,9 @@ public class ShellUtils {
 
 			in.close();
 
+=======
+			
+>>>>>>> 54bd26c 11-12 整合前
 			// 关闭session
 			session.disconnect();
 		} catch (JSchException e) {
@@ -127,7 +128,139 @@ public class ShellUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return retstate;
+
+	}
+
+	/**
+	 * create 按钮指令
+	 * 
+	 * @param map          json包信息
+	 * @param inputStream
+	 * @param outputStream
+	 * @return
+	 * @throws IOException
+	 */
+	private static int create(Map<String, Object> map, InputStream inputStream, OutputStream outputStream)
+			throws IOException {
+		// TODO Auto-generated method stub
+		int retstate = -1;
+		// 使用PrintWriter流的目的就是为了使用println这个方法
+		// 好处就是不需要每次手动给字符串加\n
+		PrintWriter printWriter = new PrintWriter(outputStream);
+		String Experimentsname = (String) map.get("EXPERIMENTSNAME");
+		String Enterfile = (String) map.get("ENTERFILE");
+		String Paramsfile = (String) map.get("PARAMSFILE");
+		String Usedframe = (String) map.get("USEDFRAME");
+		String Pip_packages = (String) map.get("PIP_PACKAGES");
+		String Computertarger = (String) map.get("COMPUTERTARGER");
+		// linux cmd命令
+		String getroot = "sudo -i";
+		printWriter.println(getroot);
+
+		String runupload = "python /home/MLmodel/upload.py" + " --Username " + Username + " --Experimentsname "
+				+ Experimentsname + " --Enterfile " + Enterfile + " --Paramsfile " + Paramsfile + " --Usedframe "
+				+ Usedframe + " --Pip_packages " + Pip_packages + " --Computertarger " + Computertarger;
+
+		printWriter.println(runupload);
+
+		printWriter.println("exit");
+		printWriter.println("exit");// 加上个就是为了，结束本次交互
+
+		// 执行命令
+		printWriter.flush();
+		// 返回值判定操作
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+		String msg = null;
+		int start = 0;
+
+		while ((msg = in.readLine()) != null) {
+
+			if (start == 1) {
+				System.out.println(msg);
+				if (msg.contains("create complete")) {
+					retstate = 1;
+					break;
+				}
+			} else if (msg
+					.contains("python /home/MLmodel/upload.py"))
+				// 从上面那条命令开始 判定
+				start = 1;
+		}
+		in.close();
 		return -1;
-		
+	}
+
+	/**
+	 * upload 按钮命令
+	 * 
+	 * @param map          json包信息
+	 * @param inputStream
+	 * @param outputStream
+	 * @return
+	 * @throws IOException
+	 */
+	private static int upload(Map<String, Object> map, InputStream inputStream, OutputStream outputStream)
+			throws IOException {
+		int retstate = -1;
+		PrintWriter printWriter = new PrintWriter(outputStream);
+		String Experimentsname = (String) map.get("EXPERIMENTSNAME");
+		String dOWNLOADLINK = (String) map.get("DOWNLOADLINK");
+		String fILENAME = (String) map.get("FILENAME");
+		// linux cmd命令
+		String getroot = "sudo -i";
+		printWriter.println(getroot);
+
+		String createfolder = "mkdir /home/MLmodel/" + Username + "/" + Experimentsname;
+		printWriter.println(createfolder);
+
+		String enterfolder = "cd /home/MLmodel/" + Username + "/" + Experimentsname;
+		printWriter.println(enterfolder);
+
+		String download = "wget " + dOWNLOADLINK;
+		printWriter.println(download);
+
+		String unzip;
+		if (fILENAME.substring(fILENAME.length() - 3).equals("rar")) {
+			unzip = "unrar x " + fILENAME;
+		} else {
+			unzip = "unzip " + fILENAME;
+		}
+		printWriter.println(unzip);
+
+		String isexist = "ls -f";
+		printWriter.println(isexist);
+
+		printWriter.println("exit");
+		printWriter.println("exit");// 加上个就是为了，结束本次交互
+
+		// 执行命令
+		printWriter.flush();
+		// 返回值判定操作
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+
+		String msg = null;
+		int start = 0;
+
+		String eNTERFILE = (String) map.get("DOWNLOADLINK");
+		while ((msg = in.readLine()) != null) {
+
+			if (start == 1) {
+				System.out.println(msg);
+				if (msg.contains(eNTERFILE)) {
+					retstate = 1;
+					break;
+				} else {
+					retstate = 0;
+					break;
+				}
+			} else if (msg
+					.startsWith("root@3dformodel:/home/MLmodel" + Username + "/" + Experimentsname + "# " + "ls -f"))
+				// 从上面那条命令开始 判定
+				start = 1;
+		}
+
+		in.close();
+		return retstate;
 	}
 }

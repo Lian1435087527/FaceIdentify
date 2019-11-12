@@ -53,6 +53,44 @@ public class moddefi {
         	Return.put("state", 0);}
         
         else {Return.put("state", 1);}
+	private String IP = "207.46.136.243";
+	private Integer PORT = 22;
+	private String USERNAME = "azureuser";
+	private String PASSWORD = "Ll1111111111";
+
+	@RequestMapping("/identify")
+	@ResponseBody
+	public ModelMap upload(@RequestBody Map<String, Object> map) {
+
+		ModelMap Return = new ModelMap();
+
+		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map,0);
+
+		if (ret == 0) {
+			Return.put("state", 0);
+		}
+
+		else {
+			Return.put("state", 1);
+		}
+
+		return Return;
+	}
+	@RequestMapping("/modelup")
+	@ResponseBody
+	public ModelMap create(@RequestBody Map<String, Object> map) {
+
+		ModelMap Return = new ModelMap();
+
+		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map,1);
+
+		if (ret == 0) {
+			Return.put("state", 0);
+		}
+
+		else {
+			Return.put("state", 1);
+		}
 
         return Return;
 	}}

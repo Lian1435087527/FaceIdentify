@@ -21,10 +21,10 @@ import java.util.List;
     //@Test
     public void test2() {
         List<String> result = new ArrayList<>();
-        int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, COMMAND, result);
+        /*int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, COMMAND, result);
         if (ret == 0) {
             System.out.print(result.toString());
-        }
+        }*/
     }
     public static void main(String[] args) {
     	TestSSH A=new TestSSH();
