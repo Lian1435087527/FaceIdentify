@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #373a3c;
+        }
+
+        .sidebar-left-layer {
+            z-index: 100;
+            width: 213px;
+            height: 100%;
+            background-color: rgb(47, 48, 48);
+        }
+
+        .sidebar-left-layer .sidebar-left, .experiments-name {
+            height: 100%;
+        }
+
+        .logo {
+            width: 100%;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -moz-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-align: center;
+            -moz-align-items: center;
+            align-items: center;
+            height: 60px;
+            background: #343434;
+        }
+
+        .sidebar-left-layer .sidebar-left .logo .img {
+            width: 120px;
+            height: 40px;
+            margin-left: 12px;
+            background-image: url(//res.ih5.cn/static/images/svg/paid-service.svg);
+            background-position: -1200px 0;
+        }
+
+        .sidebar-left-main {
+            width: 100%;
+            color: white;
+        }
+
+        .personal {
+            height: 123px;
+            position: relative;
+            padding-bottom: 18px;
+            padding-top: 20px;
+            -moz-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -ms-flex-pack: center;
+            -moz-justify-content: center;
+            justify-content: center;
+        }
+
+        .head-portrait {
+            display: flex;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            font-size: 48px;
+            border-radius: 30px;
+            overflow: hidden;
+            padding: 0;
+            margin: 2px auto 11px auto;
+        }
+
+        .name {
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+        }
+
+        nav a, .footer {
+            position: relative;
+            width: 210px;
+            height: 48px;
+            display: flex;
+            text-decoration: none;
+            font-size: 16px;
+            color: rgb(133, 133, 134);
+            line-height: 12px;
+        }
+
+        nav a:hover, .active {
+            color: rgb(255, 168, 0);
+            background: rgb(68, 68, 68);
+        }
+
+        .white-line {
+            height: 10px;
+            border-bottom: 1px solid #474747;
+            margin-bottom: 18px;
+        }
+
+        .icon {
+            margin: 0 29px;
+            background-position: -960px 0;
+
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin-top: 6px;
+            background: url(//res.ih5.cn/static/images/svg/paid-service.svg) no-repeat;
+        }
+
+        .f--hlc, .f--hlt {
+            -moz-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .f--hlc {
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            -moz-align-items: center;
+            align-items: center;
+            vertical-align: middle;
+        }
+
+        .footer {
+            width: 160px;
+            height: 34px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            background: rgba(64, 64, 64, .8);
+            margin: 50px auto 0 auto;
+            line-height: 36px;
+        }
+
+        .table-main {
+            flex: 1;
+            display: flex;
+            margin: 12px 12px 12px 48px;
+        }
+
+        .experiment-line {
+            height: 4px;
+            margin-bottom: 2px;
+        }
+
+        .experiments-name ul {
+            list-style-type: none;
+            padding: 8px 12px 12px 18px;
+            color: deepskyblue;
+            margin: 0;
+        }
+
+        .experiments-name ul li {
+            cursor: pointer;
+            margin: 8px 0;
+            text-align: left;
+        }
+
+        .main-body {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container, .main-container {
+            flex: 1;
+            display: flex;
+        }
+
+        .left-experiments-name {
+            width: 280px;
+            margin-right: 28px;
+        }
+
+        .top-placeholder {
+            display: flex;
+            height: 110px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .face-info {
+            background: blue;
+            height: 100%;
+            width: 110px;
+            border-radius: 55px;
+        }
+
+        .user-info {
+            height: 90%;
+            width: 50%;
+            background: #6e8efb;
+        }
+
+        .right-experiments-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid red;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .top-model-info {
+            display: flex;
+            width: 100%;
+            height: 120px;
+            align-items: center;
+        }
+
+        .right-model-env-info {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .left-model-base-info {
+            margin-right: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-run-info {
+            flex: 1;
+            height: 100%;
+        }
+
+        .model-name {
+            font-size: 28px;
+        }
+
+        .env-form-info {
+            display: inline-block;
+            margin: 0 12px;
+        }
+
+        #rnv-dependence {
+            min-width: 275px;
+        }
+
+        #usage-frame {
+            min-width: 280px;
+        }
+
+        #compute-src {
+            min-width: 265px;
+        }
+
+        #delete-model-btn {
+            margin: auto;
+            background: coral;
+            border-radius: 6px;
+            border: 1px solid chocolate;
+            padding: 4px 18px;
+        }
+
+        .tab-content {
+            background: white;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="main-body">
+    <div class="container">
+        <div class="sidebar-left-layer">
+            <div class="sidebar-left"><a class="logo" href=#>
+                <div class="img"></div>
+            </a>
+                <div class="sidebar-left-main">
+                    <div class="personal">
+                        <div class="head-portrait"><img
+                                src="//res.ih5.cn/sites/default/files/logos/201904/1556459083.jpg"
+                                alt="我的图标">
+                        </div>
+                        <div class="name">用户的名称</div>
+                    </div>
+                    <nav><a class="active" href=#>
+                        <div class="f--hlc"><span class="icon"></span>我的工作台</div>
+                    </a><a href=#>
+                        <div class="f--hlc"><span class="icon"></span>账号管理</div>
+                    </a><a href=#>
+                        <div class="f--hlc"><span class="icon"></span>我的消息</div>
+                    </a><a href=#>
+                        <div class="f--hlc"><span class="icon"></span>我的主页</div>
+                    </a><a href=#>
+                        <div class="f--hlc"><span class="icon"></span>我的卡券</div>
+                    </a><a href=#>
+                        <div class="f--hlc"><span class="icon"></span>设置中心</div>
+                    </a>
+                        <div class="white-line"></div>
+                        <a style="cursor: pointer">
+                            <div class="f--hlc"><span class="icon"></span>退出登录</div>
+                        </a></nav>
+                </div>
+                <a class="footer" href=#>
+                    <div style="margin-left: 40px;">返回主页</div>
+                </a></div>
+        </div>
+        <div class="table-main">
+            <div class="main-container">
+                <div class="left-experiments-name">
+                    <div class="top-placeholder">
+                        <div class="face-info"></div>
+                        <div class="user-info"></div>
+                    </div>
+                    <div class="bottom-experiments-name">
+                        <div style="padding-left: 18px; font-size: 24px;">试验</div>
+                        <div class="white-line experiment-line"></div>
+                        <div class="experiments-name">
+                            <ul>
+                                <li>实验1</li>
+                                <li>实验2</li>
+                                <li>实验3</li>
+                                <li>实验4</li>
+                                <li>实验5</li>
+                                <li>实验6</li>
+                                <li>实验7</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-experiments-info">
+                    <div class="top-model-info">
+                        <div class="left-model-base-info">
+                            <strong>
+                                <div class="model-name">模型名称</div>
+                            </strong>
+                            <button id="delete-model-btn" type="button">删除</button>
+                        </div>
+                        <div class="right-model-env-info">
+                            <div class="env-form-info">
+                                <label for="rnv-dependence">依赖环境: </label>
+                                <input type="text" id="rnv-dependence" placeholder="系统默认环境若能正常运行，则不用填写">
+                            </div>
+                            <div class="env-form-info">
+                                <label for="usage-frame">使用框架: </label>
+                                <select id="usage-frame" name="usage-frame">
+                                    <option value="tensorflow">tensorflow</option>
+                                    <option value="sk-learn">sk-learn</option>
+                                    <option value="pytorch">pytorch</option>
+                                </select>
+                            </div>
+                            <div class="env-form-info">
+                                <label for="compute-src">使用虚拟机: </label>
+                                <select id="compute-src" name="compute-src">
+                                    <option value="CPU">CPU</option>
+                                    <option value="GPU">GPU</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-run-info">
+                        <table class="experiments-info-content" width="100%" border="0" cellspacing="1"
+                               cellpadding="4" align="center">
+                            <tr>
+                                <th bgcolor="#ccc">序号</th>
+                                <th bgcolor="#ccc">状态</th>
+                                <th bgcolor="#ccc" colspan="4">操作</th>
+                            </tr>
+                            <tr>
+                                <td class="table-content" align="center">1</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-content" align="center">2</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-content" align="center">3</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-content" align="center">4</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-content" align="center">5</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-content" align="center">6</td>
+                                <td class="table-content" align="center">空闲</td>
+                                <td class="table-content" align="center">入口文件</td>
+                                <td class="table-content" align="center">配置文件</td>
+                                <td class="table-content" align="center">获取结果</td>
+                                <td class="table-content" align="center">运行</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

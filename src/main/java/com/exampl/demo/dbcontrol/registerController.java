@@ -10,8 +10,8 @@ import com.exampl.demo.model.User;
 
 
 @Controller
-@RequestMapping("/user")
-public class userController {
+@RequestMapping("/register")
+public class registerController {
     @Autowired
     private com.exampl.demo.Repositories.UserRepository UserRepository;
 

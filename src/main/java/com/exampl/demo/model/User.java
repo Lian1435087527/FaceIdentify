@@ -7,26 +7,22 @@ public class User  {
 
 
 	    
-	    private String id;
+	    
 
-	    private String name;
+	    private String user_id;
 
 	    private String password;
-	    public String getId() {
-	        return id;
-	    }
 
-	    public void setId(String id) {
-	        this.id = id;
-	    }
+		private int role;
+	   
 	    
 	    
-	    public  String getName() {
-	        return name;
+	    public  String getuser_id() {
+	        return user_id;
 	    }
 
-	    public void setName(String name) {
-	        this.name = name;
+	    public void setuser_id(String user_id) {
+	        this.user_id = user_id;
 	    }
 
 	    public String getpassword() {
@@ -36,11 +32,18 @@ public class User  {
 	    public void setpassword(String password) {
 	        this.password= password;
 	    }
+	    public int getrole() {
+	        return role;
+	    }
+
+	    public void setrole(int role) {
+	         this.role= role;
+	    }
 	    @Override
 	    public String toString() {
 	        return "User{" +
-	                "id=" + id +
-	                ", name='" + name + '\'' +
+	               
+	                "user_id='" + user_id + '\'' +
 	                ", password='" + password + '\'' +
 	                '}';
 	    }	    

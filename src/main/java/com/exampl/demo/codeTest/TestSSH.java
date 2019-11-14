@@ -9,7 +9,7 @@ import com.exampl.demo.controller.ShellUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestSSH {
+/*public class TestSSH {
 	private static final Logger logger = LoggerFactory.getLogger(TestSSH.class);
 
     private String IP = "207.46.136.243";
@@ -30,4 +30,4 @@ public class TestSSH {
     	TestSSH A=new TestSSH();
     	A.test2();
     }
-}	
+}	*/

@@ -25,7 +25,7 @@ public class ShellUtils {
 		int returnCode = 0;
 		JSch jsch = new JSch();
 		String eXPERIMENTSNAME=(String) map.get("EXPERIMENTSNAME");
-		String eNTERFILE=(String) map.get("DOWNLOADLINK");
+		String eNTERFILE=(String) map.get("ENTERFILE");
 		String pARAMSFILE=(String) map.get("PARAMSFILE");
 		String dOWNLOADLINK=(String) map.get("DOWNLOADLINK");
 		String fILENAME=(String) map.get("FILENAME");

@@ -6,10 +6,52 @@
 <head>
 
     <meta charset="UTF-8">
-    
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ 
+
+ 
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
+    <style>
+    　 #pagination {
+            text-align: center;
+        }
+
+        #table {
+            width: 800px;
+            margin: 50px auto;
+        }
+
+        #table th {
+            height: 35px;
+        }
+
+        #title {
+            text-align: center;
+        }
+
+        button {
+            padding: 5px;
+            box-shadow: 0 0 5px #000;
+        }</style>
 </head>
 <body>
+
+ <div id="title">
+        <h1>表格标题</h1>
+    </div>
+    <table id="table" border="1"></table>
+
+    <div id="pagination">
+        <button id="prev">《</button>
+        <span id="pages"></span>
+        <button id="next">》</button>
+    </div>
+<button id="down" onclick="downloadImg(2)" >down</button>
 <button id="list-button" >list</button>
 <p id="file">
 文件列表：
@@ -17,6 +59,10 @@
 </body>
 <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
 <script>
+const table = document.getElementById('table');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const pages = document.getElementById('pages'); 
 const account = {
 		    name: "cs1f9abf47a9b73x49c3x9c1",
 		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
@@ -24,19 +70,109 @@ const account = {
 	
 const blobUri = 'https://' + account.name + '.blob.core.windows.net';
 const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
-document.getElementById('list-button').addEventListener('click', () => {
+//默认设定每页十
+let num1 = 10;
+//定义一个变量保存每页真实应该展示的数量
+let num2;
+//默认展示第一页
+let page = 1;   
+var j=0;
 
+var downloadLink=new Array();
+var blobname=new Array();
+files=document.getElementById("file");
+function list() {
+       
 	    blobService.listBlobsSegmented('modelblob1', null, (error, results) => {
 	        if (error) {
 	            // Handle list blobs error
 	        } else {
 	            results.entries.forEach(blob => {
-	            	var downloadLink = blobService.getUrl('modelblob1',blob.name );
-	            	document.getElementById("file").innerHTML=downloadLink;
+	                blobname[j]=blob.name;
+	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
+	            	//console.log(downloadLink[i]);
+	            	//document.getElementById(j).innerHTML=blob.name;
+	            	
+	            	//console.log(i);
+	            	//files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
+	            	j++;
+	            	
+	            	
 	            });
 	        }
 	    });
 	    
-	});
+	}
+	
+	list();
+	const render = function () {
+        table.innerHTML =
+            `<thead>
+        <th>编号</th>
+        <th>文件名称</th>
+        
+    </thead>`;
+
+        //判断当前选择的页码对应的人数
+        if (j - num1 * (page - 1) >= 10) {
+            num2 = 10;
+        } else {
+            num2 = j - num1 * (page - 1);
+        }
+
+　　　//渲染该页对应的数据
+        for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+            table.innerHTML +=
+                `<tr>
+        <th>${blobname[i]}</th>
+        <th>${downloadLink[i]}</th>
+        
+    </tr>`;
+        }
+    }
+    render();    
+    const creatPages = function () {
+        pages.innerHTML = '';
+        for (let i = 0; i < Math.ceil(j / 10); i++) {
+            pages.innerHTML += ` <button data-page="${i+1}">${i+1}</button>`
+        }
+}
+creatPages();
+//绑定向前翻页事件
+prev.onclick = function () {
+    if (page > 1) {
+        page--;
+        render();
+    } else {
+        alert('当前为第一页！')
+    }
+}
+
+//绑定向后翻页事件
+next.onclick = function () {
+    if (page < Math.ceil(j / 10)) {
+        page++;
+        render();
+    } else {
+        alert('当前为最后一页！')
+    }
+}
+
+//绑定点击页码渲染相应的数据事件
+pages.addEventListener('click', function (e) {
+    page = e.target.getAttribute('data-page');
+    render();
+})
+function downloadImg(index){
+    
+    
+    console.log(downloadLink[index]);
+    let url =downloadLink[index];               
+    let a = document.createElement("a");          // 创建一个a节点插入的document
+    let event = new MouseEvent("click");           // 模拟鼠标click点击事件
+    a.download = 'tepic';                  // 设置a节点的download属性值
+    a.href = url;                                 // 将图片的src赋值给a节点的href
+    a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
+ }
 	</script>
 </html>
