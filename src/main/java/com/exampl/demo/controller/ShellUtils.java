@@ -198,7 +198,7 @@ public class ShellUtils {
 
 			if (start == 1) {
 				// XXX 需要结果取消下面代码的注释
-				//System.out.println(msg);
+				System.out.println(msg);
 				// 如果检测到文件名 进行标记
 				if (msg.contains(eNTERFILE))
 					enter = true;
