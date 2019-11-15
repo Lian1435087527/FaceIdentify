@@ -25,8 +25,8 @@ import java.util.List;
         if (ret == 0) {
             System.out.print(result.toString());
         }*/
-    }
-    public static void main(String[] args) {
+    
+    /*public static void main(String[] args) {
     	TestSSH A=new TestSSH();
     	A.test2();
     }
