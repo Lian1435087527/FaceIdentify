@@ -61,77 +61,7 @@ public class ShellUtils {
 				retstate = upload(map, inputStream, outputStream);
 			else
 				retstate = create(map, inputStream, outputStream);
-<<<<<<< Upstream, based on origin/master
 
-<<<<<<< Upstream, based on origin/master
-			String cmd = "sudo -i";
-	        printWriter.println(cmd);
-	        
-	        String cmd2 ="cd /home/MLmodel/test";
-
-	        printWriter.println(cmd2);
-
-	        String cmd3 ="wget "+dOWNLOADLINK;
-	        printWriter.println(cmd3);
-	        String cmd4;
-	        
-	        if(fILENAME.substring(fILENAME.length()-3).equals("rar")) {
-	        	 cmd4 ="unrar x "+fILENAME;
-	        }else {
-	        	 cmd4 ="unzip "+fILENAME;
-	        }
-	        
-	        printWriter.println(cmd4);
-	        String cmd5 ="ls -f";
-	        printWriter.println(cmd5);
-	        
-	        printWriter.println("exit");//加上个就是为了，结束本次交互
-
-	        printWriter.flush();
-	
-			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-
-			String msg = null;
-			int start=0;
-
-			while ((msg = in.readLine()) != null) {
-<<<<<<< Upstream, based on origin/master
-<<<<<<< Upstream, based on origin/master
-				
-				if(msg.startsWith("root@3dformodel:/home/MLmodel/test# ls -f")) start=1;
-				if(start==1)System.out.println(msg);
-				if(msg.contains(eNTERFILE)){
-					return 1;
-=======
-<<<<<<< Upstream, based on origin/master
-=======
-
->>>>>>> 53ac31f 11-11 整合结束
-				if(start==1) {System.out.println(msg);
-					if(msg.contains(eNTERFILE)){
-						return 1;
-						
-					}
-					else  return 0;
->>>>>>> 20671fc 2019-11-11 02整合
-				}
-<<<<<<< Upstream, based on origin/master
-				else  return 0;}
-=======
-				else if(msg.startsWith("root@3dformodel:")) start=1;
-
-			}
->>>>>>> 20671fc 2019-11-11 02整合
-		
-
-			in.close();
-
-=======
-			
->>>>>>> 54bd26c 11-12 整合前
-=======
-		
->>>>>>> 5a3a20b 11-15 整合前
 			// 关闭session
 			session.disconnect();
 		} catch (JSchException e) {
