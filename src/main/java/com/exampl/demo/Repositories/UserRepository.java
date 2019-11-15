@@ -15,6 +15,7 @@ public class UserRepository {
 	 //private static final String SQL_FIND_BY_ID = "SELECT * FROM myUser WHERE ID = :id";
 	    private static final String SQL_FIND_ALL = "SELECT * FROM myUser";
 	    private static final String SQL_FIND_BY_NAME = "SELECT * FROM myUser WHERE user_id = :user_id";
+	    private static final String SQL_FIND_NAME_BY_NAME = "SELECT user_id FROM myUser WHERE user_id = :user_id";
 	    private static final String SQL_INSERT = "INSERT INTO myUser (user_id, password, role) values(:user_id, :password ,:role)";
 	    //private static final String SQL_DELETE_BY_ID = "DELETE FROM myUser WHERE ID = :id";
 
@@ -28,15 +29,23 @@ public class UserRepository {
 	    public Iterable<User> findAll() {
 	        return jdbcTemplate.query(SQL_FIND_ALL, ROW_MAPPER);
 	    }
-
+        
 	    public int save(User user) {
+	    	final SqlParameterSource paramSource1 = new MapSqlParameterSource("user_id", user.getuser_id());
+	    	try{jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, paramSource1, ROW_MAPPER);
+	    	}
+	    	catch (EmptyResultDataAccessException ex) {
 	        final SqlParameterSource paramSource = new MapSqlParameterSource()
 	        		
 	                .addValue("user_id", user.getuser_id())
 	                .addValue("password", user.getpassword())
 	                .addValue("role", user.getrole());
-
-	        return jdbcTemplate.update(SQL_INSERT, paramSource);
+	        jdbcTemplate.update(SQL_INSERT, paramSource);
+		
+	        return 1;}
+	    	
+			return 0;
+	    	
 	    }
 	    public String identify(String user_id) {
 	    	User uu=new  User(); 

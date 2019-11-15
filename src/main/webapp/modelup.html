@@ -14,7 +14,10 @@
 <title>model up</title>
 </head>
 <body>
-
+    <div>
+    <button class="option-btn" id="modelcon"  onclick="modelcon()"
+    >模型管理</button>
+    </div>
 	<div id="upload-model-dialog" >
     <div id="dialog-title">上传模型</div>
         <div id="upload-model-content">
@@ -127,9 +130,9 @@
 		var ENTERFILE=document.getElementById('input-entry-file').value;
 		var PARAMSFILE=document.getElementById('input-train-data').value;
 		
-		var UESDFRAME=document.getElementById('input-train-env').value;
+		var PIP_PACKAGES=document.getElementById('input-train-env').value;
 		var options1=$("#select-frame-name option:selected");//获取当前选择项.
-		var PIP_PACKAGES=options1.text();//获取当前选择项的文本.
+		var USEDFRAME=options1.text();//获取当前选择项的文本.
 		var options2=$("#select-com-name option:selected");
 		var COMPUTERTARGER=options2.text();
 			$.ajax({
@@ -137,7 +140,7 @@
 				url : "/model",
 				dataType:"json",
 				contentType:"application/json;charset=utf-8;",
-				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,UESDFRAME: UESDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
+				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,USEDFRAME: USEDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
 				
 			success : function(data) {
 				if(data==null){alert("done")
@@ -148,5 +151,8 @@
 					}}}
 
 			)}
+	function modelcon(){
+		window.location.href="modelcon.html";
+	}
 	</script>
 </html>

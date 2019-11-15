@@ -22,7 +22,7 @@ public class User  {
 	    }
 
 	    public void setuser_id(String user_id) {
-	        this.user_id = user_id;
+	        this.user_id=user_id;
 	    }
 
 	    public String getpassword() {
@@ -43,8 +43,10 @@ public class User  {
 	    public String toString() {
 	        return "User{" +
 	               
-	                "user_id='" + user_id + '\'' +
+	                "user_id='" + getuser_id() + '\'' +
 	                ", password='" + password + '\'' +
 	                '}';
-	    }	    
+	    }
+
+		    
 }

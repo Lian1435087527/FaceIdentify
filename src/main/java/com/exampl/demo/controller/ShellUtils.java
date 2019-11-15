@@ -85,15 +85,13 @@ public class ShellUtils {
 			int start=0;
 			
 			while ((msg = in.readLine()) != null) {
-				if(start==1) {System.out.println(msg);
-					if(msg.contains(eNTERFILE)){
-						return 1;
-						
-					}
-					else  return 0;
+				
+				if(msg.startsWith("root@3dformodel:/home/MLmodel/test# ls -f")) start=1;
+				if(start==1)System.out.println(msg);
+				if(msg.contains(eNTERFILE)){
+					return 1;
 				}
-				else if(msg.startsWith("root@3dformodel:")) start=1;
-			}
+				else  return 0;}
 		
 
 			in.close();

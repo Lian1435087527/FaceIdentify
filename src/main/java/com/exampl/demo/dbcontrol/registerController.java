@@ -2,6 +2,7 @@ package com.exampl.demo.dbcontrol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.exampl.demo.model.User;
@@ -16,17 +17,19 @@ public class registerController {
     private com.exampl.demo.Repositories.UserRepository UserRepository;
 
     @PostMapping
+     
+    public @ResponseBody ModelMap createUser(@RequestBody User user) {
+    	ModelMap Return=new ModelMap();
+    	if(UserRepository.save(user)==0) {
+    		Return.put("state", 0);
+    	}
+    	else {
+    		Return.put("state", 1);}
+    	return Return;
+        
     
-    public @ResponseBody String createUser(@RequestBody User user) {
-    	UserRepository.save(user);
-        return String.format("Added %s", user);
-    }
 
-    @GetMapping
-    public @ResponseBody Iterable<User> getAllPets() {
-        return UserRepository.findAll();
-    }
-
+   
     
     
-}
+}}
