@@ -48,7 +48,7 @@
             <div class="content">
                 <div class="label frame-name">使用框架：</div>
                 <select id="select-frame-name">
-                    <option value="1">sk-learn</option>
+                    <option value="1">scikit-learn</option>
                     <option value="2">tensorflow</option>
                     <option value="3">pytorch</option>
                 </select>
@@ -125,7 +125,7 @@
 				
 			}
 					else{
-						alert("error")
+						alert("error "+data.state)
 					}}}
 
 			)}
@@ -147,11 +147,11 @@
 				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,USEDFRAME: USEDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
 				
 			success : function(data) {
-				if(data==null){alert("done")
+				if(data.state == 1){alert("done")
 				
 			}
 					else{
-						alert("errorr")
+						alert("erorr "+data.state)
 					}}}
 
 			)}

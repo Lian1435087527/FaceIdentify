@@ -30,19 +30,19 @@ public class pyrun {
     private String USERNAME = "azureuser";
     private String PASSWORD = "Ll1111111111";
     
-	@RequestMapping("/model")
-	@ResponseBody
+	//@RequestMapping("/model")
+	//@ResponseBody
 	public ModelMap upload_1(@RequestBody Map<String,Object> map1) {
 		
 		ModelMap Return=new ModelMap();
 	List<String> result = new ArrayList<>();
-    int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD,map1,result);
+    /*int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD,map1,result);
    
     if (ret == 0) {
     	Return.put("state", 0);}
     
     else {Return.put("state", 1);}
-    
+    */
     return Return;
 }}
 	

@@ -30,9 +30,10 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import com.exampl.demo.controller.ShellUtils;
+
 @Controller
 public class moddefi {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(moddefi.class);
 
 	private String IP = "207.46.136.243";
@@ -45,36 +46,24 @@ public class moddefi {
 	public ModelMap upload(@RequestBody Map<String, Object> map) {
 
 		ModelMap Return = new ModelMap();
+		
+		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map, 0);
 
-		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map,0);
-
-		if (ret == 0) {
-			Return.put("state", 0);
-		}
-
-		else {
-			Return.put("state", 1);
-		}
+		Return.put("state", ret);
 
 		return Return;
 	}
-	@RequestMapping("/modelup")
+
+	@RequestMapping("/model")
 	@ResponseBody
 	public ModelMap create(@RequestBody Map<String, Object> map) {
 
 		ModelMap Return = new ModelMap();
 
-		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map,1);
+		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map, 1);
 
-		if (ret == 0) {
-			Return.put("state", 0);
-		}
+		Return.put("state", ret);
 
-		else {
-			Return.put("state", 1);
-		}
-
-        return Return;
-	}}
-	
-
+		return Return;
+	}
+}
