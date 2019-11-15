@@ -7,11 +7,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.exampl.demo.dao.Userdao;
 import com.exampl.demo.model.User;
 
 
 @Repository
-public class UserRepository {
+public class UserRepository implements Userdao{
 	 //private static final String SQL_FIND_BY_ID = "SELECT * FROM myUser WHERE ID = :id";
 	    private static final String SQL_FIND_ALL = "SELECT * FROM myUser";
 	    private static final String SQL_FIND_BY_NAME = "SELECT * FROM myUser WHERE user_id = :user_id";
@@ -26,9 +27,7 @@ public class UserRepository {
 
 	    
 
-	    public Iterable<User> findAll() {
-	        return jdbcTemplate.query(SQL_FIND_ALL, ROW_MAPPER);
-	    }
+	   
         
 	    public int save(User user) {
 	    	final SqlParameterSource paramSource1 = new MapSqlParameterSource("user_id", user.getuser_id());

@@ -1,4 +1,4 @@
-package com.exampl.demo.Services;
+package com.exampl.demo.dao;
 
 public class loginTicketsDAO {
 
