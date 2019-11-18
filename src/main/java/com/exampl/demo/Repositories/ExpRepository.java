@@ -12,12 +12,12 @@ import com.exampl.demo.model.Exp;
 
 
 
-//@Repository
-/*public class ExpRepository {
+@Repository
+public class ExpRepository {
 	 //private static final String SQL_FIND_BY_ID = "SELECT * FROM myUser WHERE ID = :id";
-	    private static final String SQL_FIND_ALL = "SELECT * FROM myUser";
-	    private static final String SQL_FIND_BY_NAME = "SELECT * FROM myUser WHERE user_id = :user_id";
-	    private static final String SQL_INSERT = "INSERT INTO myUser (user_id, password, role) values(:user_id, :password ,:role)";
+	    private static final String SQL_FIND_ALL = "SELECT * FROM Exp";
+	    private static final String SQL_FIND_BY_NAME = "SELECT * FROM Exp WHERE exp_id = :exp_id";
+	    private static final String SQL_INSERT = "INSERT INTO Exp (user_id,exp_id,exp_vm,,exp_userframe,exp_pippackage,exp_dataset,exp_output) values(:user_id,:exp_id,:exp_vm,,:exp_userframe,:exp_pippackage,:exp_dataset,:exp_output)";
 	    //private static final String SQL_DELETE_BY_ID = "DELETE FROM myUser WHERE ID = :id";
 
 	    private static final BeanPropertyRowMapper<Exp> ROW_MAPPER = new BeanPropertyRowMapper<>(Exp.class);
@@ -27,31 +27,28 @@ import com.exampl.demo.model.Exp;
 
 	    
 
-	    public Iterable<Exp> findAll() {
-	        return jdbcTemplate.query(SQL_FIND_ALL, ROW_MAPPER);
-	    }
+	   
 
 	    public int save(Exp exp) {
+	    	final SqlParameterSource paramSource1 = new MapSqlParameterSource("exp_id", exp.getexp_id());
+	    	try{jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, paramSource1, ROW_MAPPER);
+	    	}
+	    	catch (EmptyResultDataAccessException ex) {
 	        final SqlParameterSource paramSource = new MapSqlParameterSource()
 	        		
-	                .addValue("user_id", exp.getexp_id())
-	                .addValue("password", exp)
-	                .addValue("role", user.getrole());
+	                .addValue("user_id", exp.getuser_id())
+	                .addValue("exp_id", exp.getexp_id()+"_"+exp.getuser_id())
+	                .addValue("exp_vm",exp.getexp_vm())
+	                .addValue("exp_userframe",exp.getExp_userframe())
+	                .addValue("exp_pippackage",exp.getExp_pippackage())
+	                .addValue("exp_dataset",exp.getExp_dataset())
+	                .addValue("exp_output",exp.getExp_output());
 
-	        return jdbcTemplate.update(SQL_INSERT, paramSource);
-	    }
-	    public String identify(String user_id) {
-	    	User uu=new  User(); 
-	    	try {  
-		            final SqlParameterSource paramSource = new MapSqlParameterSource("user_id", user_id);
-		            
-		             uu=jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, paramSource, ROW_MAPPER);
-		          }
-		        catch (EmptyResultDataAccessException ex) {
-		         return ("ERROR");
-		        }
-			return uu.getpassword();
-	    }
-
+	         jdbcTemplate.update(SQL_INSERT, paramSource);
+	         return 1;
+	   
+	    	}
+			return 0;
 	    
-	}*/
+	    
+	}}

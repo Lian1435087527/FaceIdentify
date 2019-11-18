@@ -12,7 +12,7 @@ public class Exp  {
 	    private String exp_userframe;
 	    private String exp_pippackage;
 	    private String exp_dataset;
-	    private String exp_output;
+	    private String exp_output;l
 	    
 	   
 	    
@@ -36,9 +36,7 @@ public class Exp  {
 	        return exp_vm;
 	    }
 
-	    public void setrole(String exp_vm) {
-	         this.exp_vm= exp_vm;
-	    }
+	    
 
 		public String getExp_userframe() {
 			return exp_userframe;

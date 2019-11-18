@@ -206,7 +206,7 @@ public class ShellUtils {
 					params = true;
 				if (msg.startsWith("root@3dformodel:"))
 					break;
-			} else if (msg.contains("ls -al|grep ^-"))
+			} else if (msg.contains("# ls -al|grep ^-"))
 				// 从上面那条命令开始 判定
 				start = 1;
 		}
