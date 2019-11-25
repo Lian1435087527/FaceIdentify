@@ -13,6 +13,8 @@ import com.exampl.demo.faceidentify.BaseFunctionsBaidu;
 import com.exampl.demo.faceidentify.Normalimage;
 import com.exampl.demo.faceidentify_i.BaseFunctions_I;
 import com.exampl.demo.faceidentify_i.Normalimage_I;
+import com.exampl.demo.token.UserLoginToken;
+
 import org.python.core.PyFunction;
 import org.python.core.PyInteger;
 import org.python.core.PyObject;
@@ -21,6 +23,7 @@ import org.python.util.PythonInterpreter;
 @Controller
 public class send {
 	private String picret;
+	@UserLoginToken
 	@RequestMapping("/picup")
 	@ResponseBody
 	public ModelMap getimg(@RequestParam("pic") String pic) {

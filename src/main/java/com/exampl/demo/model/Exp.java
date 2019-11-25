@@ -12,7 +12,7 @@ public class Exp  {
 	    private String exp_userframe;
 	    private String exp_pippackage;
 	    private String exp_dataset;
-	    private String exp_output;l
+	    private String exp_output;
 	    
 	   
 	    

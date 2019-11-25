@@ -86,7 +86,7 @@
 	const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
 	var DOWNLOADLINK=null;
 	var FILENAME=null;
-	    
+	let token=localStorage.getItem("token");
        
 	
 	function identify(){
@@ -117,6 +117,7 @@
 				type : 'POST',
 				url : "/identify",
 				dataType:"json",
+				headers: {'Authorization': token},
 				contentType:"application/json;charset=utf-8;",
 				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,DOWNLOADLINK: DOWNLOADLINK,FILENAME: FILENAME}),
 				
@@ -144,6 +145,8 @@
 				url : "/model",
 				dataType:"json",
 				contentType:"application/json;charset=utf-8;",
+				headers: {'Authorization': token},
+				
 				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,USEDFRAME: USEDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
 				
 			success : function(data) {

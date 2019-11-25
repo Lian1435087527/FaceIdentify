@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.exampl.demo.model.User;
+import com.exampl.demo.token.UserLoginToken;
 
 
 
@@ -17,7 +18,7 @@ public class registerController {
     private com.exampl.demo.Repositories.UserRepository UserRepository;
 
     @PostMapping
-     
+    
     public @ResponseBody ModelMap createUser(@RequestBody User user) {
     	ModelMap Return=new ModelMap();
     	if(UserRepository.save(user)==0) {

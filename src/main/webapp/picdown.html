@@ -3,7 +3,7 @@
 
 
 <html lang="en">
-<head>
+
 
     <meta charset="UTF-8">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -15,47 +15,41 @@
  
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
-    <style>
-    　 #pagination {
-            text-align: center;
-        }
+<link href="/css/picdown.css" rel="stylesheet" type="text/css" />
 
-        #table {
-            width: 800px;
-            margin: 50px auto;
-        }
 
-        #table th {
-            height: 35px;
-        }
-
-        #title {
-            text-align: center;
-        }
-
-        button {
-            padding: 5px;
-            box-shadow: 0 0 5px #000;
-        }</style>
-</head>
-<body>
-
- <div id="title">
-        <h1>表格标题</h1>
-    </div>
+<body class=container>
+<header> </header>  
+ <div class="HolyGrail-body">   
+  <main class=HolyGrail-body>
+     
     <table id="table" border="1"></table>
-
+     
+        
+    
     <div id="pagination">
-        <button id="prev">《</button>
+        
         <span id="pages"></span>
-        <button id="next">》</button>
+        
     </div>
-<button id="down" onclick="downloadImg(2)" >down</button>
-<button id="list-button" >list</button>
-<p id="file">
-文件列表：
-</p>
+    </main>
+     
+ <nav class="HolyGrail-nav">
+  <label>选择</label>
+   <select id="select-dir-name">
+                    <option value="1">111</option>
+                    <option value="2">facede</option>
+                    <option value="3">face</option>
+                </select>
+            
+<button class=button onclick='listfile()'>确定</button>
+</nav>
+<aside class="HolyGrail-ads">
+
+</aside>
+</div>
+<footer><button class=button id="prev">《</button>
+<button class=button id="next">》</button></footer>
 </body>
 <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
 <script>
@@ -63,11 +57,13 @@ const table = document.getElementById('table');
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const pages = document.getElementById('pages'); 
+var options1=$("#select-dir-name option:selected");//获取当前选择项.
+var dir=options1.text();//获取当前选择项的文本.
 const account = {
 		    name: "cs1f9abf47a9b73x49c3x9c1",
 		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
 		};
-	
+
 const blobUri = 'https://' + account.name + '.blob.core.windows.net';
 const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
 //默认设定每页十
@@ -81,9 +77,9 @@ var j=0;
 var downloadLink=new Array();
 var blobname=new Array();
 files=document.getElementById("file");
-function list() {
-       
-	    blobService.listBlobsSegmented('modelblob1', null, (error, results) => {
+function list(prefix) {
+	
+	    blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results) => {
 	        if (error) {
 	            // Handle list blobs error
 	        } else {
@@ -103,13 +99,16 @@ function list() {
 	    });
 	    
 	}
+
+
 	
-	list();
 	const render = function () {
-        table.innerHTML =
+		
+		
+		table.innerHTML =
             `<thead>
-        <th>编号</th>
-        <th>文件名称</th>
+        <th>名称</th>
+        <th>下载链接</th>
         
     </thead>`;
 
@@ -124,20 +123,28 @@ function list() {
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
             table.innerHTML +=
                 `<tr>
-        <th>${blobname[i]}</th>
-        <th>${downloadLink[i]}</th>
+        <td>${blobname[i]}</td>
+        <td>${downloadLink[i]}</td>
+        <td ><button id="down"  value=${downloadLink[i]}  onclick="downloadImg(this.value)">downloadLink</button></td>
+        
         
     </tr>`;
+            
+    
         }
     }
-    render();    
-    const creatPages = function () {
-        pages.innerHTML = '';
-        for (let i = 0; i < Math.ceil(j / 10); i++) {
-            pages.innerHTML += ` <button data-page="${i+1}">${i+1}</button>`
-        }
-}
-creatPages();
+       
+	function listfile(){
+		var options1=$("#select-dir-name option:selected");//获取当前选择项.
+		var dir=options1.text();//获取当前选择项的文本.
+		list(dir);
+		setTimeout("render();","3000"); 
+	
+		j=0;
+		
+		list(dir);
+		
+	}   
 //绑定向前翻页事件
 prev.onclick = function () {
     if (page > 1) {
@@ -158,21 +165,18 @@ next.onclick = function () {
     }
 }
 
-//绑定点击页码渲染相应的数据事件
-pages.addEventListener('click', function (e) {
-    page = e.target.getAttribute('data-page');
-    render();
-})
-function downloadImg(index){
+
+function downloadImg(downloadLink){
     
     
-    console.log(downloadLink[index]);
-    let url =downloadLink[index];               
+    
+    let url =downloadLink            
     let a = document.createElement("a");          // 创建一个a节点插入的document
     let event = new MouseEvent("click");           // 模拟鼠标click点击事件
     a.download = 'tepic';                  // 设置a节点的download属性值
     a.href = url;                                 // 将图片的src赋值给a节点的href
     a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
  }
-	</script>
+
+</script>
 </html>

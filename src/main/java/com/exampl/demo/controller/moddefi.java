@@ -24,6 +24,7 @@ import com.exampl.demo.faceidentify.BaseFunctionsBaidu;
 import com.exampl.demo.faceidentify.Normalimage;
 import com.exampl.demo.faceidentify_i.BaseFunctions_I;
 import com.exampl.demo.faceidentify_i.Normalimage_I;
+import com.exampl.demo.token.UserLoginToken;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
@@ -40,7 +41,7 @@ public class moddefi {
 	private Integer PORT = 22;
 	private String USERNAME = "azureuser";
 	private String PASSWORD = "Ll1111111111";
-
+	@UserLoginToken
 	@RequestMapping("/identify")
 	@ResponseBody
 	public ModelMap upload(@RequestBody Map<String, Object> map) {
@@ -53,7 +54,7 @@ public class moddefi {
 
 		return Return;
 	}
-
+	@UserLoginToken
 	@RequestMapping("/model")
 	@ResponseBody
 	public ModelMap create(@RequestBody Map<String, Object> map) {

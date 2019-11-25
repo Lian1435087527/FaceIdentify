@@ -1,0 +1,72 @@
+@charset "UTF-8";
+.container{
+    display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+header,
+footer {
+  flex: 1;
+}
+
+.HolyGrail-body {
+  display: flex;
+  flex: 1;
+  
+}
+
+.HolyGrail-content {
+  flex: 1;
+  flex-direction: row;
+}
+
+.HolyGrail-nav, .HolyGrail-ads {
+  /* 两个边栏的宽度设为12em */
+  flex: 0 0 12em;
+}
+
+.HolyGrail-nav {
+  /* 导航放到最左边 */
+  order: -1;
+}
+
+    　 #pagination {
+            text-align: center;
+        }
+
+        #table {
+            width: 800px;
+            margin: 50px auto;
+        }
+
+        #table th {
+            height: 35px;
+        }
+
+        #title {
+            text-align: center;
+        }
+
+ .button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;   
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+       

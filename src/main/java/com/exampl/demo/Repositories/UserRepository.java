@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.exampl.demo.dao.Userdao;
 import com.exampl.demo.model.User;
 
@@ -26,7 +28,22 @@ public class UserRepository implements Userdao{
 	    NamedParameterJdbcTemplate jdbcTemplate;
 
 	    
-
+        public User findbyid(String user_id) {
+        	User user = null;
+        	
+        	
+	    	try {  
+	            final SqlParameterSource paramSource = new MapSqlParameterSource("user_id", user_id);
+	            
+	            user=jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, paramSource, ROW_MAPPER);
+	          }
+	        catch (EmptyResultDataAccessException ex) {
+	         
+	        }
+        	
+        	return user;
+        	
+        }
 	   
         
 	    public int save(User user) {
@@ -57,6 +74,12 @@ public class UserRepository implements Userdao{
 		         return ("ERROR");
 		        }
 			return uu.getpassword();
+	    }
+	    public String getToken(User user) {
+	        String token="";
+	        token = JWT.create().withAudience(user.getuser_id() + "").sign(Algorithm.HMAC256(user.getpassword()));
+	         
+	        return token;
 	    }
 
 	    
