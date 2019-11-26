@@ -22,8 +22,7 @@
 	<footer>
 		<button id="upload-button" class="button" onclick='upload()'>Upload</button>
 
-		<button id="list-button" class="button" onclick='list()'>List</button>
-		<button id="add-button" class="button" onclick='add()'>add</button>
+		
 	</footer>
 
 	<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
@@ -44,6 +43,7 @@ const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.
 
 var status=0;
 function upload(){
+	alert('正在上传，请勿退出');
 	let filename=null;
 var options2=$("#select-name option:selected");//获取当前选择项.
 dir=options2.text();//获取当前选择项的文本.
@@ -71,6 +71,7 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                           	        if (error) {
                                           	            // Handle list blobs error
                                           	        } else {
+                                          	        	alert('正在运算，请勿退出');
                                           	            results.entries.forEach(blob => {
                                           	                
                                           	            	downloadlink= blobService.getUrl('modelblob1',blob.name );

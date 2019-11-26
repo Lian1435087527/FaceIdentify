@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.exampl.demo.baiduapi.GsonUtils;
 import com.exampl.demo.baiduapi.HttpUtil;
 import com.exampl.demo.faceidentify.BaseFunctionsBaidu;
 import com.exampl.demo.faceidentify.Normalimage;
@@ -26,12 +25,11 @@ public class score {
 	@RequestMapping("/score")
 	@ResponseBody
 	public ModelMap getul(@RequestParam("url") String url_g) throws Exception {
-		Map<String, Object> map = new HashMap<>();
 		
-		map.put("url", url_g);
 		
 
-		String param = GsonUtils.toJson(map);
+		String param = "{\"url\":\""+url_g+"\"}";
+		//System.out.println(param);
 		String accessToken=null;
 		String result = HttpUtil.post(url_p,accessToken, "application/json", param);
 		
