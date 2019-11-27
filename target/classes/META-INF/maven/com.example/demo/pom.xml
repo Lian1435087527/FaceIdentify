@@ -148,6 +148,8 @@
 				<configuration>
 					<!--跳过项目运行测试用例 -->
 					<skipTests>true</skipTests>
+					
+           
 				</configuration>
 
 			</plugin>
@@ -156,6 +158,17 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>1.4.2.RELEASE</version>
 			</plugin>
+			<plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-resources-plugin</artifactId>
+     <configuration>
+          <nonFilteredFileExtensions>
+               <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+               <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+               <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+          </nonFilteredFileExtensions>
+     </configuration>
+    </plugin>
 		</plugins>
 		<resources>
 			<resource>
@@ -168,6 +181,8 @@
 				<targetPath>META-INF/resources</targetPath>
 			</resource>
 
+      
+       
 
 		</resources>
 

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+
+<html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+
+<![endif]-->
+<!--[if IE 7]>
+
+<html class="lt-ie9 lt-ie8" lang="en">
+
+<![endif]-->
+<!--[if IE 8]>
+
+<html class="lt-ie9" lang="en">
+
+<![endif]-->
+<!--[if gt IE 8]>
+<!-->
+
+<html lang="en">
+  
+  <!--
+<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>
+     3d智能云
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    
+    <link href="icomoon/style.css" rel="stylesheet">
+    <!--[if lte IE 7]>
+    <script src="css/icomoon-font/lte-ie7.js">
+    </script>
+    <![endif]-->
+  <link href="css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
+  <link href="css/charts-graphs.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">
+        <img src="images/logo10.jpg" alt="logo" />
+      </a>
+      <div class="btn-group">
+        <button class="btn btn-primary" id='nuser'>
+         
+        </button>
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+          <span class="caret">
+          </span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a href="#">
+              Edit Profile
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Account Settings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+      <ul class="mini-nav">
+     
+      </ul>
+      
+    </header>
+    <div class="container-fluid">
+      <div class="dashboard-container">
+        <div class="top-nav">
+          <ul>
+            <li>
+              <a href="index.html" >
+                
+                                                     在线人脸检测
+              </a>
+            </li>
+            <li>
+              <a href="forms.html" >
+                
+                                                   上传数据
+              </a>
+            </li>
+            <li>
+              <a href="graphs.html" class="selected">
+                
+                下载数据
+              </a>
+            </li>
+            <li>
+              <a href="ui-elements.html">
+               
+                 上传模型
+              </a>
+            </li>
+            <li>
+              <a href="icons.html">
+               
+                在线模型          
+              </a>
+            </li>
+            <li>
+              <a href="tables.html">
+               
+                模型管理
+              </a>
+            </li>
+            <li>
+              <a href="media.html">
+                
+                Mii
+              </a>
+            </li>
+            <li>
+              <a href="calendar.html">
+                
+                Calendar
+              </a>
+            </li>
+            <li>
+              <a href="typography.html">
+               
+                Typography
+              </a>
+            </li>
+            <li>
+              <a href="edit-profile.html">
+                
+                Extras
+              </a>
+            </li>
+          </ul>
+          <div class="clearfix">
+          </div>
+        </div>
+        <div class="dashboard-wrapper">
+          <div class="left-sidebar">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="widget">
+                  <div class="widget-header">
+                    <div class="title">
+                      
+                      下载数据
+                      <span class="mini-title">
+                        请选择对应文件夹，稍等片刻
+                      </span>
+                    </div>
+                    <span class="tools">
+                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+                    </span>
+                  </div>
+                  <div class="widget-body">
+                     <div class="HolyGrail-body">   
+  <main class=HolyGrail-body>
+     
+    <table id="table" border="1" height=500px width=200px ></table>
+     
+        
+    
+    <div id="pagination">
+        
+        <span id="pages"></span>
+        
+    </div>
+    </main>
+     
+ <nav class="HolyGrail-nav">
+  <label>选择</label>
+   <select id="select-dir-name">
+                    <option value="1">111</option>
+                    <option value="2">facede</option>
+                    <option value="3">face</option>
+                </select>
+            
+<button class=button onclick="listfile()">确定</button>
+
+</nav>
+<aside class="HolyGrail-ads">
+<button class=button id="prev">《</button>
+<button class=button id="next">》</button>
+</aside>
+</div>
+
+
+
+
+
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            
+            
+            
+            
+            
+    <footer>
+      <p>
+        &copy; reinlight 2019
+      </p>
+    </footer>
+    <script src="js/jquery.min.js">
+    </script>
+    <script src="js/bootstrap.js">
+    </script>
+    <script src="js/jquery.scrollUp.js">
+    </script>
+    
+    
+    <!-- Sparkline JS -->
+    <script src="js/jquery.sparkline.js">
+    </script>
+    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+<script>
+var obj=document.getElementById('nuser');
+var nusername=localStorage.getItem("nuid");
+obj.innerHTML=nusername;
+const table = document.getElementById('table');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const pages = document.getElementById('pages'); 
+var options1=$("#select-dir-name option:selected");//获取当前选择项.
+var dir=options1.text();//获取当前选择项的文本.
+const account = {
+		    name: "cs1f9abf47a9b73x49c3x9c1",
+		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+		};
+
+const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+//默认设定每页十
+let num1 = 10;
+//定义一个变量保存每页真实应该展示的数量
+let num2;
+//默认展示第一页
+let page = 1;   
+var j=0;
+
+var downloadLink=new Array();
+var blobname=new Array();
+files=document.getElementById("file");
+function list(prefix) {
+	
+	    blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results) => {
+	        if (error) {
+	            // Handle list blobs error
+	        } else {
+	            results.entries.forEach(blob => {
+	                blobname[j]=blob.name;
+	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
+	            	//console.log(downloadLink[i]);
+	            	//document.getElementById(j).innerHTML=blob.name;
+	            	
+	            	//console.log(i);
+	            	//files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
+	            	j++;
+	            	
+	            	
+	            });
+	        }
+	    });
+	    
+	}
+
+
+	
+	const render = function () {
+		
+		
+		table.innerHTML =
+            `<thead>
+        <th>名称</th>
+        <th>下载链接</th>
+        
+    </thead>`;
+
+        //判断当前选择的页码对应的人数
+        if (j - num1 * (page - 1) >= 10) {
+            num2 = 10;
+        } else {
+            num2 = j - num1 * (page - 1);
+        }
+
+　　　//渲染该页对应的数据
+        for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+            table.innerHTML +=
+                `<tr>
+        <td>${blobname[i]}</td>
+        
+        <td ><button id="down" class=button value=${downloadLink[i]}  onclick="downloadImg(this.value)">downloadLink</button></td>
+        
+        
+    </tr>`;
+            
+    
+        }
+    }
+       
+function listfile(){
+		var options1=$("#select-dir-name option:selected");//获取当前选择项.
+		var dir=options1.text();//获取当前选择项的文本.
+		list(dir);
+		setTimeout("render();","3000"); 
+	
+		j=0;
+		
+		list(dir);
+		
+	}   
+//绑定向前翻页事件
+prev.onclick = function () {
+    if (page > 1) {
+        page--;
+        render();
+    } else {
+        alert('当前为第一页！')
+    }
+}
+
+//绑定向后翻页事件
+next.onclick = function () {
+    if (page < Math.ceil(j / 10)) {
+        page++;
+        render();
+    } else {
+        alert('当前为最后一页！')
+    }
+}
+
+
+function downloadImg(downloadLink){
+    
+    
+    
+    let url =downloadLink            
+    let a = document.createElement("a");          // 创建一个a节点插入的document
+    let event = new MouseEvent("click");           // 模拟鼠标click点击事件
+    a.download = 'tepic';                  // 设置a节点的download属性值
+    a.href = url;                                 // 将图片的src赋值给a节点的href
+    a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
+ }
+
+</script>
+   
+  
+</body>
+</html>

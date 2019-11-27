@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+
+<html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+
+<![endif]-->
+<!--[if IE 7]>
+
+<html class="lt-ie9 lt-ie8" lang="en">
+
+<![endif]-->
+<!--[if IE 8]>
+
+<html class="lt-ie9" lang="en">
+
+<![endif]-->
+<!--[if gt IE 8]>
+<!-->
+
+<html lang="en">
+  
+  <!--
+<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>
+      3d智能云
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    
+    <link href="icomoon/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
+    <!--[if lte IE 7]>
+    <script src="css/icomoon-font/lte-ie7.js">
+    </script>
+    <![endif]-->
+  <link href="css/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet">
+  <link href="css/wysiwyg/wysiwyg-color.css" rel="stylesheet">
+  <link href="css/charts-graphs.css" rel="stylesheet">
+  <link href="css/clockface.css" rel="stylesheet">
+  <link href="css/timepicker.css" rel="stylesheet">
+  <link href="css/alertify.core.css" rel="stylesheet" id="toggleCSS">
+  
+  
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">
+        <img src="images/logo10.jpg" alt="logo" />
+      </a>
+      <div class="btn-group">
+        <button class="btn btn-primary" id='nuser'>
+         
+        </button>
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+          <span class="caret">
+          </span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a href="#">
+              Edit Profile
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Account Settings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+      <ul class="mini-nav">
+     
+      </ul>
+      
+    </header>
+    <div class="container-fluid">
+      <div class="dashboard-container">
+        <div class="top-nav">
+          <ul>
+            <li>
+              <a href="index.html" >
+                
+                                                     在线人脸检测
+              </a>
+            </li>
+            <li>
+              <a href="forms.html" >
+                
+                                                   上传数据
+              </a>
+            </li>
+            <li>
+              <a href="graphs.html" >
+                
+                下载数据
+              </a>
+            </li>
+            <li>
+              <a href="ui-elements.html" class="selected">
+               
+                 上传模型
+              </a>
+            </li>
+            <li>
+              <a href="icons.html">
+               
+                在线模型          
+              </a>
+            </li>
+            <li>
+              <a href="tables.html">
+               
+                模型管理
+              </a>
+            </li>
+            <li>
+              <a href="media.html">
+                
+                Mii
+              </a>
+            </li>
+            <li>
+              <a href="calendar.html">
+                
+                Calendar
+              </a>
+            </li>
+            <li>
+              <a href="typography.html">
+               
+                Typography
+              </a>
+            </li>
+            <li>
+              <a href="edit-profile.html">
+                
+                Extras
+              </a>
+            </li>
+          </ul>
+          <div class="clearfix">
+          </div>
+        </div>
+        <div class="dashboard-wrapper">
+          <div class="left-sidebar">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="widget">
+                  <div class="widget-header">
+                    <div class="title">
+                      
+                     上传模型
+                      <span class="mini-title">
+                        请注意参数
+                      </span>
+                    </div>
+                    <span class="tools">
+                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+                    </span>
+                  </div>
+                  <div class="widget-body">
+                     <div>
+    <button class="option-btn" id="modelcon"  onclick="modelcon()"
+    >模型管理</button>
+    </div>
+	<div id="upload-model-dialog" >
+    <div id="dialog-title">上传模型</div>
+        <div id="upload-model-content">
+            <div class="content">
+                <div class="label model-name">试验名字:</div>
+                <input type="text" id="input-model-name" placeholder="请输入模型的名称">
+            </div>
+            <div class="content">
+                <div class="label model-folder">模型:</div>
+                <input type="file" id="select-model" multiple>
+                
+                
+            </div>
+            <div class="content">
+                <div class="label entry-file">入口文件：</div>
+                <input type="text" id="input-entry-file" placeholder="请输入入口文件的名称（默认值train.py）">
+            </div>
+            <div class="content">
+                <div class="label train-data">参数文件：</div>
+                <input type="text" accept="" id="input-train-data" placeholder="请输入参数文件名（默认值params.json）">
+                
+            </div>
+            
+            <div class="content">
+                <div class="label config-file">依赖环境：</div>
+                <input type="text" accept="" id="input-train-env" placeholder="系统默认运行环境若可以正常运行，则无需填写">
+            </div>
+            <div class="content">
+                <div class="label frame-name">使用框架：</div>
+                <select id="select-frame-name">
+                    <option value="1">scikit-learn</option>
+                    <option value="2">tensorflow</option>
+                    <option value="3">pytorch</option>
+                </select>
+            </div>
+             <div class="content">
+                <div class="label com-name">使用虚拟机：</div>
+                <select id="select-com-name">
+                    <option value="1">CPU</option>
+                    <option value="2">GPU</option>
+                </select>
+            </div>
+            <div class="content">
+                <div class="label model-folder">数据文件夹名</div>
+                <div class="label model-folder">datafolder1</div>
+            </div>
+            <div class="content" style="margin-left: 440px; margin-top: 70px">
+                <button class="option-btn" id="modelup"  onclick="identify()">上传</button>
+                <button class="option-btn" onclick="modelup()">确定</button>
+            </div>
+        </div>
+</div>
+<div id="black-cloth" class="hidden" onclick="hiddenUploadModelDialog()"></div>
+
+
+
+
+
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            
+            
+            
+            
+            
+    <footer>
+      <p>
+        &copy; reinlight 2019
+      </p>
+    </footer>
+    <script src="js/jquery.min.js">
+    </script>
+
+    <script src="js/bootstrap.js">
+    </script> 
+    
+    <script type="text/javascript" src="js/alertify.min.js">
+    </script>
+    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+    
+    <script type="text/javascript">
+      
+
+    <script src="js/jquery.min.js">
+    </script>
+    <script src="js/jquery.scrollUp.js">
+    </script>
+     <script type="text/javascript">
+     var obj=document.getElementById('nuser');
+     var nusername=localStorage.getItem("nuid");
+     obj.innerHTML=nusername;
+     const account = {
+ 		    name: "cs1f9abf47a9b73x49c3x9c1",
+ 		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+ 		};
+ 	
+ 	const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+ 	const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+ 	var DOWNLOADLINK=null;
+ 	var FILENAME=null;
+ 	let token=localStorage.getItem("token");
+        
+ 	
+ 	function identify(){
+ 		var len=document.getElementById('select-model').files.length;
+ 		for(i=0;i<len;i++){
+ 	    var file = document.getElementById('select-model').files[i];
+         
+ 	    blobService.createBlockBlobFromBrowserFile('modelblob1', 
+ 	                                                file.name, 
+ 	                                                file, 
+ 	                                                (error, result) => {
+ 	                                                    if(error) {
+ 	                                                        // Handle blob error
+ 	                                                    } else {
+ 	                                                    	
+ 	                                                        console.log(file.name);
+ 	                                                    }
+ 	                                                });
+ 	    FILENAME=file.name;
+ 	    DOWNLOADLINK = blobService.getUrl('modelblob1',file.name );
+ 	    console.log(DOWNLOADLINK);}
+ 		var EXPERIMENTSNAME=document.getElementById('input-model-name').value;
+ 		var ENTERFILE=document.getElementById('input-entry-file').value;
+ 		var PARAMSFILE=document.getElementById('input-train-data').value;
+ 		//var DOWNLOADLINK=downloadLink;
+ 		
+ 			$.ajax({
+ 				type : 'POST',
+ 				url : "/identify",
+ 				dataType:"json",
+ 				headers: {'Authorization': token},
+ 				contentType:"application/json;charset=utf-8;",
+ 				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,DOWNLOADLINK: DOWNLOADLINK,FILENAME: FILENAME}),
+ 				
+ 			success : function(data) {
+ 				if(data.state == 1){alert("done")
+ 				
+ 			}
+ 					else{
+ 						alert("error "+data.state)
+ 					}}}
+
+ 			)}
+ 	function modelup(){
+ 		var EXPERIMENTSNAME=document.getElementById('input-model-name').value;
+ 		var ENTERFILE=document.getElementById('input-entry-file').value;
+ 		var PARAMSFILE=document.getElementById('input-train-data').value;
+ 		
+ 		var PIP_PACKAGES=document.getElementById('input-train-env').value;
+ 		var options1=$("#select-frame-name option:selected");//获取当前选择项.
+ 		var USEDFRAME=options1.text();//获取当前选择项的文本.
+ 		var options2=$("#select-com-name option:selected");
+ 		var COMPUTERTARGER=options2.text();
+ 			$.ajax({
+ 				type : 'POST',
+ 				url : "/model",
+ 				dataType:"json",
+ 				contentType:"application/json;charset=utf-8;",
+ 				headers: {'Authorization': token},
+ 				
+ 				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,USEDFRAME: USEDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
+ 				0
+ 			success : function(data) {
+ 				if(data.state == 1){alert("done")
+ 				
+ 			}
+ 					else{
+ 						alert("erorr "+data.state)
+ 					}}}
+
+ 			)}
+ 	function modelcon(){
+ 		window.location.href="modelcon.html";
+ 	}
+      //ScrollUp
+      $(document).ready(function () {
+        $.scrollUp({
+          scrollName: 'scrollUp', // Element ID
+          topDistance: '300', // Distance from top before showing element (px)
+          topSpeed: 300, // Speed back to top (ms)
+          animation: 'fade', // Fade, slide, none
+          animationInSpeed: 400, // Animation in speed (ms)
+          animationOutSpeed: 400, // Animation out speed (ms)
+          scrollText: 'Scroll to top', // Text for element
+          activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
+      });
+    </script>
+  
+</body>
+</html>

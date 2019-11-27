@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+
+<html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+
+<![endif]-->
+<!--[if IE 7]>
+
+<html class="lt-ie9 lt-ie8" lang="en">
+
+<![endif]-->
+<!--[if IE 8]>
+
+<html class="lt-ie9" lang="en">
+
+<![endif]-->
+<!--[if gt IE 8]>
+<!-->
+
+<html lang="en">
+  
+  <!--
+<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>
+
+3d智能云    
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    
+    <link href="icomoon/style.css" rel="stylesheet">
+    <!--[if lte IE 7]>
+    <script src="css/icomoon-font/lte-ie7.js">
+    </script>
+    <![endif]-->
+  <link href="css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
+  <link href="css/charts-graphs.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">
+        <img src="images/logo10.jpg" alt="logo" />
+      </a>
+      <div class="btn-group">
+        <button class="btn btn-primary" id='nuser'>
+         
+        </button>
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+          <span class="caret">
+          </span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a href="#">
+              Edit Profile
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Account Settings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+      <ul class="mini-nav">
+     
+      </ul>
+      
+    </header>
+    <div class="container-fluid">
+      <div class="dashboard-container">
+        <div class="top-nav">
+          <ul>
+            <li>
+              <a href="index.html" >
+                
+                                                     在线人脸检测
+              </a>
+            </li>
+            <li>
+              <a href="forms.html" >
+                
+                                                   上传数据
+              </a>
+            </li>
+            <li>
+              <a href="graphs.html" >
+                
+                下载数据
+              </a>
+            </li>
+            <li>
+              <a href="ui-elements.html">
+               
+                 上传模型
+              </a>
+            </li>
+            <li>
+              <a href="icons.html" class="selected">
+               
+                在线模型          
+              </a>
+            </li>
+            <li>
+              <a href="tables.html">
+               
+                模型管理
+              </a>
+            </li>
+            <li>
+              <a href="media.html">
+                
+                Mii
+              </a>
+            </li>
+            <li>
+              <a href="calendar.html">
+                
+                Calendar
+              </a>
+            </li>
+            <li>
+              <a href="typography.html">
+               
+                Typography
+              </a>
+            </li>
+            <li>
+              <a href="edit-profile.html">
+                
+                Extras
+              </a>
+            </li>
+          </ul>
+          <div class="clearfix">
+          </div>
+        </div>
+        <div class="dashboard-wrapper">
+          <div class="left-sidebar">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="widget">
+                  <div class="widget-header">
+                    <div class="title">
+                      
+                      模型调用
+                      <span class="mini-title">
+                        请注意模型与文件的匹配
+                      </span>
+                    </div>
+                    <span class="tools">
+                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+                    </span>
+                  </div>
+                  <div class="widget-body">
+                     <div class="HolyGrail-body">
+		<main class=HolyGrail-body></main>
+
+		<nav class="HolyGrail-nav">
+			<input type="file" id="fileinput" /> 
+			<label>选择模型</label>
+			<select id="select-name">
+				<option value="1">11</option>
+				<option value="2">22</option>
+				<option value="3">33</option>
+			</select>
+
+		</nav>
+		<aside class="HolyGrail-ads">
+		<button id="upload-button" class="button" onclick='upload()'>Upload</button>
+		</aside>
+	</div>
+	
+		
+
+		
+	
+
+
+
+
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            
+            
+            
+            
+            
+    <footer>
+      <p>
+        &copy; reinlight 2019
+      </p>
+    </footer>
+    
+    <script src="js/jquery.min.js">
+    </script>
+    <script src="js/bootstrap.js">
+    </script>
+    <script src="js/jquery.scrollUp.js">
+    </script>
+    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+    var obj=document.getElementById('nuser');
+    var nusername=localStorage.getItem("nuid");
+    obj.innerHTML=nusername;
+    var downloadlink=null;
+    const account = {
+name: "cs1f9abf47a9b73x49c3x9c1",
+sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+};
+var dir=null;
+//var filename=null;
+const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+
+var status=0;
+function upload()
+{
+	alert('正在上传，请勿退出');
+	let filename=null;
+var options2=$("#select-name option:selected");//获取当前选择项.
+dir=options2.text();//获取当前选择项的文本.
+console.log(dir);
+var len=document.getElementById('fileinput').files.length;
+for(i=0;i<len;i++){
+    var file = document.getElementById('fileinput').files[i];
+
+   
+blobService.createBlockBlobFromBrowserFile('modelblob1', 
+                                            dir+'/'+file.name, 
+                                            file, 
+                                            (error, result) => {
+                                                if(error) {
+                                                    // Handle blob error
+                                                } else {
+                                                	
+                                                    alert('Upload is successful');
+                                                    
+                                                    filename=file.name;
+                                                    
+                                                   
+                                                    console.log(filename);
+                                              	  blobService.listBlobsSegmentedWithPrefix('modelblob1',dir+'/'+filename, null, (error, results) => {
+                                          	        if (error) {
+                                          	            // Handle list blobs error
+                                          	        } else {
+                                          	        	alert('正在运算，请勿退出');
+                                          	            results.entries.forEach(blob => {
+                                          	                
+                                          	            	downloadlink= blobService.getUrl('modelblob1',blob.name );
+                                          	                console.log(downloadlink);
+                                          	                
+                                          	              $.ajax({
+                                          					type : 'POST',
+                                          					url : "/score",
+                                          					
+                                          					dataType: 'json', 
+                                          				    
+                                          					 
+                                          				  
+                                          					data:{'url':downloadlink},
+                                          					
+                                          				success : function(data) {
+                                          					alert(data.result);
+                                          			 		
+                                          				
+                                          						}}
+
+                                          				)
+                                            }				
+                                          	            );}}); 
+                                                }
+                                            });
+                                            }  }
+    
+    
+    //ScrollUp
+      $(function () {
+        $.scrollUp({
+          scrollName: 'scrollUp', // Element ID
+          topDistance: '300', // Distance from top before showing element (px)
+          topSpeed: 300, // Speed back to top (ms)
+          animation: 'fade', // Fade, slide, none
+          animationInSpeed: 400, // Animation in speed (ms)
+          animationOutSpeed: 400, // Animation out speed (ms)
+          scrollText: 'Scroll to top', // Text for element
+          activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
+      });
+   
+    
+    </script>
+    
+  
+</body>
+</html>

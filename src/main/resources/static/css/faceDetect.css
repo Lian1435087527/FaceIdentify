@@ -53,16 +53,16 @@
     display: block;
     position: relative;
     left: 50%;
-    margin-left: -340px;
+    margin-left: -300px;
 }
 
 .select-img-btn {
     position: relative;
     display: inline-block;
-    height: 40px;
-    line-height: 36px;
-    width: 180px;
-    vertical-align: middle;
+    height: 25px;
+    line-height: 20px;
+    width: 150px;
+    
     background: linear-gradient(135deg, #6e8efb, #a777e3);
 
     border: 0;
@@ -86,7 +86,7 @@
     outline: none;
     background-color: rgba(0,0,0,.45);
 
-    width: 360px;
+    width: 160px;
     font-size: 20px;
     text-indent: 11px;
     border-right: 0;
