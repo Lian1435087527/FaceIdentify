@@ -210,13 +210,9 @@ public class ShellUtils {
 				//停止位置
 				if (msg.startsWith("root@3dformodel:")&&msg.endsWith("# "))
 					break;
-<<<<<<< Upstream, based on origin/master
-			} else if (msg.contains("# ls -al|grep ^-"))
-				// 从上面那条命令开始 判定
-				start = 1;
-=======
+
 			}
->>>>>>> 27cb12b 12-2整合前
+
 		}
 		if (enter == true && params == true)
 			retstate = 1;
