@@ -29,7 +29,7 @@ public class send {
 	public ModelMap getimg(@RequestParam("pic") String pic) {
 		pic=pic.substring(pic.indexOf(",")+1);
 		ModelMap Return=new ModelMap();
-		
+
 		BaseFunctions_I temp=new BaseFunctionsBaidu();
 		//System.out.println(temp.ISExistFace(pic));
 		

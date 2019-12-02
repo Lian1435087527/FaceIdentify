@@ -104,7 +104,8 @@ public class ShellUtils {
 
 		String runupload = "python upload.py" + " --Username " + Username + " --Experimentsname " + Experimentsname
 				+ " --Enterfile " + Enterfile + " --Paramsfile " + Paramsfile + " --Usedframe " + Usedframe
-				+ " --Computertarger " + Computertarger + " --ISblob True";
+				+ " --Computertarger " + Computertarger 
+				+ " --Usedataset True"+" --Dataset faceExpRecdata"+" --Outputfolder fec_model";
 		if (!Pip_packages.equals(""))
 			runupload += (" --Pip_packages " + Pip_packages);
 
@@ -118,19 +119,19 @@ public class ShellUtils {
 		// 返回值判定操作
 		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 		String msg = null;
-		int start = 0;
+		boolean start = true;
 
 		while ((msg = in.readLine()) != null) {
-
-			if (start == 1) {
+			if (start==false&&msg.contains("# python upload.py"))
+				// 从上面那条命令开始 判定					 
+				start = true;
+			if (start == true) {
 				System.out.println(msg);
-				if (msg.contains("create complete")) {
+				if (msg.contains("root@3dformodel:")&&msg.endsWith("# ")) {
 					retstate = 1;
 					break;
 				}
-			} else if (msg.contains("python upload.py"))
-				// 从上面那条命令开始 判定
-				start = 1;
+			}
 		}
 		in.close();
 		return retstate;
@@ -189,14 +190,16 @@ public class ShellUtils {
 		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 
 		String msg = null;
-		int start = 0;
+		boolean start = false;
 		// 检查入口文件名是否正确
 		boolean enter = false, params = false;
 		String eNTERFILE = (String) map.get("ENTERFILE");
 		String Paramsfile = (String) map.get("PARAMSFILE");
 		while ((msg = in.readLine()) != null) {
-
-			if (start == 1) {
+			if (start==false&&msg.contains("# ls -al|grep ^-"))//msg.contains("ls -al|grep ^-")
+				// 从上面那条命令开始 判定
+				start = true; 
+			if (start == true) {
 				// XXX 需要结果取消下面代码的注释
 				System.out.println(msg);
 				// 如果检测到文件名 进行标记
@@ -204,11 +207,16 @@ public class ShellUtils {
 					enter = true;
 				if (msg.contains(Paramsfile))
 					params = true;
-				if (msg.startsWith("root@3dformodel:"))
+				//停止位置
+				if (msg.startsWith("root@3dformodel:")&&msg.endsWith("# "))
 					break;
+<<<<<<< Upstream, based on origin/master
 			} else if (msg.contains("# ls -al|grep ^-"))
 				// 从上面那条命令开始 判定
 				start = 1;
+=======
+			}
+>>>>>>> 27cb12b 12-2整合前
 		}
 		if (enter == true && params == true)
 			retstate = 1;

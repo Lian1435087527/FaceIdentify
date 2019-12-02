@@ -45,11 +45,11 @@ public class moddefi {
 	@RequestMapping("/identify")
 	@ResponseBody
 	public ModelMap upload(@RequestBody Map<String, Object> map) {
-
+		
 		ModelMap Return = new ModelMap();
 		
 		int ret = ShellUtils.TestShell(IP, PORT, USERNAME, PASSWORD, map, 0);
-
+		
 		Return.put("state", ret);
 
 		return Return;

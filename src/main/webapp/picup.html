@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<<<<<<< Upstream, based on origin/master
 <link href="/css/picdown.css" rel="stylesheet" type="text/css" />
+=======
+<body>
+>>>>>>> 27cb12b 12-2整合前
 
+<<<<<<< Upstream, based on origin/master
    <body class=container>
 <header> </header>  
  <div class="HolyGrail-body">   
@@ -21,7 +26,10 @@
                 </select>
 </nav>
 <aside class="HolyGrail-ads">
+=======
+>>>>>>> 27cb12b 12-2整合前
 
+<<<<<<< Upstream, based on origin/master
 </aside>
 </div>
 <footer> <button id="upload-button" class="button">Upload</button>
@@ -30,6 +38,18 @@
 </footer>
 
     <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+=======
+	<input type="file" id="fileinput" multiple />
+	<button id="upload-button">Upload</button>
+
+	<button id="list-button">List</button>
+
+	<button id="delete-button" hidden=hidden>Delete</button>
+
+</body>
+<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+<script>
+>>>>>>> 27cb12b 12-2整合前
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
@@ -63,7 +83,11 @@ document.getElementById('upload-button').addEventListener('click', () =>{
     var file = document.getElementById('fileinput').files[i];
 
     blobService.createBlockBlobFromBrowserFile('modelblob1', 
+<<<<<<< Upstream, based on origin/master
                                                 dir+'/'+file.name, 
+=======
+                                                '111/'+file.name, 
+>>>>>>> 27cb12b 12-2整合前
                                                 file, 
                                                 (error, result) => {
                                                     if(error) {
