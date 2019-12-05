@@ -8,7 +8,7 @@ public class begin {
 
 	@RequestMapping(value="/")
 	public String hello() {
-		return "login";
+		return "login1";
 		
 	}
 	

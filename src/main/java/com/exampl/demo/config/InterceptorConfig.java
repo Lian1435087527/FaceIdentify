@@ -15,9 +15,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/faceDetect.html/**")
                 .addPathPatterns("/modelcon.html/**")
                 .addPathPatterns("/modelup.html/**")
-                .addPathPatterns("picdown.html/**")
-                .addPathPatterns("/picup.html/**")
-                .addPathPatterns("/usemodel.html/**");
+                //.addPathPatterns("picdown.html/**")
+                //.addPathPatterns("/picup.html/**")
+                .addPathPatterns("/index.html/**")
+                .addPathPatterns("/icons.html/**")
+                .addPathPatterns("/ui-elements.html/**")
+                .addPathPatterns("/graphs.html/**")
+                .addPathPatterns("/forms.html/**");
     }
     @Bean
     public AuthenticationInterceptor authenticationInterceptor() {

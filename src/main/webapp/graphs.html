@@ -41,109 +41,7 @@
 
   </head>
   <body>
-    <header>
-      <a href="#" class="logo">
-        <img src="images/logo10.jpg" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary" id='nuser'>
-         
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Account Settings
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-      <ul class="mini-nav">
-     
-      </ul>
-      
-    </header>
-    <div class="container-fluid">
-      <div class="dashboard-container">
-        <div class="top-nav">
-          <ul>
-            <li>
-              <a href="index.html" >
-                
-                                                     在线人脸检测
-              </a>
-            </li>
-            <li>
-              <a href="forms.html" >
-                
-                                                   上传数据
-              </a>
-            </li>
-            <li>
-              <a href="graphs.html" class="selected">
-                
-                下载数据
-              </a>
-            </li>
-            <li>
-              <a href="ui-elements.html">
-               
-                 上传模型
-              </a>
-            </li>
-            <li>
-              <a href="icons.html">
-               
-                在线模型          
-              </a>
-            </li>
-            <li>
-              <a href="tables.html">
-               
-                模型管理
-              </a>
-            </li>
-            <li>
-              <a href="media.html">
-                
-                Mii
-              </a>
-            </li>
-            <li>
-              <a href="calendar.html">
-                
-                Calendar
-              </a>
-            </li>
-            <li>
-              <a href="typography.html">
-               
-                Typography
-              </a>
-            </li>
-            <li>
-              <a href="edit-profile.html">
-                
-                Extras
-              </a>
-            </li>
-          </ul>
-          <div class="clearfix">
-          </div>
-        </div>
+ 
         <div class="dashboard-wrapper">
           <div class="left-sidebar">
             <div class="row-fluid">
@@ -164,8 +62,12 @@
                   <div class="widget-body">
                      <div class="HolyGrail-body">   
   <main class=HolyGrail-body>
-     
-    <table id="table" border="1" height=500px width=200px ></table>
+     <div id="btlist"> 
+     <button id="down" class=button onclick="downloadImg_p()">download</button>
+        <button id="move" class=button onclick="move_p()">move</button>
+        <button id="deleted" class=button onclick="deleted_p()">delete</button>
+        </div>
+         <table id="table" border="1" height=500px width=200px ></table>
      
         
     
@@ -177,7 +79,7 @@
     </main>
      
  <nav class="HolyGrail-nav">
-  <label>选择</label>
+  
    <select id="select-dir-name">
                     <option value="1">111</option>
                     <option value="2">facede</option>
@@ -192,6 +94,22 @@
 <button class=button id="next">》</button>
 </aside>
 </div>
+<div id="popLayer"></div>
+<div id="popBox">
+    <div class="close">
+        <a href="javascript:void(0)" onclick="closeBox()">关闭</a>
+    </div>
+    <div class="content">
+    <label>请选择要移到的文件夹</label>
+<select  id="select-move-dir-name">
+                    <option value="1">111</option>
+                    <option value="2">facede</option>
+                    <option value="3">face</option>
+                    <option value="4">11</option>
+                </select>
+<button id="confirm">确定</button>
+</div>
+</div>
 
 
 
@@ -205,18 +123,13 @@
               </div>
             </div>
             </div>
-            </div>
-            </div>
+           
             
             
             
             
             
-    <footer>
-      <p>
-        &copy; reinlight 2019
-      </p>
-    </footer>
+  
     <script src="js/jquery.min.js">
     </script>
     <script src="js/bootstrap.js">
@@ -228,17 +141,15 @@
     <!-- Sparkline JS -->
     <script src="js/jquery.sparkline.js">
     </script>
-    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+    <script src="/js/azure-storage.blob.min.js" charset="utf-8">
+    </script>
 <script>
-var obj=document.getElementById('nuser');
-var nusername=localStorage.getItem("nuid");
-obj.innerHTML=nusername;
+
 const table = document.getElementById('table');
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const pages = document.getElementById('pages'); 
-var options1=$("#select-dir-name option:selected");//获取当前选择项.
-var dir=options1.text();//获取当前选择项的文本.
+
 const account = {
 		    name: "cs1f9abf47a9b73x49c3x9c1",
 		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
@@ -256,9 +167,11 @@ var j=0;
 
 var downloadLink=new Array();
 var blobname=new Array();
+var chosen=new Array();
+var todo=new Array();
 files=document.getElementById("file");
 function list(prefix) {
-	
+	    
 	    blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results) => {
 	        if (error) {
 	            // Handle list blobs error
@@ -268,7 +181,7 @@ function list(prefix) {
 	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
 	            	//console.log(downloadLink[i]);
 	            	//document.getElementById(j).innerHTML=blob.name;
-	            	
+	            	chosen[j]=j;
 	            	//console.log(i);
 	            	//files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
 	            	j++;
@@ -287,8 +200,12 @@ function list(prefix) {
 		
 		table.innerHTML =
             `<thead>
+		<th>选                择</th>
         <th>名称</th>
         <th>下载链接</th>
+        <th>移动</th>
+        <th>删除</th>
+        
         
     </thead>`;
 
@@ -300,23 +217,28 @@ function list(prefix) {
         }
 
 　　　//渲染该页对应的数据
+   
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
-            table.innerHTML +=
+        	
+          
+        	table.innerHTML +=
                 `<tr>
-        <td>${blobname[i]}</td>
+        <td ><input width=90px type="checkbox" id='${chosen[i]}' value="" /></td>
+        <td>${blobname[i]+"+"+i}</td>
         
-        <td ><button id="down" class=button value=${downloadLink[i]}  onclick="downloadImg(this.value)">downloadLink</button></td>
-        
-        
+        <td ><button id="down" class=button onclick="downloadImg('${downloadLink[i]}')">downloadLink</button></td>
+        <td ><button id="move" class=button onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button></td>
+        <td ><button id="deleted" class=button onclick="deleted('${blobname[i]}')">delete1</button></td>
     </tr>`;
             
-    
+            
         }
     }
        
 function listfile(){
 		var options1=$("#select-dir-name option:selected");//获取当前选择项.
 		var dir=options1.text();//获取当前选择项的文本.
+		
 		list(dir);
 		setTimeout("render();","3000"); 
 	
@@ -345,6 +267,56 @@ next.onclick = function () {
     }
 }
 
+function move(downloadLink,blobname){
+	var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    var downloadLink1=downloadLink;
+    var blobname1=blobname;
+    document.getElementById('confirm').addEventListener('click', () => {
+    	 movereal(downloadLink1,blobname1);
+	
+	});}
+
+function movereal(downloadLink,blobname){
+	
+	let options2=$("#select-move-dir-name option:selected");//获取当前选择项.
+	let dir=options2.text();//获取当前选择项的文本.
+	let url =downloadLink;  
+	 let blob=blobname;
+	 let index1 = blob.indexOf("/");
+	 let sub_blob = blob.substring(index1+1);
+	 
+	 
+	 blobService.createBlockBlobFromText('modelblob1',dir+"/"+sub_blob,"tee",(error, Response) => {
+		 if (error) {
+	            // Handle list blobs error
+	        } else {
+	        	
+	            console.log(Response);
+	            blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
+	            	 if (error) {
+	            		 alert("error");
+	     	        } 
+	            	 else {
+	     	        	 alert("ok");
+	     	        }
+	            });
+	            	
+	            	
+	            
+	        }
+	    });
+}	
+
+function closeBox() {
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "none";
+    popLayer.style.display = "none";
+}
+
 
 function downloadImg(downloadLink){
     
@@ -353,10 +325,47 @@ function downloadImg(downloadLink){
     let url =downloadLink            
     let a = document.createElement("a");          // 创建一个a节点插入的document
     let event = new MouseEvent("click");           // 模拟鼠标click点击事件
-    a.download = 'tepic';                  // 设置a节点的download属性值
+    a.download = 'tepic';    /              // 设置a节点的download属性值
     a.href = url;                                 // 将图片的src赋值给a节点的href
     a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
  }
+function deleted(blobname){
+	var truthBeTold = window.confirm("是否确定删除？")
+	if(truthBeTold){
+	//let blob=blobname;
+	console.log(blob);
+blobService.deleteBlobIfExists('modelblob1', blob, function(error, result) {
+    if (error) {
+        alert ("删除失败");
+    } else {
+    	listfile();
+        alert("删除成功");
+        
+    }
+});}}
+function downloadImg_p(){
+	try{
+	for(let k=0;k<j;k++){
+		var xxo=k;
+		var xxe = document.getElementById(xxo);
+		
+		if(xxe.checked==true){
+			todo.push(xxe.id);
+			
+		
+	}}}
+		
+		
+		
+		catch{
+			for(let n=0;n<todo.length;n++){
+				let z=todo[n];
+				console.log(blobname[z]);
+				deleted('${blobname[z]}');
+				}
+			}
+	}
+	
 
 </script>
    

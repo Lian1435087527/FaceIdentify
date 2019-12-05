@@ -83,71 +83,54 @@
         <div class="top-nav">
           <ul>
             <li>
-              <a href="index.html" class="selected" id="ce">
+              <a href="index.html" class="selected" id="ce0">
                 
                                                      在线人脸检测
               </a>
             </li>
             <li>
-              <a href="forms.html">
+              <a onclick="load_home(this)" class="" id="ce1">
                 
                                                    上传数据
               </a>
             </li>
             <li>
-              <a href="graphs.html">
+              <a onclick="load_home(this)" class="" id="ce2">
                 
                 下载数据
               </a>
             </li>
             <li>
-              <a href="ui-elements.html">
+              <a onclick="load_home(this)" class="" id="ce3">
                
                  上传模型
               </a>
             </li>
             <li>
-              <a href="icons.html">
+              <a onclick="load_home(this)" class="" id="ce4">
                
                 在线模型          
               </a>
             </li>
             <li>
-              <a href="tables.html">
+              <a onclick="load_home(this)" class="" id="ce5">
                
                 模型管理
               </a>
             </li>
-            <li>
-              <a href="media.html">
-                
-                Mii
-              </a>
-            </li>
-            <li>
-              <a href="calendar.html">
-                
-                Calendar
-              </a>
-            </li>
-            <li>
-              <a href="typography.html">
+             <li>
+              <a onclick="load_home(this)" class="" id="ce6">
                
-                Typography
+                文件管理
               </a>
             </li>
-            <li>
-              <a href="edit-profile.html">
-                
-                Extras
-              </a>
-            </li>
+           
           </ul>
           <div class="clearfix">
           </div>
         </div>
        
-        <div class="dashboard-wrapper">
+        <div class="dashboard-wrapper" id="htbody" height=800px>
           
           <div class="left-sidebar">
             
@@ -316,10 +299,46 @@ function test(){
      
 
 
-function load_home() {
-	 document.getElementById("htbody").innerHTML = '<object type="text/html" data="forms.html" width="100%" height="100%"></object>';
+function load_home(ele) {
+	var x=document.getElementsByClassName('selected');
+	
+	var i;
+	for (i = 0; i <x.length; i++) {
+	   x[i].className= null;
+	}
+	switch(ele.id){
+		case "ce1":
+			
+	        document.getElementById("htbody").innerHTML = '<object type="text/html" data="forms.html" width="100%" height=700px></object>';
+	        $("#ce1").attr("class", "selected");
+	        break;
+		case "ce2":
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="graphs.html" width="100%" height=700px></object>';
+            $("#ce2").attr("class", "selected");
+            break;
+		case "ce3":
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="ui-elements.html" width="100%" height=700px></object>';
+            $("#ce3").attr("class", "selected");
+            break;
+		case "ce4":
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="icons.html" width="100%" height=700px></object>';
+            $("#ce4").attr("class", "selected");
+            break;
+		case "ce5":
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="tables.html" width="100%" height=700px></object>';
+            $("#ce5").attr("class", "selected");
+            break;
+		case "ce6":
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="index_1.html" width="100%" height=700px></object>';
+            $("#ce6").attr("class", "selected");
+            break;
+		
+            
+            
+        
 	   }
-	load_home();
+	}
+	
     </script>
     
     

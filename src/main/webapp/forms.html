@@ -44,109 +44,7 @@
   <link href="/css/picdown.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <header>
-      <a href="#" class="logo">
-        <img src="images/logo10.jpg" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary" id='nuser'>
-          
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Account Settings
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-      <ul class="mini-nav">
-     
-      </ul>
-      
-    </header>
-    <div class="container-fluid">
-      <div class="dashboard-container">
-        <div class="top-nav">
-          <ul>
-            <li>
-              <a href="index.html" >
-                
-                                                     在线人脸检测
-              </a>
-            </li>
-            <li>
-              <a href="forms.html" class="selected">
-                
-                                                   上传数据
-              </a>
-            </li>
-            <li>
-              <a href="graphs.html">
-                
-                下载数据
-              </a>
-            </li>
-            <li>
-              <a href="ui-elements.html">
-               
-                 上传模型
-              </a>
-            </li>
-            <li>
-              <a href="icons.html">
-               
-                在线模型          
-              </a>
-            </li>
-            <li>
-              <a href="tables.html">
-               
-                模型管理
-              </a>
-            </li>
-            <li>
-              <a href="media.html">
-                
-                Mii
-              </a>
-            </li>
-            <li>
-              <a href="calendar.html">
-                
-                Calendar
-              </a>
-            </li>
-            <li>
-              <a href="typography.html">
-               
-                Typography
-              </a>
-            </li>
-            <li>
-              <a href="edit-profile.html">
-                
-                Extras
-              </a>
-            </li>
-          </ul>
-          <div class="clearfix">
-          </div>
-        </div>
+
         <div class="dashboard-wrapper">
           <div class="left-sidebar">
             <div class="row-fluid">
@@ -182,7 +80,7 @@
 </nav>
 <aside class="HolyGrail-ads">
 <input type="file" id="upload1" multiple/>
-<button id="upload-button" class="button" >Upload</button>
+<button id="selectButton" class="button" >Upload</button>
 </aside>
 </div>
 
@@ -197,18 +95,13 @@
               </div>
             </div>
             </div>
-            </div>
-            </div>
+           
             
             
             
             
             
-    <footer>
-      <p>
-        &copy; reinlight 2019
-      </p>
-    </footer>
+  
      <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
     <script src="js/wysiwyg/wysihtml5-0.3.0.js">
     </script>
@@ -235,51 +128,37 @@
     
     
     <script type="text/javascript">
-    var obj=document.getElementById('nuser');
-    var nusername=localStorage.getItem("nuid");
-    obj.innerHTML=nusername;
-    let downloadlink=new Array(5).fill(0);//[0,0,0,0,0]
-    const account = {
-name: "cs1f9abf47a9b73x49c3x9c1",
-sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
+   
 
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
-/*document.getElementById('create-button').addEventListener('click', () => {
 
-blobService.createContainerIfNotExists('mycontainer',  (error, container) => {
-    if (error) {
-        // Handle create container error
-    } else {
-        console.log(container.name);
+const accountName = "cs1f9abf47a9b73x49c3x9c1";
+const sasString = "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D";
+const containerName = "modelblob1";
+const containerURL = new azblob.ContainerURL(
+    `https://${accountName}.blob.core.windows.net/${containerName}?${sasString}`,
+    azblob.StorageURL.newPipeline(new azblob.AnonymousCredential));
+
+
+
+
+const uploadFiles = async () => {
+    try {
+    	let options2=$("#select-name option:selected");//获取当前选择项.
+    	let dir=options2.text();//获取当前选择项的文本.
+        const promises = [];
+        for (const file of fileInput.files) {
+            const blockBlobURL = azblob.BlockBlobURL.fromContainerURL(containerURL,dir+"/"+ file.name);
+            promises.push(azblob.uploadBrowserDataToBlockBlob(
+                azblob.Aborter.none, file, blockBlobURL));
+        }
+        await Promise.all(promises);
+        alert("upload is successful")
+    } catch (error) {
+        
     }
-});
-54667894153475616
+}
 
-});*/
-
-document.getElementById('upload-button').addEventListener('click', () =>{
-var options2=$("#select-name option:selected");//获取当前选择项.
-var dir=options2.text();//获取当前选择项的文本.
-console.log(dir);
-var len=document.getElementById('upload1').files.length;
-for(i=0;i<len;i++){
-var file = document.getElementById('upload1').files[i];
-
-blobService.createBlockBlobFromBrowserFile('modelblob1', 
-                                            dir+'/'+file.name, 
-                                            file, 
-                                            (error, result) => {
-                                                if(error) {
-                                                    // Handle blob error
-                                                } else {
-                                                	
-                                                    alert('Upload is successful');
-                                                }
-                                            });
-
-}});  
+selectButton.addEventListener("click",uploadFiles);
     
     
     
@@ -297,219 +176,7 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
         });
       });
 
-      //Tooltip
-      $('a').tooltip('hide');
-
-      //Popover
-      $('.popover-pop').popover('hide');
-
-      //Collapse
-      $('#myCollapsible').collapse({
-        toggle: false
-      })
-
-      //Tabs
-      $('.myTabBeauty a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-      })
-
-      //Dropdown
-      $('.dropdown-toggle').dropdown();
-
-      //wysihtml5
-      $('#wysiwyg').wysihtml5();
-
-      //Color picker
-      $('.colorpicker').colorpicker();
-
-      //Bootstrap Timepicker
-      $('#timepicker1').timepicker();
-
-      $('#timepicker2').timepicker({
-        minuteStep: 1,
-        secondStep: 5,
-        showInputs: false,
-        template: 'modal',
-        modalBackdrop: true,
-        showSeconds: true,
-        showMeridian: false
-      });
-
-      $('#timepicker3').timepicker({
-        minuteStep: 5,
-        secondStep: 30,
-        showInputs: false,
-        showSeconds: true,
-        showMeridian: false
-      });
-
-
-      //Time Picker Clockface Plugin
-      $(function () {
-
-        $('#time1').clockface({
-          format: 'HH:mm',
-          trigger: 'manual'
-        });
-
-        $('#toggle-btn').click(function (e) {
-          e.stopPropagation();
-          $('#time1').clockface('toggle');
-        });
-
-      });
-
-      //Date picker
-      $('.date_picker').daterangepicker({
-        opens: 'right'
-      });
-
-      //Date Picker
-
-      $('.report_range').daterangepicker({
-        ranges: {
-          'Today': ['today', 'today'],
-          'Yesterday': ['yesterday', 'yesterday'],
-          'Last 7 Days': [Date.today().add({
-            days: -6
-          }), 'today'],
-          'Last 30 Days': [Date.today().add({
-            days: -29
-          }), 'today'],
-          'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
-          'Last Month': [Date.today().moveToFirstDayOfMonth().add({
-            months: -1
-          }), Date.today().moveToFirstDayOfMonth().add({
-            days: -1
-          })]
-        },
-        opens: 'right',
-        format: 'MM/dd/yyyy',
-        separator: ' to ',
-        startDate: Date.today().add({
-          days: -29
-        }),
-        endDate: Date.today(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2014',
-        locale: {
-          applyLabel: 'Submit',
-          fromLabel: 'From',
-          toLabel: 'To',
-          customRangeLabel: 'Custom Range',
-          daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-          monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-          firstDay: 1
-        },
-        showWeekNumbers: true,
-        buttonClasses: ['btn-danger']
-      },
-
-      function (start, end) {
-        $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
-      });
-
-      //Set the initial state of the picker label
-      $('.report_range span').html(Date.today().add({
-        days: -29
-      }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
-
-
-      //Wizard Progressbar
-
-      $('#inverse').bootstrapWizard({
-        'tabClass': 'nav',
-        'debug': false,
-        onShow: function (tab, navigation, index) {
-          console.log('onShow');
-        },
-        onNext: function (tab, navigation, index) {
-          console.log('onNext');
-          if (index == 2) {
-            // Make sure we entered the name
-            if (!$('#name').val()) {
-              alert('You must enter your name');
-              $('#name').focus();
-              return false;
-            }
-          }
-
-          // Set the name for the next tab
-          $('#inverse-tab3').html('Hello, ' + $('#name').val());
-
-        },
-        onPrevious: function (tab, navigation, index) {
-          console.log('onPrevious');
-        },
-        onLast: function (tab, navigation, index) {
-          console.log('onLast');
-        },
-        onTabClick: function (tab, navigation, index) {
-          console.log('onTabClick');
-          alert('on tab click disabled');
-          return false;
-        },
-        onTabShow: function (tab, navigation, index) {
-          console.log('onTabShow');
-          var $total = navigation.find('li').length;
-          var $current = index + 1;
-          var $percent = ($current / $total) * 100;
-          $('#inverse').find('.bar').css({
-            width: $percent + '%'
-          });
-        }
-      });
-
-
-      //Wizard Progressbar tabs left
-
-      $('#tabsleft').bootstrapWizard({
-        'tabClass': 'nav nav-tabs',
-        'debug': false,
-        onShow: function (tab, navigation, index) {
-          console.log('onShow');
-        },
-        onNext: function (tab, navigation, index) {
-          console.log('onNext');
-        },
-        onPrevious: function (tab, navigation, index) {
-          console.log('onPrevious');
-        },
-        onLast: function (tab, navigation, index) {
-          console.log('onLast');
-        },
-        onTabClick: function (tab, navigation, index) {
-          console.log('onTabClick');
-
-        },
-        onTabShow: function (tab, navigation, index) {
-          console.log('onTabShow');
-          var $total = navigation.find('li').length;
-          var $current = index + 1;
-          var $percent = ($current / $total) * 100;
-          $('#tabsleft').find('.bar').css({
-            width: $percent + '%'
-          });
-
-          // If it's the last tab then hide the last button and show the finish instead
-          if ($current >= $total) {
-            $('#tabsleft').find('.pager .next').hide();
-            $('#tabsleft').find('.pager .finish').show();
-            $('#tabsleft').find('.pager .finish').removeClass('disabled');
-          } else {
-            $('#tabsleft').find('.pager .next').show();
-            $('#tabsleft').find('.pager .finish').hide();
-          }
-
-        }
-      });
-
-
-      $('#tabsleft .finish').click(function () {
-        alert('Finished!, Starting over!');
-        $('#tabsleft').find("a[href*='tabsleft-tab1']").trigger('click');
-      });
+     
     </script>
   
 </body>
