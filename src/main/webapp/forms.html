@@ -80,7 +80,7 @@
 </nav>
 <aside class="HolyGrail-ads">
 <input type="file" id="upload1" multiple/>
-<button id="selectButton" class="button" >Upload</button>
+<button id="upload-button" class="button" >Upload</button>
 </aside>
 </div>
 
@@ -128,41 +128,50 @@
     
     
     <script type="text/javascript">
-   
+
+        const account = {
+            name: "cs1f9abf47a9b73x49c3x9c1",
+            sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+        };
+
+        const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+        const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+        /*document.getElementById('create-button').addEventListener('click', () => {
+
+        blobService.createContainerIfNotExists('mycontainer',  (error, container) => {
+            if (error) {
+                // Handle create container error
+            } else {
+                console.log(container.name);
+            }
+        });
 
 
-const accountName = "cs1f9abf47a9b73x49c3x9c1";
-const sasString = "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D";
-const containerName = "modelblob1";
-const containerURL = new azblob.ContainerURL(
-    `https://${accountName}.blob.core.windows.net/${containerName}?${sasString}`,
-    azblob.StorageURL.newPipeline(new azblob.AnonymousCredential));
+        });*/
 
+        document.getElementById('upload-button').addEventListener('click', () =>{
+            var options2=$("#select-name option:selected");//获取当前选择项.
+            var dir=options2.text();//获取当前选择项的文本.
+            console.log(dir);
+            var len=document.getElementById('upload1').files.length;
+            for(i=0;i<len;i++){
+                var file = document.getElementById('upload1').files[i];
 
+                blobService.createBlockBlobFromBrowserFile('modelblob1',
+                    dir+'/'+file.name,
+                    file,
+                    (error, result) => {
+                        if(error) {
+                            // Handle blob error
+                        } else {
 
+                            alert('Upload is successful');
+                        }
+                    });
 
-const uploadFiles = async () => {
-    try {
-    	let options2=$("#select-name option:selected");//获取当前选择项.
-    	let dir=options2.text();//获取当前选择项的文本.
-        const promises = [];
-        for (const file of fileInput.files) {
-            const blockBlobURL = azblob.BlockBlobURL.fromContainerURL(containerURL,dir+"/"+ file.name);
-            promises.push(azblob.uploadBrowserDataToBlockBlob(
-                azblob.Aborter.none, file, blockBlobURL));
-        }
-        await Promise.all(promises);
-        alert("upload is successful")
-    } catch (error) {
-        
-    }
-}
+            }});
 
-selectButton.addEventListener("click",uploadFiles);
-    
-    
-    
-    //ScrollUp
+        //ScrollUp
       $(function () {
         $.scrollUp({
           scrollName: 'scrollUp', // Element ID
@@ -176,7 +185,7 @@ selectButton.addEventListener("click",uploadFiles);
         });
       });
 
-     
+
     </script>
   
 </body>
