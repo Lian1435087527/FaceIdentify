@@ -8,7 +8,8 @@ function logout(){
 		var flag = confirm("确定要退出吗？");
 		if(flag==true){
 			localStorage.setItem("nuid",null);
-			window.location.href="login.html";
+			localStorage.setItem("token",null);
+			window.location.href="login1.html";
 		}
 		}
 }

@@ -16,7 +16,7 @@
  </main>
      
  <nav class="HolyGrail-nav">
-  <input type="file" id="fileinput" multiple/>
+  <input type="file" id="fileInput" multiple/>
        
    
    <select id="select-name">
@@ -32,11 +32,12 @@
 <<<<<<< Upstream, based on origin/master
 </aside>
 </div>
-<footer> <button id="upload-button" class="button">Upload</button>
+<footer> <button id="selectButton" class="button">Upload</button>
 
        
 </footer>
 
+<<<<<<< HEAD
     <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
 =======
 	<input type="file" id="fileinput" multiple />
@@ -50,30 +51,44 @@
 <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
 <script>
 >>>>>>> 27cb12b 12-2整合前
+=======
+    <script src="/js/azure-storage-blob.min.js" charset="utf-8"></script>
+>>>>>>> refs/remotes/origin/master
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
-    let downloadlink=new Array(5).fill(0);//[0,0,0,0,0]
-        const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
+    
+    const accountName = "cs1f9abf47a9b73x49c3x9c1";
+    const sasString = "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D";
+    const containerName = "modelblob1";
+    const containerURL = new azblob.ContainerURL(
+        `https://${accountName}.blob.core.windows.net/${containerName}?${sasString}`,
+        azblob.StorageURL.newPipeline(new azblob.AnonymousCredential));
 
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
-/*document.getElementById('create-button').addEventListener('click', () => {
 
-    blobService.createContainerIfNotExists('mycontainer',  (error, container) => {
-        if (error) {
-            // Handle create container error
-        } else {
-            console.log(container.name);
+
+
+    const uploadFiles = async () => {
+        try {
+        	let options2=$("#select-name option:selected");//获取当前选择项.
+        	let dir=options2.text();//获取当前选择项的文本.
+            const promises = [];
+            for (const file of fileInput.files) {
+                const blockBlobURL = azblob.BlockBlobURL.fromContainerURL(containerURL,dir+"/"+ file.name);
+                promises.push(azblob.uploadBrowserDataToBlockBlob(azblob.Aborter.none, file, blockBlobURL));
+                console.log(blockBlobURL.url); 
+            }
+            await Promise.all(promises);
+            alert("upload is successful")
+        } catch (error) {
+            
         }
-    });
-    54667894153475616
+    }
 
-});*/
+    selectButton.addEventListener("click",uploadFiles);
+    //fileInput.addEventListener("change", uploadFiles);
 
+<<<<<<< HEAD
 document.getElementById('upload-button').addEventListener('click', () =>{
 	var options2=$("#select-name option:selected");//获取当前选择项.
 	var dir=options2.text();//获取当前选择项的文本.
@@ -99,6 +114,9 @@ document.getElementById('upload-button').addEventListener('click', () =>{
                                                 });
 
 	}});
+=======
+	
+>>>>>>> refs/remotes/origin/master
 /*document.getElementById('list-button').addEventListener('click', () => {
      
 	 blobService.listBlobsSegmentedWithPrefix('modelblob1',dir+'/', null, (error, results) => {

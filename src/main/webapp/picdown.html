@@ -172,12 +172,13 @@ function list(prefix) {
 
 　　　//渲染该页对应的数据
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+        
             table.innerHTML +=
                 `<tr>
         <td>${blobname[i]}</td>
         
-        <td ><button id="down" class=button value=${downloadLink[i]}  onclick="downloadImg(this.value)">downloadLink</button></td>
-        
+        <td ><button id="down" class=button  onclick="downloadImg('${downloadLink[i]}')">downloadLink</button></td>
+        <td ><button id="move" class=button   onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button></td>
         
     </tr>`;
             
@@ -215,13 +216,54 @@ next.onclick = function () {
         alert('当前为最后一页！')
     }
 }
-
+function listdir(){
+	 blobService.listBlobDirectoriesSegmented('modelblob1', null, (error, results) => {
+	        if (error) {
+	            // Handle list blobs error
+	        } else {
+	            console.log(results.entries);
+	                
+	            	
+	            	
+	            
+	        }
+	    });
+}
+function move(downloadLink,blobname,dirmo)
+{   
+	 let url =downloadLink;  
+	 let blob=blobname;
+	 let dir=dirmo;
+	 //console.log(url);
+	// console.log(blob);
+	 blobService.createBlockBlobFromText('modelblob1',dir+"/"+blob,"tee",(error, Response) => {
+		 if (error) {
+	            // Handle list blobs error
+	        } else {
+	        	
+	            console.log(Response);
+	            blobService.startCopyBlob(url, 'modelblob1', "11/333", (error,results) => {
+	            	 if (error) {
+	            		 alert("error");
+	     	        } 
+	            	 else {
+	     	        	 alert("ok");
+	     	        }
+	            });
+	            	
+	            	
+	            
+	        }
+	    });
+	
+	
+	}
 
 function downloadImg(downloadLink){
     
     
     
-    let url =downloadLink            
+    let url =downloadLink;            
     let a = document.createElement("a");          // 创建一个a节点插入的document
     let event = new MouseEvent("click");           // 模拟鼠标click点击事件
     a.download = 'tepic';                  // 设置a节点的download属性值

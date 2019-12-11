@@ -47,109 +47,7 @@
   
   </head>
   <body>
-    <header>
-      <a href="#" class="logo">
-        <img src="images/logo10.jpg" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary" id='nuser'>
-         
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Account Settings
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-      <ul class="mini-nav">
-     
-      </ul>
-      
-    </header>
-    <div class="container-fluid">
-      <div class="dashboard-container">
-        <div class="top-nav">
-          <ul>
-            <li>
-              <a href="index.html" >
-                
-                                                     在线人脸检测
-              </a>
-            </li>
-            <li>
-              <a href="forms.html" >
-                
-                                                   上传数据
-              </a>
-            </li>
-            <li>
-              <a href="graphs.html" >
-                
-                下载数据
-              </a>
-            </li>
-            <li>
-              <a href="ui-elements.html" class="selected">
-               
-                 上传模型
-              </a>
-            </li>
-            <li>
-              <a href="icons.html">
-               
-                在线模型          
-              </a>
-            </li>
-            <li>
-              <a href="tables.html">
-               
-                模型管理
-              </a>
-            </li>
-            <li>
-              <a href="media.html">
-                
-                Mii
-              </a>
-            </li>
-            <li>
-              <a href="calendar.html">
-                
-                Calendar
-              </a>
-            </li>
-            <li>
-              <a href="typography.html">
-               
-                Typography
-              </a>
-            </li>
-            <li>
-              <a href="edit-profile.html">
-                
-                Extras
-              </a>
-            </li>
-          </ul>
-          <div class="clearfix">
-          </div>
-        </div>
+    
         <div class="dashboard-wrapper">
           <div class="left-sidebar">
             <div class="row-fluid">
@@ -238,18 +136,13 @@
               </div>
             </div>
             </div>
-            </div>
-            </div>
             
             
             
             
             
-    <footer>
-      <p>
-        &copy; reinlight 2019
-      </p>
-    </footer>
+            
+    
     <script src="js/jquery.min.js">
     </script>
 
@@ -261,16 +154,14 @@
     <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
     
     <script type="text/javascript">
-      
+    </script>
 
     <script src="js/jquery.min.js">
     </script>
     <script src="js/jquery.scrollUp.js">
     </script>
      <script type="text/javascript">
-     var obj=document.getElementById('nuser');
-     var nusername=localStorage.getItem("nuid");
-     obj.innerHTML=nusername;
+   
      const account = {
  		    name: "cs1f9abf47a9b73x49c3x9c1",
  		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
@@ -342,8 +233,9 @@
  				headers: {'Authorization': token},
  				
  				data:JSON.stringify({EXPERIMENTSNAME: EXPERIMENTSNAME,ENTERFILE:ENTERFILE,PARAMSFILE: PARAMSFILE,USEDFRAME: USEDFRAME,PIP_PACKAGES: PIP_PACKAGES,COMPUTERTARGER: COMPUTERTARGER}),
- 				0
- 			success : function(data) {
+ 				
+ 			success : function(data) 
+ 			{
  				if(data.state == 1){alert("done")
  				
  			}
