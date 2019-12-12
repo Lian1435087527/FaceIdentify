@@ -43,6 +43,7 @@ public class score {
 		return Return;
 
 	}
+	/*
 	public static void main(String[] arg) {
 		score A=new score();
 		ModelMap Return =null;
@@ -54,5 +55,5 @@ public class score {
 		}
 		System.out.print(Return);
 	}
-
+*/
 }
