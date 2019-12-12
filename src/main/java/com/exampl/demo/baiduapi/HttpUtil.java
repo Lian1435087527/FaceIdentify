@@ -18,23 +18,26 @@ public class HttpUtil {
         String contentType = "application/x-www-form-urlencoded";
         return HttpUtil.post(requestUrl, accessToken, contentType, params);
     }
-
-    public static String post(String requestUrl, String accessToken, String contentType, String params)
+    /**
+     * 向指定url发送post包
+     * @param requestUrl 目标url
+     * @param authorization token 或者 key
+     * @param contentType 包类型
+     * @param params 输入参数（将json写为string格式）
+     * @return 返回json的string格式
+     * @throws Exception
+     */
+    public static String post(String requestUrl, String authorization, String contentType, String params)
             throws Exception {
         String encoding = "UTF-8";
         if (requestUrl.contains("nlp")) {
             encoding = "GBK";
         }
-        return HttpUtil.post(requestUrl, accessToken, contentType, params, encoding);
+        return HttpUtil.postGeneralUrl(requestUrl, authorization, contentType, params, encoding);
     }
 
-    public static String post(String requestUrl, String accessToken, String contentType, String params, String encoding)
-            throws Exception {
-        String url = requestUrl;
-        return HttpUtil.postGeneralUrl(url, contentType, params, encoding);
-    }
 
-    public static String postGeneralUrl(String generalUrl, String contentType, String params, String encoding)
+    public static String postGeneralUrl(String generalUrl,String authorization, String contentType, String params, String encoding)
             throws Exception {
         URL url = new URL(generalUrl);
         // 打开和URL之间的连�?
@@ -42,6 +45,7 @@ public class HttpUtil {
         connection.setRequestMethod("POST");
         // 设置通用的请求属�?
         connection.setRequestProperty("Content-Type", contentType);
+        if(authorization!=null)connection.setRequestProperty("Authorization", authorization);
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setUseCaches(false);
         connection.setDoOutput(true);

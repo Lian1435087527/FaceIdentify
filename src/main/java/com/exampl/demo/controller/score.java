@@ -19,34 +19,40 @@ import com.exampl.demo.token.UserLoginToken;
 
 @Controller
 public class score {
-	
-	private String url_p="http://461af0d4-8da9-43ee-8285-e8d2619d98aa.southeastasia.azurecontainer.io/score";
+
+	private String url_p = "http://a5b2350c-5154-49e4-82bd-958b9ce1703c.southeastasia.azurecontainer.io/score";
+
 	@UserLoginToken
 	@RequestMapping("/score")
 	@ResponseBody
 	public ModelMap getul(@RequestParam("url") String url_g) throws Exception {
-		
-		
 
-		String param = "{\"url\":\""+url_g+"\"}";
-		//System.out.println(param);
-		String accessToken=null;
-		String result = HttpUtil.post(url_p,accessToken, "application/json", param);
+		String param = "{\"url\":\"" + url_g + "\"}";
+		// System.out.println(param);
+		String authorization = null;
+		String result = HttpUtil.post(url_p, authorization, "application/json", param);
+		//处理返回字符串
+		String resultDic=result.substring(2,result.length()-2);
+		String[] Diclist=resultDic.split("\", \"");
+		ModelMap Return = new ModelMap();
 		
-		ModelMap Return=new ModelMap();
-			
-		 Return.put("result", result);
-		
-		
-		
-		
-		return Return;
-		
-
+		for(String i:Diclist) {
+			String[] row=i.split("\": \"");
+			Return.put(row[0], row[1]);
 		}
-	
-	
+		return Return;
 
-
+	}
+	public static void main(String[] arg) {
+		score A=new score();
+		ModelMap Return =null;
+		try {
+			Return =A.getul("https://cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/modelblob1/111/timg.jpg");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.print(Return);
+	}
 
 }

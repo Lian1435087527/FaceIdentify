@@ -18,144 +18,141 @@
 <!-->
 
 <html lang="en">
-  
-  <!--
+
+<!--
 <![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <title>
-     3d智能云
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- bootstrap css -->
-    
-    <link href="icomoon/style.css" rel="stylesheet">
-    <!--[if lte IE 7]>
+<head>
+<meta charset="utf-8">
+<title>3d智能云</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- bootstrap css -->
+
+<link href="icomoon/style.css" rel="stylesheet">
+<!--[if lte IE 7]>
     <script src="css/icomoon-font/lte-ie7.js">
     </script>
     <![endif]-->
-  <link href="css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
-  <link href="css/charts-graphs.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<!-- Important. For Theming change primary-color variable in main.css  -->
+<link href="css/charts-graphs.css" rel="stylesheet">
 
-  </head>
-  <body>
- 
-        <div class="dashboard-wrapper">
-          <div class="left-sidebar">
-            <div class="row-fluid">
-              <div class="span12">
-                <div class="widget">
-                  <div class="widget-header">
-                    <div class="title">
-                      
-                      下载数据
-                      <span class="mini-title">
-                        请选择对应文件夹，(显示可能存在延迟，遇到问题请刷新！)
-                      </span>
-                    </div>
-                    <span class="tools">
-                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
-                    </span>
-                  </div>
-                  <div class="widget-body">
-                     <div class="HolyGrail-body">   
-  <main class=HolyGrail-body>
-     <div id="btlist"> 
-     <button id="down" class=button onclick="copy_p()">copy</button>
-        <button id="move" class=button onclick="move_p()">move</button>
-        <button id="deleted" class=button onclick="deleted_p()">delete</button>
-        </div>
-         <table id="table" border="1" height=500px width=200px ></table>
-     
-        
-    
-    <div id="pagination">
-        
-        <span id="pages"></span>
-        
-    </div>
-    </main>
-     
- <nav class="HolyGrail-nav">
-  
-   <select id="select-dir-name">
-                    <option value="1">111</option>
-                    <option value="2">facede</option>
-                    <option value="3">face</option>
-                </select>
-            
-<button class=button onclick="listfile()">确定</button>
+</head>
+<body>
 
-</nav>
-<aside class="HolyGrail-ads">
-<button class=button id="prev">《</button>
-    <input type="text" id="page" value=""/>
-<button class=button id="next">》</button>
-</aside>
-</div>
-<div id="popLayer" ></div>
-<div id="popBox" >
-    <div class="close">
-        <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
-    </div>
-    <div class="content">
-    <label>请选择要移到的文件夹</label>
-<select  id="select-move-dir-name">
-                    <option value="1">111</option>
-                    <option value="2">facede</option>
-                    <option value="3">face</option>
-                    <option value="4">11</option>
-                </select>
-<button id="confirm">确定</button>
-</div>
-</div>
-                      <div id="popLayer1" ></div>
-                      <div id="popBox1">
-                          <div class="close">
-                              <a href="javascript:void(0)" id="closere" onclick="closeBox1()">关闭</a>
-                          </div>
-                          <div class="content">
-                              <input id="newname" alt="输入新名字：" >
-                              <button id="confirm1">确定</button>
-                          </div>
-                      </div>
+	<div class="dashboard-wrapper">
+		<div class="left-sidebar">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="widget">
+						<div class="widget-header">
+							<div class="title">
 
+								下载数据 <span class="mini-title">
+									请选择对应文件夹，(显示可能存在延迟，遇到问题请刷新！) </span>
+							</div>
+							<span class="tools"> <a class="fs1" aria-hidden="true"
+								data-icon="&#xe090;"></a>
+							</span>
+						</div>
+						<div class="widget-body">
+							<div class="HolyGrail-body">
+								<main class=HolyGrail-body>
+									<div id="btlist">
+										<button id="down" class=button onclick="copy_p()">copy</button>
+										<button id="move" class=button onclick="move_p()">move</button>
+										<button id="deleted" class=button onclick="deleted_p()">delete</button>
+									</div>
+									<table id="table" border="1" height=500px width=200px></table>
+
+
+
+									<div id="pagination">
+
+										<span id="pages"></span>
+
+									</div>
+								</main>
+
+								<nav class="HolyGrail-nav">
+
+									<select id="select-dir-name">
+										<option value="1">111</option>
+										<option value="2">facede</option>
+										<option value="3">face</option>
+									</select>
+
+									<button class=button onclick="listfile()">确定</button>
+
+								</nav>
+								<aside class="HolyGrail-ads">
+									<button class=button id="prev">《</button>
+									<input type="text" id="page" value="" />
+									<button class=button id="next">》</button>
+								</aside>
+							</div>
+							<div id="popLayer"></div>
+							<div id="popBox">
+								<div class="close">
+									<a href="javascript:void(0)" id="closemove"
+										onclick="closeBox()">关闭</a>
+								</div>
+								<div class="content">
+									<label>请选择要移到的文件夹</label> <select id="select-move-dir-name">
+										<option value="1">111</option>
+										<option value="2">facede</option>
+										<option value="3">face</option>
+										<option value="4">11</option>
+									</select>
+									<button id="confirm">确定</button>
+								</div>
+							</div>
+							<div id="popLayer1"></div>
+							<div id="popBox1">
+								<div class="close">
+									<a href="javascript:void(0)" id="closere" onclick="closeBox1()">关闭</a>
+								</div>
+								<div class="content">
+									<input id="newname" alt="输入新名字：">
+									<button id="confirm1">确定</button>
+								</div>
+							</div>
 
 
 
 
-                    
-                    
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-           
-            
-            
-            
-            
-            
-  
-    <script src="js/jquery.min.js">
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<script src="js/jquery.min.js">
     </script>
-    <script src="js/bootstrap.js">
+	<script src="js/bootstrap.js">
     </script>
-    <script src="js/jquery.scrollUp.js">
-    </script>
-    
-    
-    <!-- Sparkline JS -->
-    <script src="js/jquery.sparkline.js">
-    </script>
-    <script src="/js/azure-storage.blob.min.js" charset="utf-8">
+	<script src="js/jquery.scrollUp.js">
     </script>
 
-<script>
+
+	<!-- Sparkline JS -->
+	<script src="js/jquery.sparkline.js">
+    </script>
+	<script src="/js/azure-storage.blob.min.js" charset="utf-8">
+    </script>
+
+	<script>
 
 const table = document.getElementById('table');
 const prev = document.getElementById('prev');
@@ -200,6 +197,7 @@ function list(prefix) {
 	            	
 	            	
 	            });
+	            render();
 	        }
 	    });
 	    
@@ -255,7 +253,7 @@ function listfile(){
 		var dir=options1.text();//获取当前选择项的文本.
 		
 		list(dir);
-		setTimeout("render();","3000");
+		//setTimeout("render();","3000");
        document.getElementById("page").value=page;
 
 		console.log(j);
@@ -556,7 +554,7 @@ function rename(downloadLink,blobname){
 }
 
 </script>
-   
-  
+
+
 </body>
 </html>
