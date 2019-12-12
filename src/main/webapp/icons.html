@@ -141,7 +141,7 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                                 } else {
                                                 	
                                                     alert('Upload is successful');
-                                                    
+
                                                     filename=file.name;
                                                     
                                                    
@@ -154,31 +154,34 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                           	            results.entries.forEach(blob => {
                                           	                
                                           	            	downloadlink= blobService.getUrl('modelblob1',blob.name );
-                                          	                console.log(downloadlink);
-                                          	                
-                                          	              $.ajax({
-                                          					type : 'POST',
-                                          					url : "/score",
-                                          					
-                                          					dataType: 'json', 
-                                          				    
-                                          					 
-                                          				  
-                                          					data:{'url':downloadlink},
-                                          					
-                                          				success : function(data) {
-                                          					alert(data.result);
-                                          			 		
-                                          				
-                                          						}}
 
-                                          				)
+                                          	                
+                                          	             post_a(downloadlink);
                                             }				
                                           	            );}}); 
                                                 }
                                             });
                                             }  }
-    
+
+
+    function post_a(downloadlink){
+    $.ajax({
+        type : 'POST',
+        url : "/score",
+
+        dataType: 'json',
+
+        contentType:"application/json;charset=utf-8;",
+
+        data:{'url':downloadlink},
+
+        success : function(data) {
+            alert(data.ret);
+
+
+        }}
+
+    )}
     
     //ScrollUp
       $(function () {
