@@ -154,6 +154,8 @@
          <button class=button id="next">》</button>
          <label>已选择：</label>
          <label id="chosenum"></label>
+         <input type="checkbox" id="allcheck" onclick="allcheck()">
+         <label>全选</label>
      <button id="down" class=button onclick="copy_p()">copy</button>
         <button id="move" class=button onclick="move_p()">move</button>
         <button id="deleted" class=button onclick="deleted_p()">delete</button>
@@ -270,6 +272,7 @@ var todo=[];
 var isfull=false;
 files=document.getElementById("file");
 function list(prefix) {
+    document.getElementById("chosenum").innerText=0;
 console.log("初始1"+islist);
 	   blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results,response) => {
 	        if (error) {
@@ -375,6 +378,20 @@ function listfile(){
 
 		j=0;
 	}
+function allcheck(){
+    if (j - num1 * (page - 1) >= 10) {
+        num2 = 10;
+    } else {
+        num2 = j - num1 * (page - 1);
+    }
+    if(document.getElementById("allcheck").checked==true){
+    for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+        $("#"+i).prop("checked", true);
+    }
+}
+else {for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+        $("#"+i).prop("checked", false);}
+}}
 //绑定向前翻页事件
 prev.onclick = function () {
     if (page > 1) {
@@ -382,6 +399,8 @@ prev.onclick = function () {
         gets_all();
 
         render();
+        for(let n=0;n<todo.length;n++) {
+            $("#"+todo[n]).prop("checked", true);}
         document.getElementById("page").value=page;
     } else {
         alert('当前为第一页！')
@@ -393,7 +412,11 @@ next.onclick = function () {
     if (page < Math.ceil(j / 10)) {
         page++;
         gets_all();
+
         render();
+        for(let n=0;n<todo.length;n++) {
+            $("#"+todo[n]).prop("checked", true);}
+
         document.getElementById("page").value=page;
     } else {
         alert('当前为最后一页！')
@@ -534,7 +557,7 @@ function checkdefine(){
 
     }}
 function gets_all(){
-    for(let k=0,p=0;k<j;k++){
+    for(let k=0;k<j;k++){
         let xxo=k;
         let xxe = document.getElementById(xxo);
     try{

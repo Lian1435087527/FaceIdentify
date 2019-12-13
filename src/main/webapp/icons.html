@@ -61,15 +61,18 @@
                   </div>
                   <div class="widget-body">
                      <div class="HolyGrail-body">
-		<main class=HolyGrail-body></main>
+		<main class=HolyGrail-body>
+            <img id="yuantu" src="" alt="原图片" height="900px" width="600px">
+            <img id="fankui" src="" alt="返回图"  height="900px" width="600px">
+        </main>
 
 		<nav class="HolyGrail-nav">
 			<input type="file" id="fileinput" /> 
 			<label>选择模型</label>
 			<select id="select-name">
-				<option value="1">11</option>
-				<option value="2">22</option>
-				<option value="3">33</option>
+				<option value="1">faceliveness</option>
+				<option value="2">facelivenessirsl</option>
+
 			</select>
 
 		</nav>
@@ -121,19 +124,19 @@ const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.
 
 var status=0;
 function upload()
-{
+{   document.getElementById("yuantu").src=null;
+document.getElementById("fankui").src=null;
 	alert('正在上传，请勿退出');
 	let filename=null;
-var options2=$("#select-name option:selected");//获取当前选择项.
-dir=options2.text();//获取当前选择项的文本.
-console.log(dir);
+
+
 var len=document.getElementById('fileinput').files.length;
 for(i=0;i<len;i++){
     var file = document.getElementById('fileinput').files[i];
 
    
 blobService.createBlockBlobFromBrowserFile('modelblob1', 
-                                            dir+'/'+file.name, 
+                                            "picformodel"+'/'+file.name,
                                             file, 
                                             (error, result) => {
                                                 if(error) {
@@ -146,7 +149,8 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                                     
                                                    
                                                     console.log(filename);
-                                              	  blobService.listBlobsSegmentedWithPrefix('modelblob1',dir+'/'+filename, null, (error, results) => {
+
+                                              	  blobService.listBlobsSegmentedWithPrefix('modelblob1',"picformodel"+'/'+filename, null, (error, results) => {
                                           	        if (error) {
                                           	            // Handle list blobs error
                                           	        } else {
@@ -155,8 +159,8 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                           	                
                                           	            	downloadlink= blobService.getUrl('modelblob1',blob.name );
 
-                                          	                
-                                          	             post_a(downloadlink);
+                                                                document.getElementById("yuantu").src=downloadlink;
+                                          	             post_a(downloadlink,blob.name);
                                             }				
                                           	            );}}); 
                                                 }
@@ -164,23 +168,37 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                             }  }
 
 
-    function post_a(downloadlink){
+    function post_a(downloadlink,blobname){
+        var options2=$("#select-name option:selected");//获取当前选择项.
+        dir=options2.text();//获取当前选择项的文本.
+
     $.ajax({
         type : 'POST',
         url : "/score",
 
         dataType: 'json',
 
-        data:{'url':downloadlink},
+        data:{'url':downloadlink,'modelname':dir},
 
         success : function(data) {
-            alert(data.ret);
+            document.getElementById("fankui").src="https://cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/apioutput/"+data.id+"/output.jpg";
+            alert(data.face_liveness);
+           dele(blobname);
 
 
         }}
 
     )}
-    
+    function dele(blob){
+
+
+    blobService.deleteBlobIfExists('modelblob1', blob, function (error, result) {
+        if (error) {
+            alert("数据异常");
+        } else {
+
+
+        }});}
     //ScrollUp
       $(function () {
         $.scrollUp({
