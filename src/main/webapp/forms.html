@@ -155,13 +155,9 @@
             let dir=options2.text();//获取当前选择项的文本.
             console.log(dir);
             var len=document.getElementById('upload1').files.length;
-<<<<<<< Upstream, based on origin/master
             var successnum=0;
 
 
-=======
-            var print=false;
->>>>>>> 41010ea 12-13整合前
             for(i=0;i<len;i++){
 
                 let file = document.getElementById('upload1').files[i];
@@ -174,15 +170,10 @@
                             // Handle blob error
                         } else {
 
-<<<<<<< Upstream, based on origin/master
                             append(file.name);
                             if(successnum==len-1){alert('Upload is successful');}
                             else {successnum++;}
 
-=======
-                            if(print==false){alert('Upload is successful');print=true;}
-                            
->>>>>>> 41010ea 12-13整合前
                         }
                     });
                function append(file1){
