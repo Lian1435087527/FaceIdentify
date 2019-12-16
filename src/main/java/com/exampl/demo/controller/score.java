@@ -21,7 +21,7 @@ import com.exampl.demo.token.UserLoginToken;
 public class score {
 
 	private String url_p1 = "http://a5b2350c-5154-49e4-82bd-958b9ce1703c.southeastasia.azurecontainer.io/score";
-	private String url_p2 ="http://104.45.95.31:80/api/v1/service/facelivenessirsl/score";
+	private String url_p2 ="http://13.74.168.198:80/api/v1/service/facelivenessirsl/score";
 	@UserLoginToken
 	@RequestMapping("/score")
 	@ResponseBody
