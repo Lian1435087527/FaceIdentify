@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+
+<html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+
+<![endif]-->
+<!--[if IE 7]>
+
+<html class="lt-ie9 lt-ie8" lang="en">
+
+<![endif]-->
+<!--[if IE 8]>
+
+<html class="lt-ie9" lang="en">
+
+<![endif]-->
+<!--[if gt IE 8]>
+<!-->
+
+<html lang="en">
+
+<!--
+<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>3d智能云</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- bootstrap css -->
+
+<link href="icomoon/style.css" rel="stylesheet">
+<!--[if lte IE 7]>
+    <script src="css/icomoon-font/lte-ie7.js">
+    </script>
+    <![endif]-->
+<link href="css/main.css" rel="stylesheet">
+<!-- Important. For Theming change primary-color variable in main.css  -->
+<link href="css/charts-graphs.css" rel="stylesheet">
+<style type="text/css">
+#table {
+	width: 70%;
+	border-collapse: collapse;
+	white-space: nowrap;
+}
+
+#table td, .table1 th {
+	border: 1px solid #98bf21;
+}
+
+#table th {
+	height: 20px;
+	line-height: 20px;
+	background-color: #A7C942;
+	color: #ffffff;
+}
+
+#table tr.alt td {
+	color: #000000;
+	background-color: #EAF2D3;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#table thead {
+	border: 1px solid #98bf21;
+}
+
+.dropbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 99999;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: #3e8e41;
+}
+</style>
+</head>
+<body>
+
+	<div class="dashboard-wrapper">
+		<div class="left-sidebar">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="widget">
+						<div class="widget-header">
+							<div class="title">
+
+								下载数据 <span class="mini-title">
+									请选择对应文件夹，(显示可能存在延迟，遇到问题请刷新！) </span>
+							</div>
+							<span class="tools"> <a class="fs1" aria-hidden="true"
+								data-icon="&#xe090;"></a>
+							</span>
+						</div>
+						<div class="widget-body">
+							<div class="HolyGrail-body">
+								<main class=HolyGrail-body>
+									<div id="btlist">
+										<select id="select-dir-name">
+											<option value="1">111</option>
+											<option value="2">facede</option>
+											<option value="3">face</option>
+										</select>
+										<button id="confirm0" class=button onclick="listfile()">确定</button>
+
+										<button class=button id="prev">《</button>
+										<input type="text" id="page" value="" />
+										<button class=button id="next">》</button>
+										<label>已选择：</label> <label id="chosenum"></label> <input
+											type="checkbox" id="allcheck" onclick="allcheck()"> <label>全选</label>
+										<button id="down" class=button onclick="copy_p()">copy</button>
+										<button id="move" class=button onclick="move_p()">move</button>
+										<button id="deleted" class=button onclick="deleted_p()">delete</button>
+									</div>
+
+									<div class="tbody" style="height: 600px">
+										<table id="table" class="table1" border="1" width=200px></table>
+									</div>
+
+
+									​
+
+
+
+								</main>
+
+								<nav class="HolyGrail-nav"></nav>
+								<aside class="HolyGrail-ads"></aside>
+							</div>
+							<div id="popLayer"></div>
+							<div id="popBox">
+								<div class="close">
+									<a href="javascript:void(0)" id="closemove"
+										onclick="closeBox()">关闭</a>
+								</div>
+								<div class="content">
+									<label>请选择要移到的文件夹</label> <select id="select-move-dir-name">
+										<option value="1">111</option>
+										<option value="2">facede</option>
+										<option value="3">face</option>
+										<option value="4">11</option>
+									</select>
+									<button id="confirm">确定</button>
+								</div>
+							</div>
+							<div id="popLayer1"></div>
+							<div id="popBox1">
+								<div class="close">
+									<a href="javascript:void(0)" id="closere" onclick="closeBox1()">关闭</a>
+								</div>
+								<br class="content"> <input id="newname" alt="输入新名字："><label
+									id="suffix"></label></br>
+								<button id="confirm1">确定</button>
+							</div>
+						</div>
+
+
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+
+
+
+
+
+	<script src="js/jquery.min.js">
+    </script>
+	<script src="js/bootstrap.js">
+    </script>
+	<script src="js/jquery.scrollUp.js">
+    </script>
+
+
+	<!-- Sparkline JS -->
+	<script src="js/jquery.sparkline.js">
+    </script>
+	<script src="/js/azure-storage.blob.min.js" charset="utf-8">
+    </script>
+
+	<script>
+
+const table = document.getElementById('table');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const pages = document.getElementById('pages'); 
+var checkp=0;
+const account = {
+		    name: "cs1f9abf47a9b73x49c3x9c1",
+		    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+		};
+
+const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+//默认设定每页十
+let num1 = 10;
+//定义一个变量保存每页真实应该展示的数量
+let num2;
+//默认展示第一页
+let page = 1;   
+var j=0;
+var islist=false;
+var downloadLink=[];
+var blobname=[];
+var chosen=[];
+var todo=[];
+var isfull=false;
+files=document.getElementById("file");
+function list(prefix) {
+    document.getElementById("chosenum").innerText=0;
+console.log("初始1"+islist);
+	   blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results,response) => {
+	        if (error) {
+	            // Handle list blobs error
+	        } else {
+	            results.entries.forEach(blob => {
+	                blobname[j]=blob.name;
+	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
+	            	//console.log(downloadLink[i]);
+	            	//document.getElementById(j).innerHTML=blob.name;
+	            	chosen[j]=j;
+	            	//console.log(i);
+	            	//files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
+	            	j++;
+	            	
+
+	            });
+
+                render();
+	        }
+
+	    });
+
+	}
+
+
+	
+	const render = function () {
+		
+		
+		table.innerHTML =
+            `<thead>
+		<th>选择</th>
+        <th>名称</th>
+        <th>操作</th>
+
+        
+    </thead>`;
+
+        //判断当前选择的页码对应的人数
+        if (j - num1 * (page - 1) >= 10) {
+            num2 = 10;
+        } else {
+            num2 = j - num1 * (page - 1);
+        }
+
+　　　//渲染该页对应的数据
+   
+        for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+
+            let blob=blobname[i];
+            let index1 = blob.indexOf("/");
+            let sub_blob = blob.substring(index1+1);
+        	table.innerHTML +=
+                `<tr>
+        <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/ ></td>
+        <td>${sub_blob}</td>
+        <td > <div class="dropdown">
+      <button class="dropbtn">操作</button>
+        <div class="dropdown-content">
+          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}')">downloadLink</button>
+              <button id="move1" class=button  onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button>
+              <button id="deleted1" class=button onclick="deleted('${blobname[i]}')">delete</button>
+              <button id="rename" class=button onclick="rename('${downloadLink[i]}','${blobname[i]}')">rename</button>
+      </div></td>
+
+    </tr>`;
+
+
+
+
+
+
+
+
+
+        checkdefine();
+
+        }
+    }
+    function checksum(id){
+
+    if(document.getElementById(id).checked==true){
+        checkp++;
+        document.getElementById("chosenum").innerText=checkp;
+    }
+    else{
+        checkp--;
+        document.getElementById("chosenum").innerText=checkp;
+    }
+    }
+       
+function listfile(){
+		var options1=$("#select-dir-name option:selected");//获取当前选择项.
+		var dir=options1.text();//获取当前选择项的文本.
+
+         list(dir);
+
+
+
+       document.getElementById("page").value=page;
+		//console.log(j);
+
+		j=0;
+	}
+function allcheck(){
+    if (j - num1 * (page - 1) >= 10) {
+        num2 = 10;
+    } else {
+        num2 = j - num1 * (page - 1);
+    }
+    if(document.getElementById("allcheck").checked==true){
+    for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+        $("#"+i).prop("checked", true);
+    }
+}
+else {for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+        $("#"+i).prop("checked", false);}
+}}
+//绑定向前翻页事件
+prev.onclick = function () {
+    if (page > 1) {
+        page--;
+        gets_all();
+
+        render();
+        for(let n=0;n<todo.length;n++) {
+            $("#"+todo[n]).prop("checked", true);}
+        document.getElementById("page").value=page;
+    } else {
+        alert('当前为第一页！')
+    }
+}
+
+//绑定向后翻页事件
+next.onclick = function () {
+    if (page < Math.ceil(j / 10)) {
+        page++;
+        gets_all();
+
+        render();
+        for(let n=0;n<todo.length;n++) {
+            $("#"+todo[n]).prop("checked", true);}
+
+        document.getElementById("page").value=page;
+    } else {
+        alert('当前为最后一页！')
+    }
+}
+
+function move(downloadLink,blobname){
+	var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    var downloadLink1=downloadLink;
+    var blobname1=blobname;
+    document.getElementById('confirm').addEventListener('click', () => {
+    	 movereal(downloadLink1,blobname1);
+	
+	});}
+
+function movereal(downloadLink,blobname,isfull){
+
+	let options2=$("#select-move-dir-name option:selected");//获取当前选择项.
+	let dir=options2.text();//获取当前选择项的文本.
+	let url =downloadLink;
+	 let blob=blobname;
+	 let index1 = blob.indexOf("/");
+	 let sub_blob = blob.substring(index1+1);
+
+
+	 blobService.createBlockBlobFromText('modelblob1',dir+"/"+sub_blob,"tee",(error, Response) => {
+		 if (error) {
+	            // Handle list blobs error
+	        } else {
+
+	           // console.log(Response);
+	            blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
+	            	 if (error) {
+	            		 alert("error");
+	     	        }
+	            	 else {
+                       //deleted_rea(blob);
+                         $("#closemove").click();
+                         deleted_rea(blob,isfull);
+
+
+
+	     	        }
+                    });
+
+
+
+	        }
+
+	    });
+
+}	
+
+function closeBox() {
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "none";
+    popLayer.style.display = "none";
+}
+function closeBox1() {
+    var popBox = document.getElementById("popBox1");
+    var popLayer = document.getElementById("popLayer1");
+    popBox.style.display = "none";
+    popLayer.style.display = "none";
+}
+
+function downloadImg(downloadLink){
+    
+    console.log("download启动");
+    
+    let url =downloadLink;
+    let a = document.createElement("a");          // 创建一个a节点插入的document
+    let event = new MouseEvent("click");           // 模拟鼠标click点击事件
+    a.download = 'tepic';                  // 设置a节点的download属性值
+    a.href = url;                                 // 将图片的src赋值给a节点的href
+    a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
+ }
+ function deleted(blobname) {
+     let truthBeTold = window.confirm("是否确定删除？");
+     if (truthBeTold) {
+         let blob = blobname;
+         console.log(blob);
+         blobService.deleteBlobIfExists('modelblob1', blob, function (error, result) {
+             if (error) {
+                 alert("删除失败");
+             } else{
+
+
+                 alert("删除成功");
+                 listfile();
+             }
+
+
+         });
+
+
+     }
+ }
+function deleted_rea(blobname,isfull) {
+
+    console.log("删除启动");
+    let blob=blobname;
+    blobService.deleteBlobIfExists('modelblob1', blob, function(error, result) {
+        if (error) {
+            alert ("删除失败");
+        } else {
+if(isfull==true)
+{listfile();}
+
+
+        }
+
+    });
+
+
+}
+
+function checkdefine(){
+    for(let k=0;k<j;k++){
+
+
+
+
+        if ($("#"+k).prop("checked")) {
+            //设置checked属性
+            $("#"+k).prop("checked", true);
+        } else {
+            //设置checked属性
+            $("#"+k).prop("checked",false);
+        }
+
+
+
+
+
+    }}
+function gets_all(){
+    for(let k=0;k<j;k++){
+        let xxo=k;
+        let xxe = document.getElementById(xxo);
+    try{
+        if(xxe.checked==true){
+
+
+			todo.push(xxe.id);//存储所有被选中的项
+
+		//console.log(todo);
+        }}
+
+
+
+		catch{
+
+
+
+				}
+
+	}}
+
+function copyreal(downloadLink,blobname) {
+    let options2=$("#select-move-dir-name option:selected");//获取当前选择项.
+    let dir=options2.text();//获取当前选择项的文本.
+    let url =downloadLink;
+    let blob=blobname;
+    let index1 = blob.indexOf("/");
+    let sub_blob = blob.substring(index1+1);
+
+
+    blobService.createBlockBlobFromText('modelblob1',dir+"/"+sub_blob,"tee",(error, Response) => {
+        if (error) {
+            // Handle list blobs error
+        } else {
+
+            console.log(Response);
+            blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
+                if (error) {
+                    alert("error");
+                }
+                else {
+
+                    $("#closemove").click();
+
+
+
+                }
+                }
+            );
+
+
+
+        }
+    });
+
+}
+function deleted_p() {
+    gets_all();
+    //console.log(todo);
+    //console.log(j);
+    let truthBeTold = window.confirm("是否确定删除？");
+
+    if(truthBeTold){
+    for(let m=0;m<todo.length;m++) {
+        if(m==todo.length-1)
+        deleted_rea(blobname[todo[m]],true);
+        else{
+            deleted_rea(blobname[todo[m]],false);
+        }
+
+    }
+
+    todo=[];
+
+
+
+
+        alert("删除成功");
+
+
+
+}}
+function move_p() {
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    gets_all();
+    //console.log(todo);
+    document.getElementById('confirm').addEventListener('click', () => {
+    for(let m=0;m<todo.length;m++) {
+        //console.log("移动启动");
+        if(m==todo.length-1){
+        movereal(downloadLink[todo[m]],blobname[todo[m]],true);
+
+    }
+        else{
+            movereal(downloadLink[todo[m]],blobname[todo[m]],false);
+        }
+    }
+        todo=[];
+    });
+
+   listfile();
+    //console.log(todo);
+}
+function copy_p() {
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    gets_all();
+    //console.log(todo);
+    document.getElementById('confirm').addEventListener('click', () => {
+        for(let m=0;m<todo.length;m++) {
+            //console.log("移动启动");
+            copyreal(downloadLink[todo[m]],blobname[todo[m]]);
+
+        }
+        todo=[];
+    });
+
+    listfile();
+    //console.log(todo);
+
+}
+function rename(downloadLink,blobname){
+    var popBox = document.getElementById("popBox1");
+    var popLayer = document.getElementById("popLayer1");
+    let options3=$("#select-dir-name  option:selected");//获取当前选择项.
+    let dir=options3.text();//获取当前选择项的文本.
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+
+    let blobyuan = blobname;
+
+
+    let suffix=blobyuan.split(".");
+    document.getElementById("suffix").innerText="."+suffix[suffix.length-1];
+    document.getElementById("confirm1").addEventListener('click', () => {
+        let url = downloadLink;
+        let blobname1 = document.getElementById("newname").value;
+        if(blobname1.match("/")==null){
+        blobService.createBlockBlobFromText('modelblob1', dir + "/" + blobname1+"."+suffix[suffix.length-1], "tee", (error, Response) => {
+            if (error) {
+                // Handle list blobs error
+            } else {
+
+
+                blobService.startCopyBlob(url, 'modelblob1', dir + "/" + blobname1+"."+suffix[suffix.length-1], (error, results) => {
+                    if (error) {
+                        alert("error");
+                    } else {
+                        //deleted_rea(blob);
+                        $("#closere").click();
+
+                        deleted_rea(blobyuan,true);
+
+                    }
+                });
+
+
+            }
+        });}
+        else {alert("包含有非法字符'/'");}
+
+    });
+}
+function operate() {
+    document.getElementById("down").removeAttribute("hidden");
+    document.getElementById("move").removeAttribute("hidden");
+    document.getElementById("deleted").removeAttribute("hidden");
+    document.getElementById("rename").removeAttribute("hidden");
+
+}
+
+</script>
+
+
+</body>
+</html>
