@@ -3,6 +3,7 @@ package com.exampl.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,14 +43,20 @@ public class score {
 		         break;}
 		String result = HttpUtil.post(url_p, authorization, "application/json", param);
 		//处理返回字符串
+
+		ModelMap Return = new ModelMap();
+        JSONObject ret=new JSONObject(result);
+		Map<String,Object> map = (HashMap<String,Object>)ret.toMap();
+		Return.addAllAttributes(map);
+		/*
 		String resultDic=result.substring(2,result.length()-2);
 		String[] Diclist=resultDic.split("\", \"");
-		ModelMap Return = new ModelMap();
-		
 		for(String i:Diclist) {
 			String[] row=i.split("\": \"");
 			Return.put(row[0], row[1]);
 		}
+		*
+		 */
 		return Return;
 
 	}
