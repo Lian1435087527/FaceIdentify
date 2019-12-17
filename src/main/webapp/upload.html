@@ -65,7 +65,7 @@
                   <div class="widget-body">
                      <div class="HolyGrail-body">   
   <main class=HolyGrail-body>
-     <div id="filelist"></div>
+
  </main>
      
  <nav class="HolyGrail-nav">
@@ -82,6 +82,15 @@
 <input type="file" id="upload1" multiple/>
 <button id="upload-button" class="button" >Upload</button>
 </aside>
+                         <div id="popLayer" ></div>
+                         <div id="popBox" >
+                             <div class="close">
+                                 <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
+                             </div>
+                             <div class="content">
+                                 <div id="filelist"></div>
+                             </div>
+                         </div>
 </div>
 
 
@@ -151,6 +160,10 @@
 
         document.getElementById('upload-button').addEventListener('click', () =>{
             document.getElementById("filelist").innerHTML="";
+            var popBox = document.getElementById("popBox");
+            var popLayer = document.getElementById("popLayer");
+            popBox.style.display = "block";
+            popLayer.style.display = "block";
             let options2=$("#select-name option:selected");//获取当前选择项.
             let dir=options2.text();//获取当前选择项的文本.
             console.log(dir);
@@ -171,16 +184,23 @@
                         } else {
 
                             append(file.name);
-                            if(successnum==len-1){alert('Upload is successful');}
+                            if(successnum==len-1){
+                                alert('Upload is successful');
+                                $("#closemove").click();}
                             else {successnum++;}
 
                         }
                     });
                function append(file1){
-                document.getElementById("filelist").innerHTML+=file1+"//   //";}
+                document.getElementById("filelist").innerHTML+=file1+"上传成功！"+"</br>";}
 
             }});
-
+        function closeBox() {
+            var popBox = document.getElementById("popBox");
+            var popLayer = document.getElementById("popLayer");
+            popBox.style.display = "none";
+            popLayer.style.display = "none";
+        }
         //ScrollUp
       $(function () {
         $.scrollUp({
