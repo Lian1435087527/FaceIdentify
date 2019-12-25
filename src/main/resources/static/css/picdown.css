@@ -22,7 +22,7 @@ footer {
 
 .HolyGrail-nav, .HolyGrail-ads {
   /* 两个边栏的宽度设为12em */
-  flex: 0 0 12em;
+
 }
 
 .HolyGrail-nav {
@@ -47,7 +47,7 @@ footer {
             text-align: center;
         }
 
- .button {
+ .button01 {
   display: inline-block;
   padding: 15px 25px;
   font-size: 24px;
@@ -62,9 +62,9 @@ footer {
   box-shadow: 0 9px #999;
 }
 
-.button:hover {background-color: #3e8e41}
+.button01:hover {background-color: #3e8e41}
 
-.button:active {
+.button01:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);

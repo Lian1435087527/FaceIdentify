@@ -38,7 +38,32 @@
     <![endif]-->
   <link href="css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
   <link href="css/charts-graphs.css" rel="stylesheet">
+      <link rel="stylesheet" href="/css/demo.css" type="text/css">
+      <link rel="stylesheet" href="/css/zTreeStyle/zTreeStyle.css" type="text/css">
+      <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+      <script type="text/javascript" src="/js/jquery.ztree.all.js"></script>
       <style type="text/css">
+
+          .wrap{
+              margin: 0 auto;
+              width: 80%;
+              height: auto;
+              display: flex;
+          }
+          #left{
+
+              flex: 0 0 200px;
+          }
+          #right{
+
+              flex: 0 0 100px;
+          }
+          #main{
+
+              flex: 1;
+          }
+
+
           #table
           {
 
@@ -117,111 +142,115 @@
           .dropdown:hover .dropbtn {
               background-color: #3e8e41;
           }
+
       </style>
   </head>
   <body>
  
         <div class="dashboard-wrapper">
           <div class="left-sidebar">
-            <div class="row-fluid">
-              <div class="span12">
-                <div class="widget">
-                  <div class="widget-header">
-                    <div class="title">
-                      
-                      下载数据
-                      <span class="mini-title">
-                        请选择对应文件夹，(显示可能存在延迟，遇到问题请刷新！)
+              <div class="row-fluid">
+                  <div class="span12">
+                      <div class="widget">
+                          <div class="widget-header">
+                              <div class="title">
+                                  选择文件夹
+                                  <span class="mini-title">
+
                       </span>
-                    </div>
-                    <span class="tools">
+                              </div>
+                              <span class="tools">
                       <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
                     </span>
+                          </div>
+                          <div class="widget-body">
+
+
+
+
+                              <div class="wrap">
+                                  <aside id="left">
+                                      <div id="dirlist">
+                                          <ul id="treeDemo" class="ztree"></ul>
+
+                                      </div>
+
+                                  </aside>
+
+                                  <section id="main">
+                                      <button class=button id="prev" style="display: inline">《</button>
+                                      <input type="text" style="width:30px; display: inline" id="page" value=""/>
+                                      <label id="pagesum" style="width:30px; display: inline"></label>
+                                      <button class=button id="next" style=" display: inline">》</button>
+                                      <button class=button id="jump" onclick="jumpto()" style=" display: inline">跳转</button>
+                                      <label style="width:30px; display: inline">已选择：</label>
+                                      <label id="chosenum" style=" display: inline"></label>
+                                      <button onclick="lookdir()">test</button>
+                                      <div class="tbody" style="height:600px">
+                                          <table id="table0" height="50px"></table>
+                                          <table id="table" class="table1" border="1"  width=200px ></table>
+                                      </div>
+                                  </section>
+
+                                  <aside id="right">
+
+
+
+
+
+                                          <button id="down" class=button onclick="copy_p()">copy</button><br/>
+                                          <button id="move" class=button onclick="move_p()">move</button><br/>
+                                          <button id="deleted" class=button onclick="deleted_p()">delete</button>
+
+                                  </aside>
+                              </div>
+
+                              <div id="popLayer" ></div>
+                              <div id="popBox" >
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
+                                  </div>
+                                  <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                      <label>请选择要移到的文件夹</label>
+                                      <select  id="select-move-dir-name">
+                                          <option value="1">111</option>
+                                          <option value="2">facede</option>
+                                          <option value="3">face</option>
+                                          <option value="4">11</option>
+                                      </select>
+                                      <button id="confirm">确定</button>
+                                  </div>
+                              </div>
+                              <div id="popLayer1" ></div>
+                              <div id="popBox1">
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="closere" onclick="closeBox1()">关闭</a>
+                                  </div>
+
+                                  <input id="newname" alt="输入新名字：" ><label id="suffix"></label></br>
+                                  <button id="confirm1">确定</button>
+                              </div>
+                                      ​
+
+
+
+
+
+
+
+                              </div>
+
+
+                      </div>
                   </div>
-                  <div class="widget-body">
-                     <div class="HolyGrail-body">   
-  <main class=HolyGrail-body>
-     <div id="btlist">
-         <select id="select-dir-name">
-             <option value="1">111</option>
-             <option value="2">facede</option>
-             <option value="3">face</option>
-         </select>
-         <button id="confirm0" class=button onclick="listfile()">确定</button>
 
-         <button class=button id="prev">《</button>
-         <input type="text" id="page" value=""/>
-         <button class=button id="next">》</button>
-         <label>已选择：</label>
-         <label id="chosenum"></label>
 
-     <button id="down" class=button onclick="copy_p()">copy</button>
-        <button id="move" class=button onclick="move_p()">move</button>
-        <button id="deleted" class=button onclick="deleted_p()">delete</button>
+              </div>
+          </div>
         </div>
 
-      <div class="tbody" style="height:600px">
-          <table id="table0" height="50px"></table>
-      <table id="table" class="table1" border="1"  width=200px ></table>
-                     </div>
 
 
-                      ​
-
-
-
-    </main>
-     
- <nav class="HolyGrail-nav">
-  
-
-            
-
-
-</nav>
-<aside class="HolyGrail-ads">
-
-</aside>
-</div>
-<div id="popLayer" ></div>
-<div id="popBox" >
-    <div class="close">
-        <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
-    </div>
-    <div class="content">
-    <label>请选择要移到的文件夹</label>
-<select  id="select-move-dir-name">
-                    <option value="1">111</option>
-                    <option value="2">facede</option>
-                    <option value="3">face</option>
-                    <option value="4">11</option>
-                </select>
-<button id="confirm">确定</button>
-</div>
-</div>
-                      <div id="popLayer1" ></div>
-                      <div id="popBox1">
-                          <div class="close">
-                              <a href="javascript:void(0)" id="closere" onclick="closeBox1()">关闭</a>
-                          </div>
-                          <br class="content">
-                              <input id="newname" alt="输入新名字：" ><label id="suffix"></label></br>
-                              <button id="confirm1">确定</button>
-                          </div>
-                      </div>
-
-
-
-
-
-                    
-                    
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
            
             
             
@@ -229,8 +258,7 @@
             
             
   
-    <script src="js/jquery.min.js">
-    </script>
+
     <script src="js/bootstrap.js">
     </script>
     <script src="js/jquery.scrollUp.js">
@@ -244,7 +272,54 @@
     </script>
 
 <script>
+    var nodes = [{name:"Uphoton深度图数据",id:0,pId:null},{name:"DP",id:1,pId:0},{name:"IR",id:2,pId:0},{name:"Fake",id:3,pId:1,isParent:true},{name:"People",id:4,pId:1,isParent:true},{name:"Fake",id:5,pId:2,isParent:true},{name:"People",id:6,pId:2,isParent:true}]
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
+        data:{//表示tree的数据格式
+            simpleData:{
+                enable:true,//表示使用简单数据模式
+                idKey:"id",//设置之后id为在简单数据模式中的父子节点关联的桥梁
+                pidKey:"pId",//设置之后pid为在简单数据模式中的父子节点关联的桥梁和id互相对应
+                rootId:"null"//pid为null的表示根节点
+            }
+        },
+        view:{//表示tree的显示状态
+            selectMulti:false//表示禁止多选
+        },
+        check:{//表示tree的节点在点击时的相关设置
+            enable:false,//是否显示radio/checkbox
+            chkStyle:"checkbox",//值为checkbox或者radio表示
+            checkboxType:{p:"",s:""},//表示父子节点的联动效果
+            radioType:"level"//设置tree的分组
+        },
+        callback:{//表示tree的一些事件处理函数
+          onClick:chosenode
+        }
+    }
+    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
 
+    $(document).ready(function(){
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+    });
+    function chosenode(event,treeId,treeNode) {
+       var prename=treeNode.name;
+
+        function getpath(treeNode){
+
+        if(treeNode.getParentNode()!=null){
+            prename=treeNode.getParentNode().name+'/'+prename;
+
+            getpath(treeNode.getParentNode());
+        }
+        else{
+            //console.log(prename);
+            listfile(prename);
+
+        }}
+        getpath(treeNode);
+
+    }
 const table = document.getElementById('table');
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
@@ -272,7 +347,18 @@ var chosen=[];
 var todo=[];
 var allcheck=[];
 var isfull=false;
+var pagesum=0;
 files=document.getElementById("file");
+function lookdir(){
+    blobService.listBlobDirectoriesSegmentedWithPrefix('modelblob1',"Uphoton深度图数据/", null,(error, results) => {
+        if (error) {
+            // Handle list blobs error
+        } else {
+            console.log(results.entries);
+
+
+        }});
+}
 function list(prefix) {
     document.getElementById("chosenum").innerText=0;
     checkp=0;
@@ -292,7 +378,8 @@ function list(prefix) {
 	            	
 
 	            });
-
+                pagesum=Math.ceil(j / 10);
+                document.getElementById("pagesum").innerText="/"+pagesum;
                 render();
                 chushihua();
 	        }
@@ -385,19 +472,30 @@ function chushihua() {
     }
     }
        
-function listfile(){
-		var options1=$("#select-dir-name option:selected");//获取当前选择项.
-		var dir=options1.text();//获取当前选择项的文本.
+function listfile(dir){
+
          todo=[];
          list(dir);
 
 
 
-       document.getElementById("page").value=page;
+       document.getElementById("page").value=1;
 		//console.log(j);
 
 		j=0;
 	}
+	function jumpto() {
+    let pagejojo= document.getElementById("page").value;
+    if(pagejojo>pagesum){
+        alert("超出最大值！");
+    }
+    else{
+        page=pagejojo;
+        render();
+        document.getElementById("page").value=page;
+    }
+
+    }
 function allcheck1(page){
     if (j - num1 * (page - 1) >= 10) {
         num2 = 10;

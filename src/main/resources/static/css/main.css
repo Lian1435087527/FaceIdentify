@@ -6369,7 +6369,7 @@ header {
             background-repeat: no-repeat; }
             .dashboard-wrapper .right-sidebar .wrapper .push-buttons .button.jet-blue:active:after {
               border-color: #0a86a3; }
-      .dashboard-wrapper .right-sidebar .wrapper .doc-icons-container {
+     /* .dashboard-wrapper .right-sidebar .wrapper .doc-icons-container {
         position: relative;
         line-height: 100%; }
         .dashboard-wrapper .right-sidebar .wrapper .doc-icons-container .icon {
@@ -6433,7 +6433,7 @@ header {
           font-size: 11px;
           text-transform: uppercase;
           text-align: center;
-          line-height: 8px; }
+          line-height: 8px; })*/
 
 /*  INVOICE page CSS starts here  */
 .invoice {
@@ -7487,8 +7487,8 @@ footer {
             display: none;
             background-color: #FFFFFF;
             z-index: 11;
-            width: 200px;
-            height: 200px;
+            width: 80%;
+            height: 80%;
             position:fixed;
             top:0;
             right:0;
@@ -7519,7 +7519,9 @@ footer {
             text-decoration: none;
             color: #2D2C3B;
         }
-
+#popBox .content{
+  position:relative;
+}
 #popLayer1 {
   display: none;
   background-color: #B3B3B3;
@@ -7530,7 +7532,7 @@ footer {
   left: 0;
   z-index: 10;
   -moz-opacity: 0.8;
-  opacity:.80;
+  opacity:.30;
   filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
 }
 #popBox1 {
@@ -7560,8 +7562,8 @@ footer {
 }
 .button {
   display: inline-block;
-  padding: 15px 25px;
-  font-size: 24px;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -7570,14 +7572,14 @@ footer {
   background-color: #4CAF50;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+
 }
 
 .button:hover {background-color: #3e8e41}
 
 .button:active {
   background-color: #3e8e41;
-  box-shadow: 0 5px #666;
+
   transform: translateY(4px);
 }
 

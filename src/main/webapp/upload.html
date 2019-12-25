@@ -36,11 +36,10 @@
     <script src="css/icomoon-font/lte-ie7.js">
     </script>
     <![endif]-->
-  <link href="/css/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet">
-  <link href="/css/wysiwyg/wysiwyg-color.css" rel="stylesheet">
+
   <link href="/css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
-  <link href="/css/charts-graphs.css" rel="stylesheet">
-  <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
+
+
   <link href="/css/picdown.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -71,24 +70,29 @@
  <nav class="HolyGrail-nav">
   
        
-   
-   <select id="select-name">
-                    <option value="1">111</option>
-                    <option value="2">facede</option>
-                    <option value="3">face</option>
-                </select>
+  <div id="dirlist">
+      <ul id="treeDemo" class="ztree"></ul>
+
+  </div>
+
 </nav>
 <aside class="HolyGrail-ads">
-<input type="file" id="upload1" multiple/>
-<button id="upload-button" class="button" >Upload</button>
+<input type="file" id="upload1" multiple style="display: none;"/>
+    <input type="file" id="upload2" style="display: none;"  webkitdirectory/>
+<button id="uploadfile-button" class="button01" >上传文件</button>
+    <button id="uploaddir-button" class="button01" >上传文件夹</button>
+<button onclick="ptree()">retree</button>
 </aside>
                          <div id="popLayer" ></div>
                          <div id="popBox" >
                              <div class="close">
+                                 <a href="javascript:void(0)"  onclick="startup()">开始上传</a>
+                             </div>
+                             <div class="close">
                                  <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
                              </div>
-                             <div class="content">
-                                 <div id="filelist"></div>
+                             <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                 <div id="filelist" style="overflow:auto"></div>
                              </div>
                          </div>
 </div>
@@ -104,18 +108,21 @@
               </div>
             </div>
             </div>
-           
-            
-            
-            
-            
-            
-  
+
+
+
+
+
+
+
+        <link rel="stylesheet" href="/css/demo.css" type="text/css">
+        <link rel="stylesheet" href="/css/zTreeStyle/zTreeStyle.css" type="text/css">
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.ztree.core.js"></script>
      <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
     <script src="js/wysiwyg/wysihtml5-0.3.0.js">
     </script>
-    <script src="js/jquery.min.js">
-    </script>
+
     <script src="js/bootstrap.js">
     </script>
     <script src="js/jquery.scrollUp.js">
@@ -137,6 +144,155 @@
     
     
     <script type="text/javascript">
+      var tre1;
+      var nodes=[];
+      var notodata=[];
+      var filedir=document.getElementById("upload2");
+      window.onload=gtree();
+        function gtree(){
+          $.ajax({
+            type : 'POST',
+            url : "/gettree",
+            dataType:"json",
+            contentType:"application/json;charset=UTF-8",
+            data:{},
+
+
+            success : function(data) {
+                if(data.message==0
+                ){
+                    alert("treeisnull");
+
+
+                }
+
+
+                else{
+                 tre1=data.tree;
+                 console.log(data.tree);
+                maketree();
+                zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+                }}}
+
+        )}
+        function ptree() {
+            $.ajax({
+                type : 'POST',
+                url : "/posttree",
+                dataType:"json",
+                //contentType:"application/json;charset=UTF-8",
+                data:{'tree':JSON.stringify(notodata)},
+
+
+                success : function(data) {
+                    if(data.state==1){
+                        retree();
+                    }
+                }
+                })
+        }
+function maketree(){
+for(let n=0;n<tre1.length;n++){
+    var nodeobj={isParent:true};
+    nodeobj["id"]=tre1[n].t_id;
+    nodeobj["name"]=tre1[n].t_name;
+    nodeobj["pId"]=tre1[n].t_pid;
+    nodes.push(nodeobj);
+}
+
+
+        }
+
+
+        //var nodes = [{name:"Uphoton深度图数据",id:0,pId:null},{name:"DP",id:1,pId:0},{name:"IR",id:2,pId:0},{name:"Fake",id:3,pId:1,isParent:true},{name:"People",id:4,pId:1,isParent:true},{name:"Fake",id:5,pId:2,isParent:true},{name:"People",id:6,pId:2,isParent:true}]
+
+       /* var map = {};
+        var val = [];
+       function tree(data) {
+
+           //生成数据对象集合
+           data.forEach(it => {
+               map[it.id] = it;
+           })
+           console.log(map);
+
+
+           //生成结果集
+           data.forEach(it => {
+               const parent = map[it.pid];
+               if (parent) {
+                   if (!Array.isArray(parent.children)) parent.children = [];
+                   parent.children.push(it);
+               } else {
+                   val.push(it);
+               }
+           })
+           console.log(val)
+           return val;
+
+       }
+       tree(data);*/
+
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            data:{//表示tree的数据格式
+                simpleData:{
+                    enable:true,//表示使用简单数据模式
+                    idKey:"id",//设置之后id为在简单数据模式中的父子节点关联的桥梁
+                    pidKey:"pId",//设置之后pid为在简单数据模式中的父子节点关联的桥梁和id互相对应
+                    rootId:"null"//pid为null的表示根节点
+                }
+            },
+            view:{//表示tree的显示状态
+                selectMulti:false//表示禁止多选
+            },
+            check:{//表示tree的节点在点击时的相关设置
+                enable:true,//是否显示radio/checkbox
+                chkStyle:"checkbox",//值为checkbox或者radio表示
+                checkboxType:{p:"",s:""},//表示父子节点的联动效果
+                radioType:"level"//设置tree的分组
+            },
+            callback:{//表示tree的一些事件处理函数
+                onClick:chosenode
+            }
+        }
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+
+        function retree(){
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+        }
+
+       var dir;
+        var dir1;
+        var chnode;
+        var npid;
+        var ndir;
+        function chosenode(event,treeId,treeNode) {
+            var prename=treeNode.name;
+             ndir=treeNode.name;
+             npid=treeNode.id;
+            function getpath(treeNode){
+
+                if(treeNode.getParentNode()!=null){
+                    prename=treeNode.getParentNode().name+'/'+prename;
+
+                    getpath(treeNode.getParentNode());
+                }
+                else{
+
+                   dir=prename;
+                   dir1=prename;
+                }}
+            getpath(treeNode);
+
+            chnode=treeNode.children;
+
+        }
+
+
+
+         var stacode;
 
         const account = {
             name: "cs1f9abf47a9b73x49c3x9c1",
@@ -157,16 +313,69 @@
 
 
         });*/
+        var fgh=0;
+function getdir1(prefix,kpid){
 
-        document.getElementById('upload-button').addEventListener('click', () =>{
+
+//console.log(prefix);
+fgh=fgh+1;
+//console.log("递归了"+fgh);
+    blobService.listBlobDirectoriesSegmentedWithPrefix("modelblob1", prefix+"/",null, (error, result) => {
+        if(error) {
+            // Handle blob error
+        } else {
+            let dirpren0=result.entries;
+            if (dirpren0.length>0){
+                //let nlength=nodes.length;
+            for(let n=0;n<dirpren0.length;n++){
+            let array1=dirpren0[n]["name"].split("/");
+                let nodeobj={t_id:nodes.length};
+                let kkpid=nodes.length;
+
+                nodeobj["t_name"]=array1[array1.length-2];
+                nodeobj["t_pid"]=kpid;
+            //console.log("for"+n);
+            //console.log(nodeobj);
+                notodata.push(nodeobj);
+                nodes.push(nodeobj)
+
+               //console.log(prefix+"/"+array1[array1.length-2]);
+            getdir1(prefix+"/"+array1[array1.length-2],kkpid)
+            }
+
+        }
+        else{
+            }}
+    });
+    //console.log("最终");
+    //console.log(notodata);
+}
+
+
+        document.getElementById('uploadfile-button').addEventListener('click', () =>{
+            document.getElementById("upload1").click();
             document.getElementById("filelist").innerHTML="";
             var popBox = document.getElementById("popBox");
             var popLayer = document.getElementById("popLayer");
             popBox.style.display = "block";
             popLayer.style.display = "block";
-            let options2=$("#select-name option:selected");//获取当前选择项.
-            let dir=options2.text();//获取当前选择项的文本.
-            console.log(dir);
+            stacode=1;});
+        document.getElementById('uploaddir-button').addEventListener('click', () =>{
+            document.getElementById("filelist").innerHTML="";
+            var popBox = document.getElementById("popBox");
+            var popLayer = document.getElementById("popLayer");
+            popBox.style.display = "block";
+            popLayer.style.display = "block";
+            document.getElementById("upload2").click();
+
+            stacode=2;});
+
+
+        function startup(){
+            if (stacode==1){
+
+
+
             var len=document.getElementById('upload1').files.length;
             var successnum=0;
 
@@ -176,25 +385,91 @@
                 let file = document.getElementById('upload1').files[i];
 
                 blobService.createBlockBlobFromBrowserFile('modelblob1',
-                    dir+'/'+file.name,
+                    dir+"/"+file.name,
                     file,
                     (error, result) => {
                         if(error) {
                             // Handle blob error
                         } else {
 
-                            append(file.name);
+
                             if(successnum==len-1){
-                                alert('Upload is successful');
-                                $("#closemove").click();}
-                            else {successnum++;}
+                                append(file.name);
+                                append("upload is finished!");
+                               // $("#closemove").click();
+                                 }
+                            else {successnum++;
+                                append(file.name);}
 
                         }
-                    });
-               function append(file1){
+                    });}}
+                    else if(stacode==2){
+
+
+            var len=filedir.files.length;
+            var successnum=0;
+            var isrrr;
+                 let finow=document.getElementById("upload2").files[0].webkitRelativePath.split("/");
+                 if(chnode){
+                 for (let n=0;n<chnode.length;n++){
+                 if(finow[0]==chnode[n]["name"]){
+                     alert("文件夹已存在");
+                     isrrr=true;
+                     break;
+                 }else{
+
+                     isrrr=false;
+                 }}}
+                 else{isrrr=false;}
+                   if(isrrr==false)  {
+                       let kkpid=nodes.length;
+                       let nodeobj={t_id:nodes.length};
+
+
+                       nodeobj["t_name"]=finow[0];
+                       nodeobj["t_pid"]=npid;
+                       notodata.push(nodeobj);
+            for(i=0;i<len;i++){
+
+                let file = document.getElementById('upload2').files[i];
+
+
+                let relativepath= file.webkitRelativePath;
+
+                blobService.createBlockBlobFromBrowserFile('modelblob1',
+                    dir+"/"+relativepath,
+                    file,
+                    (error, result) => {
+                        if(error) {
+                            // Handle blob error
+                        } else {
+
+
+                            if(successnum==len-1){
+                                append(file.name);
+                                append("upload is finished!");
+                                getdir1(dir+"/"+finow[0],kkpid);
+                                console.log(notodata);
+                                console.log(notodata.length);
+                                console.log(nodes.length);
+                               console.log(nodes);
+
+                                ptree();
+
+                                // $("#closemove").click();
+                            }
+                            else {successnum++;
+                                append(file.name);}
+
+                        }
+        });
+
+
+                          }}}}
+        function append(file1){
                 document.getElementById("filelist").innerHTML+=file1+"上传成功！"+"</br>";}
 
-            }});
+
         function closeBox() {
             var popBox = document.getElementById("popBox");
             var popLayer = document.getElementById("popLayer");
