@@ -29,9 +29,9 @@ public class pTreecontroller {
         JSONArray tree1=new JSONArray(ltree);
 
         for(int i=0;i<tree1.length();i++){
-            tree2.setTree_id(tree1.getJSONObject(i).getInt("t_id"));
+            tree2.setTree_id(tree1.getJSONObject(i).getString("t_id"));
             tree2.setName(tree1.getJSONObject(i).getString("t_name"));
-            tree2.setPid(tree1.getJSONObject(i).getInt("t_pid"));
+            tree2.setPid(tree1.getJSONObject(i).getString("t_pid"));
             System.out.println(tree2);
             if(TreeRepository.savet(tree2)==0) {
                 Return.put("state", 0);

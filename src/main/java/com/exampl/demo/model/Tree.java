@@ -1,14 +1,14 @@
 package com.exampl.demo.model;
 
 public class Tree {
-    private int t_id;
+    private String t_id;
     private String t_name;
-    private int t_pid;
-    public int getTree_id() {
+    private String t_pid;
+    public String getTree_id() {
         return t_id;
     }
 
-    public void setTree_id(int t_id) {
+    public void setTree_id(String t_id) {
         this.t_id = t_id;
     }
 
@@ -24,11 +24,11 @@ public class Tree {
 
 
 
-    public int getPid() {
+    public String getPid() {
         return t_pid;
     }
 
-    public void setPid(int t_pid) {
+    public void setPid(String t_pid) {
         this.t_pid = t_pid;
     }
 

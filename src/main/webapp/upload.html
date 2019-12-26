@@ -262,6 +262,13 @@ console.log(nodes);
         }
         // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
 
+      function guid() {
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+              var r = Math.random() * 16 | 0,
+                  v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+          });
+      }
 
 
        var dir;
@@ -332,8 +339,9 @@ async function getdir1(prefix,kpid){
 
             for(let n=0;n<dirpren0.length;n++){
             let array1=dirpren0[n]["name"].split("/");
-                let nodeobj={t_id:nlength};
-                let kkpid=nlength;
+                let kkpid=guid();
+            let nodeobj={t_id:kkpid};
+
 
                 nodeobj["t_name"]=array1[array1.length-2];
                 nodeobj["t_pid"]=kpid;
@@ -341,9 +349,7 @@ async function getdir1(prefix,kpid){
             //console.log(nodeobj);
 
                 notodata.push(nodeobj);
-                nlength=nlength+1;
-                console.log(nlength);
-               console.log(nodeobj);
+
 
                //console.log(prefix+"/"+array1[array1.length-2]);
             getdir1(prefix+"/"+array1[array1.length-2],kkpid);
@@ -385,6 +391,10 @@ async function getdir1(prefix,kpid){
 
 
         function startup(){
+            if (npid==null){
+                alert("未选中文件夹!");
+            }
+            else{
             if (stacode==1){
 
 
@@ -435,8 +445,8 @@ async function getdir1(prefix,kpid){
                  }}}
                  else{isrrr=false;}
                    if(isrrr==false)  {
-                       let kkpid=nodes.length;
-                       let nodeobj={t_id:nodes.length};
+                       let kkpid=guid();
+                       let nodeobj={t_id:kkpid};
 
 
                        nodeobj["t_name"]=finow[0];
@@ -475,7 +485,7 @@ async function getdir1(prefix,kpid){
         });
 
 
-                          }}}}
+                          }}}}}
         function append(file1){
                 document.getElementById("filelist").innerHTML+=file1+"上传成功！"+"</br>";}
 
