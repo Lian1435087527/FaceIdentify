@@ -24,6 +24,7 @@ public class pTreecontroller {
     public @ResponseBody ModelMap posttree(@RequestParam("tree") String ltree) {
 
         ModelMap Return=new ModelMap();
+<<<<<<< Upstream, based on origin/test
         Tree tree2 = new Tree();
         //System.out.println(ltree);
         JSONArray tree1=new JSONArray(ltree);
@@ -39,8 +40,24 @@ public class pTreecontroller {
             else {
                 Return.put("state", 1);}
 
+=======
+        
+        System.out.println(ltree);
+        JSONArray tree1=new JSONArray(ltree);
+        System.out.println(tree1.getJSONObject(0).get("t_name"));
+        /*if(TreeRepository.savet(tree)==0) {
+            Return.put("state", 0);
+>>>>>>> 43e28b7 整合前
         }
+<<<<<<< Upstream, based on origin/test
 
+=======
+        else {
+            Return.put("state", 1);}
+        return Return;*/
+        Return.put("state", 1);
+        
+>>>>>>> 43e28b7 整合前
         return Return;
 
 
