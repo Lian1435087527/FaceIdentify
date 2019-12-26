@@ -81,7 +81,7 @@
     <input type="file" id="upload2" style="display: none;"  webkitdirectory/>
 <button id="uploadfile-button" class="button01" >上传文件</button>
     <button id="uploaddir-button" class="button01" >上传文件夹</button>
-<button onclick="ptree()">retree</button>
+
 </aside>
                          <div id="popLayer" ></div>
                          <div id="popBox" >
@@ -150,6 +150,7 @@
       var filedir=document.getElementById("upload2");
       window.onload=gtree();
         function gtree(){
+            nodes=[];
           $.ajax({
             type : 'POST',
             url : "/gettree",
@@ -186,7 +187,9 @@
 
                 success : function(data) {
                     if(data.state==1){
-                        retree();
+                        zTreeObj = $.fn.zTree.destroy("treeDemo");
+                        gtree();
+
                     }
                 }
                 })
@@ -199,8 +202,8 @@ for(let n=0;n<tre1.length;n++){
     nodeobj["pId"]=tre1[n].t_pid;
     nodes.push(nodeobj);
 }
-
-
+console.log(nodes);
+    nlength=nodes.length+1;
         }
 
 
@@ -259,9 +262,7 @@ for(let n=0;n<tre1.length;n++){
         }
         // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
 
-        function retree(){
-            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
-        }
+
 
        var dir;
         var dir1;
@@ -314,11 +315,13 @@ for(let n=0;n<tre1.length;n++){
 
         });*/
         var fgh=0;
-function getdir1(prefix,kpid){
+      var nlength;
+async function getdir1(prefix,kpid){
 
 
 //console.log(prefix);
-fgh=fgh+1;
+    fgh++;
+
 //console.log("递归了"+fgh);
     blobService.listBlobDirectoriesSegmentedWithPrefix("modelblob1", prefix+"/",null, (error, result) => {
         if(error) {
@@ -326,26 +329,36 @@ fgh=fgh+1;
         } else {
             let dirpren0=result.entries;
             if (dirpren0.length>0){
-                //let nlength=nodes.length;
+
             for(let n=0;n<dirpren0.length;n++){
             let array1=dirpren0[n]["name"].split("/");
-                let nodeobj={t_id:nodes.length};
-                let kkpid=nodes.length;
+                let nodeobj={t_id:nlength};
+                let kkpid=nlength;
 
                 nodeobj["t_name"]=array1[array1.length-2];
                 nodeobj["t_pid"]=kpid;
             //console.log("for"+n);
             //console.log(nodeobj);
+
                 notodata.push(nodeobj);
-                nodes.push(nodeobj)
+                nlength=nlength+1;
+                console.log(nlength);
+               console.log(nodeobj);
 
                //console.log(prefix+"/"+array1[array1.length-2]);
-            getdir1(prefix+"/"+array1[array1.length-2],kkpid)
-            }
+            getdir1(prefix+"/"+array1[array1.length-2],kkpid);
 
+            }
         }
         else{
-            }}
+
+            /*if(fgh==dirpren0.length){
+                console.log(notodata);*/
+
+            }
+            fgh--;
+        if( fgh==0)ptree();
+        }
     });
     //console.log("最终");
     //console.log(notodata);
@@ -449,12 +462,9 @@ fgh=fgh+1;
                                 append(file.name);
                                 append("upload is finished!");
                                 getdir1(dir+"/"+finow[0],kkpid);
-                                console.log(notodata);
-                                console.log(notodata.length);
-                                console.log(nodes.length);
-                               console.log(nodes);
 
-                                ptree();
+
+
 
                                 // $("#closemove").click();
                             }

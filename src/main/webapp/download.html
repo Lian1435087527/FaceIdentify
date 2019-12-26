@@ -272,7 +272,7 @@
     </script>
 
 <script>
-    var nodes = [{name:"Uphoton深度图数据",id:0,pId:null},{name:"DP",id:1,pId:0},{name:"IR",id:2,pId:0},{name:"Fake",id:3,pId:1,isParent:true},{name:"People",id:4,pId:1,isParent:true},{name:"Fake",id:5,pId:2,isParent:true},{name:"People",id:6,pId:2,isParent:true}]
+    var nodes = [];
     var zTreeObj;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
     var setting = {
@@ -299,9 +299,45 @@
     }
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
 
-    $(document).ready(function(){
-        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
-    });
+    window.onload=gtree();
+    function gtree(){
+        nodes=[];
+        $.ajax({
+            type : 'POST',
+            url : "/gettree",
+            dataType:"json",
+            contentType:"application/json;charset=UTF-8",
+            data:{},
+
+
+            success : function(data) {
+                if(data.message==0
+                ){
+                    alert("treeisnull");
+
+
+                }
+
+
+                else{
+                    tre1=data.tree;
+                    console.log(data.tree);
+                    maketree();
+                    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
+                }}}
+
+        )}
+    function maketree(){
+        for(let n=0;n<tre1.length;n++){
+            var nodeobj={isParent:true};
+            nodeobj["id"]=tre1[n].t_id;
+            nodeobj["name"]=tre1[n].t_name;
+            nodeobj["pId"]=tre1[n].t_pid;
+            nodes.push(nodeobj);
+        }
+
+
+    }
     function chosenode(event,treeId,treeNode) {
        var prename=treeNode.name;
 

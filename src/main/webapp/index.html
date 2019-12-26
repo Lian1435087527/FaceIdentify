@@ -118,6 +118,12 @@
                 模型管理
               </a>
             </li>
+            <li>
+              <a onclick="load_home(this)" class="" id="ce6">
+
+                内部测试
+              </a>
+            </li>
 
            
           </ul>
@@ -323,6 +329,10 @@ function load_home(ele) {
 			document.getElementById("htbody").innerHTML = '<object type="text/html" data="tables.html" width="100%" height=700px></object>';
             $("#ce5").attr("class", "selected");
             break;
+      case "ce6":
+        document.getElementById("htbody").innerHTML = '<object type="text/html" data="rtmp.html" width="100%" height=700px></object>';
+        $("#ce6").attr("class", "selected");
+        break;
 
 		
             
