@@ -63,7 +63,7 @@
 
 								<nav class="HolyGrail-nav">
 
-<<<<<<< Upstream, based on origin/test
+
 </nav>
 <aside class="HolyGrail-ads">
 <input type="file" id="upload1" multiple style="display: none;"/>
@@ -85,38 +85,7 @@
                              </div>
                          </div>
 </div>
-=======
 
-									<div id="dirlist">
-										<ul id="treeDemo" class="ztree"></ul>
-
-									</div>
-
-								</nav>
-								<aside class="HolyGrail-ads">
-									<input type="file" id="upload1" multiple style="display: none;" />
-									<input type="file" id="upload2" style="display: none;"
-										webkitdirectory />
-									<button id="uploadfile-button" class="button01">上传文件</button>
-									<button id="uploaddir-button" class="button01">上传文件夹</button>
-									<button onclick="ptree()">retree</button>
-								</aside>
-								<div id="popLayer"></div>
-								<div id="popBox">
-									<div class="close">
-										<a href="javascript:void(0)" onclick="startup()">开始上传</a>
-									</div>
-									<div class="close">
-										<a href="javascript:void(0)" id="closemove"
-											onclick="closeBox()">关闭</a>
-									</div>
-									<div class="content"
-										style="margin: 5px auto 6px auto; width: 70%">
-										<div id="filelist" style="overflow: auto"></div>
-									</div>
-								</div>
-							</div>
->>>>>>> 43e28b7 整合前
 
 
 
@@ -348,12 +317,11 @@ console.log(nodes);
 
 
         });*/
-<<<<<<< Upstream, based on origin/test
+
         var fgh=0;
       var nlength;
 async function getdir1(prefix,kpid){
-=======
->>>>>>> 43e28b7 整合前
+
 
 function getData1(str) {
     console.log(str+"  "+new Date())
@@ -406,15 +374,10 @@ async function getdir1(prefix,kpid){
 
 fgh++;
 //console.log(prefix);
-<<<<<<< Upstream, based on origin/test
+
     fgh++;
 
-=======
-/* if(start_T==false){
-	fgh=prefix;
-	start_T=true;//记录递归开头位置
-}; */
->>>>>>> 43e28b7 整合前
+
 //console.log("递归了"+fgh);
  
    blobService.listBlobDirectoriesSegmentedWithPrefix("modelblob1", prefix+"/",null, (error, result) => {
@@ -437,41 +400,15 @@ fgh++;
             //console.log(nodeobj);
 
                 notodata.push(nodeobj);
-<<<<<<< Upstream, based on origin/test
 
-
-=======
-                nodes.push(nodeobj);
-				
->>>>>>> 43e28b7 整合前
                //console.log(prefix+"/"+array1[array1.length-2]);
-<<<<<<< Upstream, based on origin/test
+
             getdir1(prefix+"/"+array1[array1.length-2],kkpid);
 
             }
-=======
-            	getdir1(prefix+"/"+array1[array1.length-2],kkpid);
-            }
-			
-        }     
-           /*  console.log("end  "+prefix);
-            console.log("fgh  "+fgh);
-           if(prefix==fgh){//递归结束
-        	   start_T=false;
-        	   
-               
-           		
-           } */
-          fgh--;
-          if(fgh==0){
-        	  console.log(notodata.length);
-              console.log(nodes.length);
-             console.log(nodes);
-          		ptree();
-          }
->>>>>>> 43e28b7 整合前
+
         }
-<<<<<<< Upstream, based on origin/test
+
         else{
 
             /*if(fgh==dirpren0.length){
@@ -481,8 +418,7 @@ fgh++;
             fgh--;
         if( fgh==0)ptree();
         }
-=======
->>>>>>> 43e28b7 整合前
+
     });
     //console.log("最终");
     //console.log(notodata);
@@ -593,17 +529,10 @@ fgh++;
                                 console.log(dir+"/"+finow[0]);
                                 asyncCall();
                                 getdir1(dir+"/"+finow[0],kkpid);
-<<<<<<< Upstream, based on origin/test
-=======
-                                
->>>>>>> 43e28b7 整合前
-
-<<<<<<< Upstream, based on origin/test
 
 
-=======
-                                //ptree();
->>>>>>> 43e28b7 整合前
+
+
 
                                 // $("#closemove").click();
                             }
