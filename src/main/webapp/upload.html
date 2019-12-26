@@ -18,51 +18,62 @@
 <!-->
 
 <html lang="en">
-
-<!--
+  
+  <!--
 <![endif]-->
-<head>
-<meta charset="utf-8">
-<title>3d智能云</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-<!-- bootstrap css -->
-
-<link href="/icomoon/style.css" rel="stylesheet">
-<!--[if lte IE 7]>
+  <head>
+    <meta charset="utf-8">
+        <title>
+      3d智能云
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    
+    <link href="/icomoon/style.css" rel="stylesheet">
+    <!--[if lte IE 7]>
     <script src="css/icomoon-font/lte-ie7.js">
     </script>
     <![endif]-->
 
-<link href="/css/main.css" rel="stylesheet">
-<!-- Important. For Theming change primary-color variable in main.css  -->
+  <link href="/css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
 
 
-<link href="/css/picdown.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
+  <link href="/css/picdown.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
 
-	<div class="dashboard-wrapper">
-		<div class="left-sidebar">
-			<div class="row-fluid">
-				<div class="span12">
-					<div class="widget">
-						<div class="widget-header">
-							<div class="title">
+        <div class="dashboard-wrapper">
+          <div class="left-sidebar">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="widget">
+                  <div class="widget-header">
+                    <div class="title">
+                      
+                      上传数据
+                      <span class="mini-title">
+                        请选择对应文件夹，支持压缩包格式
+                      </span>
+                    </div>
+                    <span class="tools">
+                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
+                    </span>
+                  </div>
+                  <div class="widget-body">
+                     <div class="HolyGrail-body">   
+  <main class=HolyGrail-body>
 
-								上传数据 <span class="mini-title"> 请选择对应文件夹，支持压缩包格式 </span>
-							</div>
-							<span class="tools"> <a class="fs1" aria-hidden="true"
-								data-icon="&#xe090;"></a>
-							</span>
-						</div>
-						<div class="widget-body">
-							<div class="HolyGrail-body">
-								<main class=HolyGrail-body></main>
+ </main>
+     
+ <nav class="HolyGrail-nav">
+  
+       
+  <div id="dirlist">
+      <ul id="treeDemo" class="ztree"></ul>
 
-								<nav class="HolyGrail-nav">
-
+  </div>
 
 </nav>
 <aside class="HolyGrail-ads">
@@ -89,52 +100,50 @@
 
 
 
-
-
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
 
 
 
 
-	<link rel="stylesheet" href="/css/demo.css" type="text/css">
-	<link rel="stylesheet" href="/css/zTreeStyle/zTreeStyle.css"
-		type="text/css">
-	<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.ztree.core.js"></script>
-	<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
-	<script src="js/wysiwyg/wysihtml5-0.3.0.js">
+
+
+
+        <link rel="stylesheet" href="/css/demo.css" type="text/css">
+        <link rel="stylesheet" href="/css/zTreeStyle/zTreeStyle.css" type="text/css">
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.ztree.core.js"></script>
+     <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+    <script src="js/wysiwyg/wysihtml5-0.3.0.js">
     </script>
 
-	<script src="js/bootstrap.js">
+    <script src="js/bootstrap.js">
     </script>
-	<script src="js/jquery.scrollUp.js">
+    <script src="js/jquery.scrollUp.js">
     </script>
-	<script src="js/wysiwyg/bootstrap-wysihtml5.js">
+    <script src="js/wysiwyg/bootstrap-wysihtml5.js">
     </script>
-	<script src="js/bootstrap-colorpicker.js">
+    <script src="js/bootstrap-colorpicker.js">
     </script>
-	<script type="text/javascript" src="js/date-picker/date.js">
+    <script type="text/javascript" src="js/date-picker/date.js">
     </script>
-	<script type="text/javascript" src="js/date-picker/daterangepicker.js">
+    <script type="text/javascript" src="js/date-picker/daterangepicker.js">
     </script>
-	<script type="text/javascript" src="js/clockface.js">
+    <script type="text/javascript" src="js/clockface.js">
     </script>
-	<script type="text/javascript" src="js/bootstrap-timepicker.js">
+    <script type="text/javascript" src="js/bootstrap-timepicker.js">
     </script>
-	<script type="text/javascript" src="js/jquery.bootstrap.wizard.js">
+    <script type="text/javascript" src="js/jquery.bootstrap.wizard.js">
     </script>
-
-
-	<script type="text/javascript">
+    
+    
+    <script type="text/javascript">
       var tre1;
       var nodes=[];
       var notodata=[];
@@ -184,11 +193,6 @@
                     }
                 }
                 })
-                return new Promise(resolve => {
-                    
-                        resolve('resolved2');
-                      
-                    });
         }
 function maketree(){
 for(let n=0;n<tre1.length;n++){
@@ -317,72 +321,19 @@ console.log(nodes);
 
 
         });*/
-
-
-
-
-function getData1(str) {
-    console.log(str+"  "+new Date())
-    return new Promise(resolvesdr => {
-      setTimeout(() => {
-    	 console.log("111"+new Date())
-        resolvesdr('resolved');
-    	 console.log("122"+new Date())
-      }, 2000);
-    });
-  }
- async function getData2() {
-    console.log(new Date())
-    console.log(455377)
-    return new Promise(resolert => {
-    	setTimeout(() => {
-       	 console.log("222"+new Date())
-         resolert('resolved2');
-       	 console.log("233"+new Date())
-         ;
-    	 }, 1000);
-    });
-  }
-  async function asyncCall() {
-    var data1 = getData1(421);
-    var data2=  getData2();
-    var datalist=[data1,data2]
-    /* await datalist[0]
-    console.log("AAAAA")
-    data2 = await data2  */   
-    
-    for(let n=0;n<datalist.length;n++){
-        
-        await datalist[n]   ;    
-        console.log("AAAAA "+n)
-    }
-    console.log(data2)
-    console.log(data1)
-  }
-  var fgh=0;//并行计算数
-  var start_T=false;
-/* async function getdir2(prefix,kpid){
-var func1=await getdir1(prefix,kpid);
-console.log(func1);
-console.log(nodes.length);
-console.log(nodes);
-await ptree();
-} */
+        var fgh=0;
+      var nlength;
 async function getdir1(prefix,kpid){
 
-fgh++;
-//console.log(prefix);
 
+//console.log(prefix);
     fgh++;
 
-
 //console.log("递归了"+fgh);
- 
-   blobService.listBlobDirectoriesSegmentedWithPrefix("modelblob1", prefix+"/",null, (error, result) => {
+    blobService.listBlobDirectoriesSegmentedWithPrefix("modelblob1", prefix+"/",null, (error, result) => {
         if(error) {
             // Handle blob error
         } else {
-        	//console.log("start  "+prefix+new Date());
             let dirpren0=result.entries;
             if (dirpren0.length>0){
 
@@ -399,14 +350,12 @@ fgh++;
 
                 notodata.push(nodeobj);
 
-               //console.log(prefix+"/"+array1[array1.length-2]);
 
+               //console.log(prefix+"/"+array1[array1.length-2]);
             getdir1(prefix+"/"+array1[array1.length-2],kkpid);
 
             }
-
         }
-
         else{
 
             /*if(fgh==dirpren0.length){
@@ -416,11 +365,9 @@ fgh++;
             fgh--;
         if( fgh==0)ptree();
         }
-
     });
     //console.log("最终");
     //console.log(notodata);
-    
 }
 
 
@@ -524,10 +471,7 @@ fgh++;
                             if(successnum==len-1){
                                 append(file.name);
                                 append("upload is finished!");
-                                console.log(dir+"/"+finow[0]);
-                                //asyncCall();
                                 getdir1(dir+"/"+finow[0],kkpid);
-
 
 
 
@@ -570,6 +514,6 @@ fgh++;
 
 
     </script>
-
+  
 </body>
 </html>
