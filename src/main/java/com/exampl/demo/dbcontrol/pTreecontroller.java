@@ -1,4 +1,5 @@
 package com.exampl.demo.dbcontrol;
+
 import com.exampl.demo.model.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

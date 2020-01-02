@@ -16,13 +16,13 @@ import com.exampl.demo.model.Tree;
 import java.util.List;
 
 @Controller
-@RequestMapping("/gettree")
+
 public class Treecontroller {
     @Autowired
     private com.exampl.demo.Repositories.TreeRepository TreeRepository;
 
     @PostMapping
-
+    @RequestMapping("/gettree")
     public @ResponseBody ModelMap gettree() {
 
         ModelMap Return=new ModelMap();
