@@ -165,14 +165,14 @@
                           </div>
                           <div class="widget-body">
 
-
+                              <iframe src="" name="show" style="width:0;height:0"></iframe>
 
 
                               <div class="wrap">
                                   <aside id="left">
                                       <div id="dirlist">
                                           <ul id="treeDemo" class="ztree"></ul>
-
+                                          <button class="button" id="deletedir" onclick="deletedir()">删除文件夹</button>
                                       </div>
 
                                   </aside>
@@ -185,7 +185,7 @@
                                       <button class=button id="jump" onclick="jumpto()" style=" display: inline">跳转</button>
                                       <label style="width:30px; display: inline">已选择：</label>
                                       <label id="chosenum" style=" display: inline"></label>
-                                      <button onclick="lookdir()">test</button>
+
                                       <div class="tbody" style="height:600px">
                                           <table id="table0" height="50px"></table>
                                           <table id="table" class="table1" border="1"  width=200px ></table>
@@ -198,9 +198,10 @@
 
 
 
-                                          <button id="down" class=button onclick="copy_p()">copy</button><br/>
-                                          <button id="move" class=button onclick="move_p()">move</button><br/>
+                                          <button id="down" class=button onclick="copy_p()">copy</button>
+                                          <button id="move" class=button onclick="move_p()">move</button>
                                           <button id="deleted" class=button onclick="deleted_p()">delete</button>
+                                          <button id="donloadall" class="button" onclick="download_p()">downloadall</button>
 
                                   </aside>
                               </div>
@@ -212,12 +213,7 @@
                                   </div>
                                   <div class="content" style="margin:5px auto 6px auto;width: 70%">
                                       <label>请选择要移到的文件夹</label>
-                                      <select  id="select-move-dir-name">
-                                          <option value="1">111</option>
-                                          <option value="2">facede</option>
-                                          <option value="3">face</option>
-                                          <option value="4">11</option>
-                                      </select>
+                                      <ul id="treeDemo1" class="ztree"></ul>
                                       <button id="confirm">确定</button>
                                   </div>
                               </div>
@@ -263,7 +259,10 @@
     </script>
     <script src="js/jquery.scrollUp.js">
     </script>
-    
+        <script src="js/jszip.min.js">
+        </script>
+        <script src="js/FileSaver.js">
+        </script>
     
     <!-- Sparkline JS -->
     <script src="js/jquery.sparkline.js">
@@ -272,8 +271,11 @@
     </script>
 
 <script>
+
     var nodes = [];
+
     var zTreeObj;
+    var zTreeObj1;
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
     var setting = {
         data:{//表示tree的数据格式
@@ -295,6 +297,28 @@
         },
         callback:{//表示tree的一些事件处理函数
           onClick:chosenode
+        }
+    }
+    var setting1 = {
+        data:{//表示tree的数据格式
+            simpleData:{
+                enable:true,//表示使用简单数据模式
+                idKey:"id",//设置之后id为在简单数据模式中的父子节点关联的桥梁
+                pidKey:"pId",//设置之后pid为在简单数据模式中的父子节点关联的桥梁和id互相对应
+                rootId:"null"//pid为null的表示根节点
+            }
+        },
+        view:{//表示tree的显示状态
+            selectMulti:false//表示禁止多选
+        },
+        check:{//表示tree的节点在点击时的相关设置
+            enable:false,//是否显示radio/checkbox
+            chkStyle:"checkbox",//值为checkbox或者radio表示
+            checkboxType:{p:"",s:""},//表示父子节点的联动效果
+            radioType:"level"//设置tree的分组
+        },
+        callback:{//表示tree的一些事件处理函数
+            onClick:chosenode1
         }
     }
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
@@ -338,9 +362,11 @@
 
 
     }
+    var prename;
+    var trid;
     function chosenode(event,treeId,treeNode) {
-       var prename=treeNode.name;
-
+        prename=treeNode.name;
+        trid=treeNode.id;
         function getpath(treeNode){
 
         if(treeNode.getParentNode()!=null){
@@ -349,13 +375,36 @@
             getpath(treeNode.getParentNode());
         }
         else{
-            //console.log(prename);
+            console.log(prename);
             listfile(prename);
 
         }}
         getpath(treeNode);
 
     }
+    var prename1;
+
+
+    function chosenode1(event,treeId,treeNode) {
+        prename1=treeNode.name;
+        function getpath(treeNode){
+
+            if(treeNode.getParentNode()!=null){
+                prename1=treeNode.getParentNode().name+'/'+prename1;
+
+                getpath(treeNode.getParentNode());
+            }
+            else{
+                console.log(prename1);
+
+
+            }}
+        getpath(treeNode);
+
+
+
+    }
+
 const table = document.getElementById('table');
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
@@ -382,19 +431,11 @@ var blobname=[];
 var chosen=[];
 var todo=[];
 var allcheck=[];
+var blobing=[];
 var isfull=false;
 var pagesum=0;
 files=document.getElementById("file");
-function lookdir(){
-    blobService.listBlobDirectoriesSegmentedWithPrefix('modelblob1',"Uphoton深度图数据/", null,(error, results) => {
-        if (error) {
-            // Handle list blobs error
-        } else {
-            console.log(results.entries);
 
-
-        }});
-}
 function list(prefix) {
     document.getElementById("chosenum").innerText=0;
     checkp=0;
@@ -403,6 +444,8 @@ function list(prefix) {
 	            // Handle list blobs error
 	        } else {
 	            results.entries.forEach(blob => {
+                    blobing[j]=blob;
+
 	                blobname[j]=blob.name;
 	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
 	            	//console.log(downloadLink[i]);
@@ -455,7 +498,7 @@ function chushihua() {
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
 
             let blob=blobname[i];
-            let index1 = blob.indexOf("/");
+            let index1 = blob.lastIndexOf("/");
             let sub_blob = blob.substring(index1+1);
         	table.innerHTML +=
                 `<tr>
@@ -464,7 +507,7 @@ function chushihua() {
         <td > <div class="dropdown">
       <button class="dropbtn">操作</button>
         <div class="dropdown-content">
-          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}')">downloadLink</button>
+          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}','${blobname[i]}')">downloadLink</button>
               <button id="move1" class=button  onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button>
               <button id="deleted1" class=button onclick="deleted('${blobname[i]}')">delete</button>
               <button id="rename" class=button onclick="rename('${downloadLink[i]}','${blobname[i]}')">rename</button>
@@ -599,6 +642,7 @@ next.onclick = function () {
 }
 
 function move(downloadLink,blobname){
+    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
 	var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
@@ -611,12 +655,15 @@ function move(downloadLink,blobname){
 	});}
 
 function movereal(downloadLink,blobname,isfull){
+    if(prename1==null){
+        alert("未选择文件夹");
+    }
+    else{
 
-	let options2=$("#select-move-dir-name option:selected");//获取当前选择项.
-	let dir=options2.text();//获取当前选择项的文本.
+	let dir=prename1;
 	let url =downloadLink;
 	 let blob=blobname;
-	 let index1 = blob.indexOf("/");
+	 let index1 = blob.lastIndexOf("/");
 	 let sub_blob = blob.substring(index1+1);
 
 
@@ -646,7 +693,7 @@ function movereal(downloadLink,blobname,isfull){
 
 	    });
 
-}	
+}	}
 
 function closeBox() {
     var popBox = document.getElementById("popBox");
@@ -661,17 +708,134 @@ function closeBox1() {
     popLayer.style.display = "none";
 }
 
-function downloadImg(downloadLink){
-    
+function downloadImg(downloadLink,blobname){
+    let subti=downloadLink.lastIndexOf(".");
+    let d_subti=downloadLink.substring(subti+1);
+    let subnai=blobname.lastIndexOf("/");
+    let d_subnai=blobname.substring(subnai+1);
+    if(d_subti=="jpg"||d_subti=="png"){
+        var img = new Image();
+        img.src = downloadLink;
+        // 必须设置，否则canvas中的内容无法转换为blob
+        img.setAttribute('crossOrigin', 'Anonymous');
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            // 将img中的内容画到画布上
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // 将画布内容转换为Blob
+            canvas.toBlob((blob) => {
+                // blob转为同源url
+                var blobUrl = window.URL.createObjectURL(blob);
+                // 创建a链接
+                var a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = d_subnai;
+                // 触发a链接点击事件，浏览器开始下载文件
+                a.click();
+                a.remove();
+            })
+        }
+
+    }
+    else{
     console.log("download启动");
     
     let url =downloadLink;
     let a = document.createElement("a");          // 创建一个a节点插入的document
     let event = new MouseEvent("click");           // 模拟鼠标click点击事件
-    a.download = 'tepic';                  // 设置a节点的download属性值
+    a.download = d_subnai;                  // 设置a节点的download属性值
     a.href = url;                                 // 将图片的src赋值给a节点的href
-    a.dispatchEvent(event)  ;                      // 触发鼠标点击事件
+    a.dispatchEvent(event)  ;   }                   // 触发鼠标点击事件
  }
+
+ function download_p() {
+    gets_all();
+     let zip = new JSZip();//*****创建实例，zip是对象实例
+     let file_name = 'pic.zip';
+     let k=0;
+
+     for(let i=0;i<todo.length;i++){
+        let fname=blobname[todo[i]];
+         //对每一个图片链接获取base64的数据，并使用回调函数处理
+         getBase64Image(downloadLink[todo[i]],blobname[todo[i]],function(dataURL){
+             //对获取的图片base64数据进行处理
+
+             let img_arr = dataURL.split(',');
+             console.log(img_arr[0]);
+
+             zip.file(fname,img_arr[1],{base64: true});
+             k++;
+
+             console.log(k);
+             console.log(todo.length);
+             if(k==todo.length){//当所有图片都已经生成打包并保存zip
+                 zip.generateAsync({type:"blob"})
+                     .then(function(content) {
+                         console.log(content);
+                         saveAs(content, file_name);
+                     });
+             }
+         });
+
+     }
+
+
+
+ }
+    function getBase64Image(downloadLink,picname,callback) {
+       let lsuffix=picname.lastIndexOf(".");
+       let realsuffix;
+       if(picname.substring(lsuffix+1)=="jpg"){
+           realsuffix="jpeg";
+       }
+       else {
+           realsuffix = "png";
+       }
+        var img = new Image();
+        img.src = downloadLink;
+        // 必须设置，否则canvas中的内容无法转换为blob
+        img.setAttribute('crossOrigin', 'Anonymous');
+        img.onload = function(){
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            // 将img中的内容画到画布上
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            var dataURL = canvas.toDataURL("image/"+realsuffix);//使用canvas获取图片的base64数据
+
+            callback?callback(dataURL):null; //调用回调函数
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  function deleted(blobname) {
      let truthBeTold = window.confirm("是否确定删除？");
      if (truthBeTold) {
@@ -684,7 +848,7 @@ function downloadImg(downloadLink){
 
 
                  alert("删除成功");
-                 listfile();
+                 listfile(prename);
              }
 
 
@@ -702,7 +866,7 @@ function deleted_rea(blobname,isfull) {
             alert ("删除失败");
         } else {
 if(isfull==true)
-{listfile();}
+{listfile(prename);}
 
 
         }
@@ -710,6 +874,59 @@ if(isfull==true)
     });
 
 
+}
+function deletedir(){
+    $.ajax({
+        type : 'POST',
+        url : "/deldir",
+        dataType:"json",
+        //contentType:"application/json;charset=UTF-8",
+        data:{"dirn":trid},
+
+
+        success : function(data) {
+            if(data.state==1){
+                alert("delete is successful");
+               gtree();
+
+            }
+
+
+            else{
+                alert("delete is failed");
+            }}
+
+
+    })
+
+
+    blobService.listBlobsSegmentedWithPrefix('modelblob1',prename+'/', null, (error, results,response) => {
+        if (error) {
+            // Handle list blobs error
+        } else {
+            results.entries.forEach(blob => {
+                blobService.deleteBlobIfExists('modelblob1', blob.name, (error, result) => {
+                    if (error) {
+                        //alert("删除失败");
+                    } else{
+
+
+                        j--;
+                        if(j==0){
+                            //alert("删除文件夹成功")
+                            listfile(prename);
+                        }
+                    }
+
+
+                });
+
+
+            });
+
+        }
+
+    });
 }
 
 function checkdefine(){
@@ -799,7 +1016,7 @@ function gets_all_plus(page_d){
 
 	}
 function gets_all() {
-    console.log(333);
+
     gets_all_plus(page);
     for(let f=0;f<todo.length;f++){
        if(todo[f]<0){
@@ -811,11 +1028,11 @@ function gets_all() {
 
 
 function copyreal(downloadLink,blobname) {
-    let options2=$("#select-move-dir-name option:selected");//获取当前选择项.
-    let dir=options2.text();//获取当前选择项的文本.
+
+    let dir=prename1;
     let url =downloadLink;
     let blob=blobname;
-    let index1 = blob.indexOf("/");
+    let index1 = blob.lastIndexOf("/");
     let sub_blob = blob.substring(index1+1);
 
 
@@ -872,6 +1089,7 @@ function deleted_p() {
 
 }}
 function move_p() {
+    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
     var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
@@ -896,6 +1114,7 @@ function move_p() {
     //console.log(todo);
 }
 function copy_p() {
+    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
     var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
@@ -911,7 +1130,7 @@ function copy_p() {
 
         }
         //todo=[];
-        listfile();
+        listfile(prename);
     });
 
 
@@ -921,8 +1140,8 @@ function copy_p() {
 function rename(downloadLink,blobname){
     var popBox = document.getElementById("popBox1");
     var popLayer = document.getElementById("popLayer1");
-    let options3=$("#select-dir-name  option:selected");//获取当前选择项.
-    let dir=options3.text();//获取当前选择项的文本.
+
+    let dir=prename;//获取当前选择项的文本.
     popBox.style.display = "block";
     popLayer.style.display = "block";
 

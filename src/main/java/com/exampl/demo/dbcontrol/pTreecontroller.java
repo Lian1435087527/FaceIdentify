@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Map;
 import org.json.JSONArray;
 @Controller
-@RequestMapping("/posttree")
+
 public class pTreecontroller {
     @Autowired
     private com.exampl.demo.Repositories.TreeRepository TreeRepository;
 
     @PostMapping
-
+    @RequestMapping("/posttree")
     public @ResponseBody ModelMap posttree(@RequestParam("tree") String ltree) {
 
         ModelMap Return=new ModelMap();
@@ -44,7 +44,24 @@ public class pTreecontroller {
         return Return;
 
 
-}}
+}
+
+    @PostMapping
+    @RequestMapping("/deldir")
+    public @ResponseBody ModelMap deldir(@RequestParam("dirn") String trid) {
+
+        ModelMap Return = new ModelMap();
+        if (TreeRepository.deletet(trid) == 0) {
+            Return.put("state", 0);
+        } else {
+            Return.put("state", 1);
+        }
+        return Return;
+
+    }
+
+
+}
 
 
 
