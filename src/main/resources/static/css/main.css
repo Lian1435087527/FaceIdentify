@@ -7574,7 +7574,33 @@ footer {
   border-radius: 15px;
 
 }
+#popLayer2 {
+  display: none;
 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+
+  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+}
+#popBox2{
+  display: none;
+  background-image: url("images/loadforuse.gif");
+  z-index: 11;
+  height: 400px;
+  width: 500px;
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  -moz-opacity: 0.8;
+  opacity:.30;
+  margin:auto;
+}
 .button:hover {background-color: #3e8e41}
 
 .button:active {

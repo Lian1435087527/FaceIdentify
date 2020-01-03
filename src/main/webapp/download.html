@@ -185,7 +185,8 @@
                                       <button class=button id="jump" onclick="jumpto()" style=" display: inline">跳转</button>
                                       <label style="width:30px; display: inline">已选择：</label>
                                       <label id="chosenum" style=" display: inline"></label>
-
+                                      <label style=" display: inline">显示子文件夹内的文件</label>
+                                      <input type="checkbox" id="showall" value="" />
                                       <div class="tbody" style="height:600px">
                                           <table id="table0" height="50px"></table>
                                           <table id="table" class="table1" border="1"  width=200px ></table>
@@ -226,7 +227,9 @@
                                   <input id="newname" alt="输入新名字：" ><label id="suffix"></label></br>
                                   <button id="confirm1">确定</button>
                               </div>
-                                      ​
+                              <div id="popLayer2" ></div>
+                              <div id="popBox2"></div>
+
 
 
 
@@ -271,7 +274,7 @@
     </script>
 
 <script>
-
+    $("showall").prop('checked',false);
     var nodes = [];
 
     var zTreeObj;
@@ -431,36 +434,56 @@ var blobname=[];
 var chosen=[];
 var todo=[];
 var allcheck=[];
-var blobing=[];
+
 var isfull=false;
 var pagesum=0;
 files=document.getElementById("file");
 
 function list(prefix) {
+
+    let popLayer = document.getElementById("popLayer2");
+   let popbox = document.getElementById("popBox2");
+    popLayer.style.display = "block";
+    popbox.style.display="block";
     document.getElementById("chosenum").innerText=0;
     checkp=0;
+
 	   blobService.listBlobsSegmentedWithPrefix('modelblob1',prefix+'/', null, (error, results,response) => {
 	        if (error) {
 	            // Handle list blobs error
 	        } else {
 	            results.entries.forEach(blob => {
-                    blobing[j]=blob;
+	                if(document.getElementById("showall").checked==false) {
+                        if (prefix.split("/").length == blob.name.split("/").length - 1) {
 
-	                blobname[j]=blob.name;
-	            	downloadLink[j] = blobService.getUrl('modelblob1',blob.name );
-	            	//console.log(downloadLink[i]);
-	            	//document.getElementById(j).innerHTML=blob.name;
-	            	chosen[j]=j;
-	            	//console.log(i);
-	            	//files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
-	            	j++;
-	            	
 
+                            blobname[j] = blob.name;
+                            downloadLink[j] = blobService.getUrl('modelblob1', blob.name);
+                            //console.log(downloadLink[i]);
+                            //document.getElementById(j).innerHTML=blob.name;
+                            chosen[j] = j;
+                            //console.log(i);
+                            //files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
+                            j++;
+                        }
+                    }
+	                else{
+                        blobname[j] = blob.name;
+                        downloadLink[j] = blobService.getUrl('modelblob1', blob.name);
+                        //console.log(downloadLink[i]);
+                        //document.getElementById(j).innerHTML=blob.name;
+                        chosen[j] = j;
+                        //console.log(i);
+                        //files.innerHTML=files.innerHTML+blob.name+downloadLink+"<br>";
+                        j++;
+                    }
 	            });
                 pagesum=Math.ceil(j / 10);
                 document.getElementById("pagesum").innerText="/"+pagesum;
                 render();
                 chushihua();
+                popLayer.style.display = "none";
+                popbox.style.display = "none";
 	        }
 
 	    });
@@ -1044,6 +1067,7 @@ function copyreal(downloadLink,blobname) {
             console.log(Response);
             blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
                 if (error) {
+                    console.log(results);
                     alert("error");
                 }
                 else {
