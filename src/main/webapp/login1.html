@@ -18,6 +18,15 @@
    <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
  <script>
+     document.onkeydown=function(ev){
+
+         var ev=ev||window.event
+
+         if(ev.which==13){
+             login();
+         }
+
+     }
 	function register(){
 		var userName=document.getElementById('userName').value;
 		var userPw=document.getElementById('userPw').value;
