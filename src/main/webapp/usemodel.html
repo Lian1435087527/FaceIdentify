@@ -20,8 +20,10 @@
 		<aside class="HolyGrail-ads"></aside>
 	</div>
 	<footer>
-		<button id="upload-button" class="button" onclick='upload()'>Upload</button>
-
+		<button id="upload-button" class="button" onclick='upload()' >Upload</button>
+        <label style="display: inline">input url:</label>
+		<input id="picurl" type="text" style="display: inline"/>
+		<button id="upload-url" class="button" onclick="upload1()"  style="display: inline">Up by url</button>
 		
 	</footer>
 
@@ -100,18 +102,18 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                             });
                                             }
 
-//setTimeout("list();","6000");
 
-//setTimeout("add();","9000");
-/*while(filename!=null){
-	console.log(filename);
-	list(filename);
-	while(downloadlink!=null){
-		add(downloadlink);
-	}
-	
-}*/
 }
+  function upload1() {
+	  let downloadlink=document.getElementById("picurl").value;
+	  if (downloadlink==null){
+	  	alert("url 错误");
+	  }
+	  else{
+
+	  }
+
+  }
                                
 /*function list(){
 	 

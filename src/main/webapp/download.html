@@ -230,7 +230,7 @@
                               <div id="popLayer2" ></div>
                               <div id="popBox2"></div>
 
-
+                              <input id="picurl" style="display: none"/>
 
 
 
@@ -250,14 +250,15 @@
 
 
 
-           
-            
-            
-            
-            
-            
-  
 
+
+
+
+
+
+
+
+        <script type="text/javascript" src="js/clipboard.js"></script>
     <script src="js/bootstrap.js">
     </script>
     <script src="js/jquery.scrollUp.js">
@@ -534,6 +535,8 @@ function chushihua() {
               <button id="move1" class=button  onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button>
               <button id="deleted1" class=button onclick="deleted('${blobname[i]}')">delete</button>
               <button id="rename" class=button onclick="rename('${downloadLink[i]}','${blobname[i]}')">rename</button>
+
+              <button id="copyurl" class="button"   onclick="copyurl('${downloadLink[i]}')">copy url</button>
       </div></td>
 
     </tr>`;
@@ -561,6 +564,17 @@ function chushihua() {
 
         table0.innerHTML= `<tr> <td><button class="button"  id=${id} value=${page} onclick="allcheck1(page)">全选</button></td>    </tr>`;
 
+    }
+    function copyurl(downloadlink){
+    console.log(downloadlink);
+        new ClipboardJS('.button', {
+            text: function() {
+                return downloadlink;
+            }
+        });
+
+
+    alert("复制成功");
     }
     function checksum(id){
 

@@ -78,6 +78,9 @@
 		</nav>
 		<aside class="HolyGrail-ads">
 		<button id="upload-button" class="button" onclick='upload()'>Upload</button>
+            <label style="display: inline">input url:</label>
+            <input id="picurl" type="text" style="display: inline"/>
+            <button id="upload-url" class="button" onclick="upload1()"  style="display: inline">Up by url</button>
 		</aside>
                          <div id="popLayer" ></div>
                          <div id="popBox" >
@@ -134,8 +137,7 @@ const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.
 
 var status=0;
 function upload()
-{   document.getElementById("yuantu").src="/images/kk1.jpg";
-document.getElementById("fankui").src="/images/kk1.jpg";
+{
     var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
@@ -181,7 +183,21 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
                                             });
                                             }  }
 
+function upload1() {
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    let downloadlink=document.getElementById("picurl").value;
+    if (downloadlink==null){
+        alert("url 错误");
+    }
+    else{
+        document.getElementById("yuantu").src=downloadlink;
+        post_a(downloadlink,"///");//url不用删除，传一个不容易重复的无用参数
+    }
 
+}
     function post_a(downloadlink,blobname){
         var options2=$("#select-name option:selected");//获取当前选择项.
         dir=options2.text();//获取当前选择项的文本.
@@ -198,8 +214,10 @@ blobService.createBlockBlobFromBrowserFile('modelblob1',
             document.getElementById("fankui").src="https://cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/apioutput/"+data.id+"/output.jpg";
             alert(data.face_liveness);
             $("#closemove").click();
-           dele(blobname);
-
+            if(blobname=="///"){}
+            else {
+                dele(blobname);
+            }
 
         }
 
