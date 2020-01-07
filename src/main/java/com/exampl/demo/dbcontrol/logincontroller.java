@@ -35,7 +35,7 @@ public class logincontroller {
                  String token = UserRepository.getToken(userForBase);
                  Return.put("token", token);
                  Return.put("userid", userForBase.getuser_id());
-                 
+                 Return.put("role",userForBase.getrole());
              }
          }
 		return Return;

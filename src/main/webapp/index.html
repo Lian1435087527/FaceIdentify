@@ -261,9 +261,7 @@
       var nusername=localStorage.getItem("nuid");
       obj.innerHTML=nusername;
      function displayforrole(){
-
        let nrole=localStorage.getItem("role");
-
        switch(nrole){
          case "0":
 
@@ -274,7 +272,7 @@
                    document.importNode(content, true));
            break;
          case "1":
-
+        	 
            var content = document.querySelector('#fordev').content;
            // 更新 template DOM 中的内容。
            var content1=document.querySelector('#notfortour').content;
