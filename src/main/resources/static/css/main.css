@@ -7649,3 +7649,9 @@ footer {
 #ImgpopBox .content{
   position:relative;
 }
+#yuantu{
+  width: 45%; height: 100%; max-height: 640px; min-height: 640px
+}
+#fankui{
+  width: 45%; height: 100%; max-height: 640px; min-height: 640px
+}
