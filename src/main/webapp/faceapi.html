@@ -62,15 +62,15 @@
                   <div class="widget-body">
                      <div class="HolyGrail-body">
 		<main class=HolyGrail-body>
-            <img id="yuantu" src="/images/kk1.jpg" alt="原图片" height="900px" width="600px">
-            <img id="fankui" src="/images/kk1.jpg" alt="返回图"  height="900px" width="600px">
+            <img id="yuantu" src="/images/kk1.jpg" alt="原图片" width="0" height="0" onload="AutoResizeImage(640,480,this)">
+            <img id="fankui" src="/images/kk1.jpg" alt="返回图" width="0" height="0" onload="AutoResizeImage(640,480,this)">
         </main>
 
 		<nav class="HolyGrail-nav">
 			<input type="file" id="fileinput" /> 
 			<label>选择模型</label>
 			<select id="select-name">
-				<option value="1">faceliveness</option>
+
 				<option value="2">facelivenessirsl</option>
 
 			</select>
@@ -254,7 +254,32 @@ function upload1() {
           activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
         });
       });
-   
+    function AutoResizeImage(maxWidth,maxHeight,objImg){
+        var img = new Image();
+        img.src = objImg.src;
+        var hRatio;
+        var wRatio;
+        var Ratio = 1;
+        var w = img.width;
+        var h = img.height;
+        wRatio = maxWidth / w;
+        hRatio = maxHeight / h;
+        if (maxWidth ==0 && maxHeight==0){
+            Ratio = 1;
+        }else if (maxWidth==0){//
+            if (hRatio<1) Ratio = hRatio;
+        }else if (maxHeight==0){
+            if (wRatio<1) Ratio = wRatio;
+        }else if (wRatio<1 || hRatio<1){
+            Ratio = (wRatio<=hRatio?wRatio:hRatio);
+        }
+        if (Ratio<1){
+            w = w * Ratio;
+            h = h * Ratio;
+        }
+        objImg.height = h;
+        objImg.width = w;
+    }
     
     </script>
     

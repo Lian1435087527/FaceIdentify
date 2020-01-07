@@ -172,7 +172,9 @@
                                   <aside id="left">
                                       <div id="dirlist">
                                           <ul id="treeDemo" class="ztree"></ul>
+                                          <template id="foradmin0">
                                           <button class="button" id="deletedir" onclick="deletedir()">删除文件夹</button>
+                                          </template>
                                       </div>
 
                                   </aside>
@@ -201,7 +203,9 @@
 
                                           <button id="down" class=button onclick="copy_p()">copy</button>
                                           <button id="move" class=button onclick="move_p()">move</button>
+                                      <template id="foradmin1">
                                           <button id="deleted" class=button onclick="deleted_p()">delete</button>
+                                      </template>
                                           <button id="donloadall" class="button" onclick="download_p()">downloadall</button>
 
                                   </aside>
@@ -232,7 +236,17 @@
 
                               <input id="picurl" style="display: none"/>
 
-
+                              <div id="ImgpopLayer" ></div>
+                              <div id="ImgpopBox" >
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="Imgshow" onclick="closeImgBox()">关闭</a>
+                                  </div>
+                                  <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                      <label id="Imgshowname"></label>
+                                      <label id="Imgshowurl"></label>
+                                      <img id="Imgshowimage" width="480" height="640"src=""  alt="展示图片" style="position: relative"/>
+                                  </div>
+                              </div>
 
 
 
@@ -275,6 +289,25 @@
     </script>
 
 <script>
+    function displayforrole(){
+
+        let nrole=localStorage.getItem("role");
+
+        if(nrole==2){
+            var content = document.querySelector('#foradmin0').content;
+                var content1 = document.querySelector('#foradmin1').content;
+                // 更新 template DOM 中的内容。
+                document.querySelector('#right').appendChild(
+                    document.importNode(content1, true));
+                document.querySelector('#dirlist').appendChild(
+                    document.importNode(content, true));
+
+
+        }}
+
+
+
+    displayforrole();
     $("showall").prop('checked',false);
     var nodes = [];
 
@@ -518,28 +551,36 @@ function chushihua() {
         }
 
 　　　//渲染该页对应的数据
-   
+        let nrole=localStorage.getItem("role");
+        if(nrole==2){
+
+
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
 
             let blob=blobname[i];
             let index1 = blob.lastIndexOf("/");
             let sub_blob = blob.substring(index1+1);
+
+
         	table.innerHTML +=
                 `<tr>
         <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/></td>
-        <td>${sub_blob}</td>
+         <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
         <td > <div class="dropdown">
       <button class="dropbtn">操作</button>
         <div class="dropdown-content">
-          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}','${blobname[i]}')">downloadLink</button>
+          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}','${blobname[i]}')">download</button>
               <button id="move1" class=button  onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button>
               <button id="deleted1" class=button onclick="deleted('${blobname[i]}')">delete</button>
               <button id="rename" class=button onclick="rename('${downloadLink[i]}','${blobname[i]}')">rename</button>
 
               <button id="copyurl" class="button"   onclick="copyurl('${downloadLink[i]}')">copy url</button>
+
+
       </div></td>
 
     </tr>`;
+
 
 
 
@@ -559,6 +600,38 @@ function chushihua() {
 
         checkdefine();
 
+        }}
+        else if(nrole==1){
+
+
+            for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
+
+                let blob=blobname[i];
+                let index1 = blob.lastIndexOf("/");
+                let sub_blob = blob.substring(index1+1);
+
+
+                table.innerHTML +=
+                    `<tr>
+        <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/></td>
+        <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
+        <td > <div class="dropdown">
+      <button class="dropbtn">操作</button>
+        <div class="dropdown-content">
+          <button id="down1" class=button onclick="downloadImg('${downloadLink[i]}','${blobname[i]}')">download</button>
+              <button id="move1" class=button  onclick="move('${downloadLink[i]}','${blobname[i]}')">move</button>
+
+              <button id="rename" class=button onclick="rename('${downloadLink[i]}','${blobname[i]}')">rename</button>
+
+              <button id="copyurl" class="button"   onclick="copyurl('${downloadLink[i]}')">copy url</button>
+
+
+      </div></td>
+
+    </tr>`;
+                checkdefine();
+
+            }
         }
           let id="allcheck"+page;
 
@@ -1217,7 +1290,24 @@ function rename(downloadLink,blobname){
 
     });
 }
+    function showImg(downloadLink,blobname){
+        var popBox = document.getElementById("ImgpopBox");
+        var popLayer = document.getElementById("ImgpopLayer");
+        popBox.style.display = "block";
+        popLayer.style.display = "block";
+        var Imgnamelabel=document.getElementById("Imgshowname");
+        Imgnamelabel.innerText=blobname;
+        var Imgurllabel=document.getElementById("Imgshowurl");
+        Imgurllabel.innerText=downloadLink;
+        document.getElementById("Imgshowimage").src=downloadLink;
 
+    }
+    function closeImgBox(){
+        var popBox = document.getElementById("ImgpopBox");
+        var popLayer = document.getElementById("ImgpopLayer");
+        popBox.style.display = "none";
+        popLayer.style.display = "none";
+    }
 
 </script>
    
