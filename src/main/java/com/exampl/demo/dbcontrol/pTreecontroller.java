@@ -26,7 +26,6 @@ public class pTreecontroller {
 	public @ResponseBody ModelMap posttree(@RequestParam("tree") String ltree) {
 		ModelMap Return = new ModelMap();
 
-        ModelMap Return=new ModelMap();
 
         Tree tree2 = new Tree();
         //System.out.println(ltree);

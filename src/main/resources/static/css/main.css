@@ -7481,7 +7481,7 @@ footer {
             z-index: 10;
             -moz-opacity: 0.8;
             opacity:.80;
-            filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+            filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
         }
 #popBox {
             display: none;
@@ -7496,6 +7496,46 @@ footer {
             bottom:0;
             margin:auto;
         }
+#ImgpopLayer {
+            display: none;
+            background-color: #B3B3B3;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
+        }
+#ImgpopBox {
+            display: none;
+            background-color: #FFFFFF;
+            z-index: 11;
+            width: 80%;
+            height: 80%;
+            position:fixed;
+            top:0;
+            right:0;
+            left:0;
+            bottom:0;
+            margin:auto;
+        }
+ #ImgpopBox .close{
+            text-align: right;
+            margin-right: 5px;
+            background-color: #F8F8F8;
+        }
+ 
+        /*鍏抽棴鎸夐挳*/
+        #ImgpopBox .close a {
+            text-decoration: none;
+            color: #2D2C3B;
+        }
+#ImgpopBox .content{
+  position:relative;
+}
  #select-move-dir-name{
     
             width: 150px;
@@ -7514,7 +7554,7 @@ footer {
             background-color: #F8F8F8;
         }
  
-        /*关闭按钮*/
+        /*鍏抽棴鎸夐挳*/
         #popBox .close a {
             text-decoration: none;
             color: #2D2C3B;
@@ -7522,6 +7562,7 @@ footer {
 #popBox .content{
   position:relative;
 }
+
 #popLayer1 {
   display: none;
   background-color: #B3B3B3;
@@ -7533,7 +7574,7 @@ footer {
   z-index: 10;
   -moz-opacity: 0.8;
   opacity:.30;
-  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+  filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
 }
 #popBox1 {
   display: none;
@@ -7555,7 +7596,7 @@ footer {
   background-color: #F8F8F8;
 }
 
-/*关闭按钮*/
+/*鍏抽棴鎸夐挳*/
 #popBox1 .close a {
   text-decoration: none;
   color: #2D2C3B;
@@ -7584,7 +7625,7 @@ footer {
   left: 0;
   z-index: 10;
 
-  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+  filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
 }
 #popBox2{
   display: none;

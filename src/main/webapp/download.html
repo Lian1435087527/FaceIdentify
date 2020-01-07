@@ -205,7 +205,7 @@
 
                                   </aside>
                               </div>
-
+								
                               <div id="popLayer" ></div>
                               <div id="popBox" >
                                   <div class="close">
@@ -231,13 +231,22 @@
 
                               <input id="picurl" style="display: none"/>
 
-
+							
 
 
 
 
                               </div>
-
+                              <div id="ImgpopLayer" ></div>
+                              <div id="ImgpopBox" >
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="Imgshow" onclick="closeImgBox()">关闭</a>
+                                  </div>
+                                  <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                      <label id="Imgshowname"></label>
+                                      <img id="Imgshowimage" src=""  alt="展示图片" />
+                                  </div>
+                              </div>
 
                       </div>
                   </div>
@@ -522,10 +531,11 @@ function chushihua() {
             let blob=blobname[i];
             let index1 = blob.lastIndexOf("/");
             let sub_blob = blob.substring(index1+1);
+   
         	table.innerHTML +=
                 `<tr>
         <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/></td>
-        <td>${sub_blob}</td>
+        <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
         <td > <div class="dropdown">
       <button class="dropbtn">操作</button>
         <div class="dropdown-content">
@@ -675,7 +685,22 @@ next.onclick = function () {
         alert('当前为最后一页！')
     }
 }
-
+function showImg(downloadLink,blobname){
+	var popBox = document.getElementById("ImgpopBox");
+    var popLayer = document.getElementById("ImgpopLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    var Imgnamelabel=document.getElementById("Imgshowname");
+    Imgnamelabel.innerText=blobname;
+    document.getElementById("Imgshowimage").src=downloadLink;
+    
+}
+function closeImgBox(){
+	var popBox = document.getElementById("ImgpopBox");
+    var popLayer = document.getElementById("ImgpopLayer");
+    popBox.style.display = "none";
+    popLayer.style.display = "none";
+}
 function move(downloadLink,blobname){
     zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
 	var popBox = document.getElementById("popBox");
