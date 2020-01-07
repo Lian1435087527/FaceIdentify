@@ -20,9 +20,35 @@
     function repass() {
         $("poplayer").style.display=block;
         $("popbox").style.display=block;
+        document.getElementById('uploadfile-button').addEventListener('click', () =>{
+        if(document.getElementById("yuan1").value==null||document.getElementById("xin1").value==null||document.getElementById("xin2").value==null){
+            alert("不能为空！");
+        }
+        else if(document.getElementById("xin1").value!=document.getElementById("xin2").value){
+            alert("两次密码不匹配！");
+        }
+        else{
+            let newpwd=document.getElementById("xin1").value;
+            $.ajax({
+                type : 'POST',
+                url : "/changepwd",
+                dataType:"json",
+                //contentType:"application/json;charset=UTF-8",
+                data:{'newpwd':JSON.stringify(notodata)},
 
 
-    }
+                success : function(data) {
+                    if(data.state==1){
+                        zTreeObj = $.fn.zTree.destroy("treeDemo");
+                        gtree();
+
+                    }
+                }
+            })
+        }
+
+    });}
+
 </script>
 </body>
 </html>

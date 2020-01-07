@@ -79,28 +79,42 @@
       
     </header>
     <div class="container-fluid">
+
       <div class="dashboard-container">
-        <div class="top-nav">
-          <ul>
+        <div class="top-nav" id="top-nav">
+          <ul id="tpnv">
             <li>
-              <a onclick="load_home(this)" class="selected" id="ce0">
+              <a href="index.html" class="selected" id="ce0">
                 
-                                                     在线人脸检测
+                                                     在线活体检测
               </a>
             </li>
+            <template id="notfortour">
             <li>
               <a onclick="load_home(this)" class="" id="ce1">
                 
                                                    上传数据
               </a>
             </li>
+            </template>
+            <template id="fortour">
             <li>
               <a onclick="load_home(this)" class="" id="ce2">
                 
                 下载数据
               </a>
             </li>
+            </template>
+            <template id="fordev">
             <li>
+              <a onclick="load_home(this)" class="" id="ce3">
+
+                下载数据
+              </a>
+            </li>
+              </template>
+
+           <!-- <li>
               <a onclick="load_home(this)" class="" id="ce3">
                
                  上传模型
@@ -123,7 +137,7 @@
 
                 内部测试
               </a>
-            </li>
+            </li>-->
 
            
           </ul>
@@ -131,78 +145,80 @@
           </div>
         </div>
        
-        <div class="dashboard-wrapper" id="htbody" height=800px>
-          
-          <div class="left-sidebar">
+
             
-            <div class="row-fluid">
-              <div class="span12">
-                <div class="widget">
-                  <div class="widget-header">
-                    <div class="title">
-                      在线人脸检测
-                      <span class="mini-title">
-                        检测有风险
+    </div>
+
+    <div class="dashboard-wrapper" id="htbody">
+      <div class="left-sidebar">
+        <div class="row-fluid">
+          <div class="span12">
+            <div class="widget">
+              <div class="widget-header">
+                <div class="title">
+
+                  模型调用
+                  <span class="mini-title">
+                        请注意模型与文件的匹配
                       </span>
-                    </div>
-                    <span class="tools">
+                </div>
+                <span class="tools">
                       <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
                     </span>
-                  </div>
-                  <div class="widget-body" id="htbody">
-	<div id="main-body">
-		<div class="select-show-img" id="Imagediv">
-			<div class="img-frame" >
-				<img class="src-img" src="/images/kk2.jpg" alt="图片预览区" title="预览图片" id="ImagePic"
-					height="260" width="260" >
-			</div>
-
-			<div class="select-img">
-				<div class="select-img-area">
-					
-
-	<button class="select-img-btn" type="button" onclick="document.getElementById('upload').click();">上传图片</button>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	<input type="file" id="upload">                
               </div>
-            </div>
-            </div>
-            
-            
-            <div class="row-fluid">
-              <div class="span12">
-                <div class="widget">
-                  <div class="widget-header">
-                    <div class="title">
-                      Line Chart
-                      <span class="mini-title">
-                        Social Statistics 
-                      </span>
+              <div class="widget-body" >
+                <div class="HolyGrail-body">
+                  <main class=HolyGrail-body>
+                    <img id="yuantu" src="/images/kk1.jpg" alt="原图片" width="480" height="640" >
+                    <img id="fankui" src="/images/kk1.jpg" alt="返回图" width="480" height="640" >
+                  </main>
+
+                  <nav class="HolyGrail-nav">
+
+                    <label>选择模型</label>
+                    <select id="select-name">
+
+                      <option value="2">facelivenessirsl</option>
+
+                    </select>
+                    <input type="file" id="fileinput" style="display: none"/>
+                    <button id="filebt" class="button" onclick="uploading()">Up by localfile</button>
+                  </nav>
+                  <aside class="HolyGrail-ads">
+
+                    <label style="display: inline">input url:</label>
+                    <input id="picurl" type="text" style="display: inline"/>
+                    <button id="upload-url" class="button" onclick="upload1()"  style="display: inline">Up by url</button>
+                  </aside>
+                  <div id="popLayer" ></div>
+                  <div id="popBox" >
+                    <div class="close">
+                      <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
                     </div>
-                    <span class="tools">
-                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
-                    </span>
-                  </div>
-                  <div class="widget-body">
-                    <div id="area_chart">
+                    <div class="content" style="margin:5px auto 6px auto;width: 70%" >
+                      <label>运算中，请等待</label>
+
                     </div>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
               </div>
             </div>
-           </div>
-           </div>
-         
-            
-      </div>      
-            
+          </div>
+        </div>
+      </div>
     </div>
-    </div>      
-          
+    </div>
            
     <footer>
       <p>
@@ -237,50 +253,53 @@
     <!-- Tiny Scrollbar JS -->
     <script src="js/tiny-scrollbar.js">
     </script>
-    
-    
-    
+
+
+    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
     <script type="text/javascript">
- var obj=document.getElementById('nuser');
- var nusername=localStorage.getItem("nuid");
- obj.innerHTML=nusername;
-    var fileInput = document.querySelector('input[type=file]')
-    var previewImg =  document.querySelector("#ImagePic");
-    
-fileInput.addEventListener('change', function() {
-var file = this.files[0];
-var reader = new FileReader();
-let token=localStorage.getItem("token");
-//$("#ImagePic").attr("src", "");
-// 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
-reader.addEventListener("load", function() {
-	previewImg.src = reader.result;
-	$.ajax({
-		type : 'POST',
-		url : '/picup',
-		headers: {'Authorization': token},
-		data : {
-			
-			"pic" : previewImg.src
-		},
-		success : function(data) {
-			if (data.state == 1) {
-				$("#ImagePic").attr("src",
-						"data:image/gif;base64," + data.picret);
-			} else {
-				alert("错误码："+data.state+",没有检测到人脸");
+      var obj=document.getElementById('nuser');
+      var nusername=localStorage.getItem("nuid");
+      obj.innerHTML=nusername;
+     function displayforrole(){
 
-			}
-		}
-	}
+       let nrole=localStorage.getItem("role");
 
-	)
-}, false);
+       switch(nrole){
+         case "0":
 
-// 调用reader.readAsDataURL()方法，把图片转成base64
-reader.readAsDataURL(file);
+           var content = document.querySelector('#fortour').content;
+           // 更新 template DOM 中的内容。
 
-}, false);
+           document.querySelector('#tpnv').appendChild(
+                   document.importNode(content, true));
+           break;
+         case "1":
+
+           var content = document.querySelector('#fordev').content;
+           // 更新 template DOM 中的内容。
+           var content1=document.querySelector('#notfortour').content;
+           document.querySelector('#tpnv').appendChild(
+                   document.importNode(content1, true));
+           document.querySelector('#tpnv').appendChild(
+                   document.importNode(content, true));
+
+           break;
+         case "2":
+
+             var content = document.querySelector('#fordev').content;
+           var content1 = document.querySelector('#notfortour').content;
+             // 更新 template DOM 中的内容。
+           document.querySelector('#tpnv').appendChild(
+                   document.importNode(content1, true));
+             document.querySelector('#tpnv').appendChild(
+                     document.importNode(content, true));
+
+             break;
+       }}
+
+
+
+     displayforrole();
       //ScrollUp
       $(function () {
         $.scrollUp({
@@ -294,9 +313,7 @@ reader.readAsDataURL(file);
           activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
         });
       });
-function test(){
-	alert('启动');
-}
+
      
 
 
@@ -308,20 +325,17 @@ function load_home(ele) {
 	   x[i].className= null;
 	}
 	switch(ele.id){
-		case "ce0":		
-        	document.getElementById("htbody").innerHTML = '<object type="text/html" data="index.html" width="100%" height=700px></object>';
-        	$("#ce0").attr("class", "selected");
-        	break;
-		case "ce1":		
+		case "ce1":
+			
 	        document.getElementById("htbody").innerHTML = '<object type="text/html" data="upload.html" width="100%" height=700px></object>';
 	        $("#ce1").attr("class", "selected");
 	        break;
 		case "ce2":
-			document.getElementById("htbody").innerHTML = '<object type="text/html" data="download.html" width="100%" height=700px></object>';
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="downfortour.html" width="100%" height=700px></object>';
             $("#ce2").attr("class", "selected");
             break;
 		case "ce3":
-			document.getElementById("htbody").innerHTML = '<object type="text/html" data="ui-elements.html" width="100%" height=700px></object>';
+			document.getElementById("htbody").innerHTML = '<object type="text/html" data="download.html" width="100%" height=700px></object>';
             $("#ce3").attr("class", "selected");
             break;
 		case "ce4":
@@ -346,6 +360,157 @@ function load_home(ele) {
 function editP() {
   window.location.herf="editP.html";
 }
+
+      var downloadlink=null;
+      const account = {
+        name: "cs1f9abf47a9b73x49c3x9c1",
+        sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
+      };
+      var dir=null;
+      //var filename=null;
+      const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+      const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+
+      var status=0;
+      function uploading(){
+        document.getElementById("fileinput").click();
+      }
+      document.getElementById("fileinput").addEventListener("change",function () {
+        upload();
+      });
+
+      function upload()
+      {
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "block";
+        popLayer.style.display = "block";
+        //alert('正在上传，请勿退出');
+        let filename=null;
+
+
+        var len=document.getElementById('fileinput').files.length;
+        for(i=0;i<len;i++){
+          var file = document.getElementById('fileinput').files[i];
+
+
+          blobService.createBlockBlobFromBrowserFile('modelblob1',
+                  "picformodel"+'/'+file.name,
+                  file,
+                  (error, result) => {
+                    if(error) {
+                      // Handle blob error
+                    } else {
+
+                      //alert('Upload is successful');
+
+                      filename=file.name;
+
+
+                      console.log(filename);
+
+                      blobService.listBlobsSegmentedWithPrefix('modelblob1',"picformodel"+'/'+filename, null, (error, results) => {
+                        if (error) {
+                          // Handle list blobs error
+                        } else {
+                          //alert('正在运算，请勿退出');
+                          results.entries.forEach(blob => {
+
+                                    downloadlink= blobService.getUrl('modelblob1',blob.name );
+
+                                    document.getElementById("yuantu").src=downloadlink;
+                                    post_a(downloadlink,blob.name);
+                                  }
+                          );}});
+                    }
+                  });
+        }  }
+
+      function upload1() {
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "block";
+        popLayer.style.display = "block";
+        let downloadlink=document.getElementById("picurl").value;
+        if (downloadlink==null){
+          alert("url 错误");
+        }
+        else{
+          document.getElementById("yuantu").src=downloadlink;
+          post_a(downloadlink,"///");//url不用删除，传一个不容易重复的无用参数
+        }
+
+      }
+      function post_a(downloadlink,blobname){
+        var options2=$("#select-name option:selected");//获取当前选择项.
+        dir=options2.text();//获取当前选择项的文本.
+
+        $.ajax({
+                  type : 'POST',
+                  url : "/score",
+
+                  dataType: 'json',
+
+                  data:{'url':downloadlink,'modelname':dir},
+
+                  success : function(data) {
+                    document.getElementById("fankui").src="https://cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/apioutput/"+data.id+"/output.jpg";
+                    alert(data.face_liveness);
+                    $("#closemove").click();
+                    if(blobname=="///"){}
+                    else {
+                      dele(blobname);
+                    }
+
+                  }
+
+
+                }
+
+        )}
+      function dele(blob){
+
+
+        blobService.deleteBlobIfExists('modelblob1', blob, function (error, result) {
+          if (error) {
+            alert("数据异常");
+          } else {
+
+
+          }});}
+      function closeBox() {
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "none";
+        popLayer.style.display = "none";
+      }
+      function AutoResizeImage(maxWidth,maxHeight,objImg){
+        var img = new Image();
+        img.src = objImg.src;
+        var hRatio;
+        var wRatio;
+        var Ratio = 1;
+        var w = img.width;
+        var h = img.height;
+        wRatio = maxWidth / w;
+        hRatio = maxHeight / h;
+        if (maxWidth ==0 && maxHeight==0){
+          Ratio = 1;
+        }else if (maxWidth==0){//
+          if (hRatio<1) Ratio = hRatio;
+        }else if (maxHeight==0){
+          if (wRatio<1) Ratio = wRatio;
+        }else if (wRatio<1 || hRatio<1){
+          Ratio = (wRatio<=hRatio?wRatio:hRatio);
+        }
+        if (Ratio<1){
+          w = w * Ratio;
+          h = h * Ratio;
+        }
+        objImg.height = h;
+        objImg.width = w;
+      }
+
 
     </script>
     
