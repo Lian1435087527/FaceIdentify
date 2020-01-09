@@ -7599,9 +7599,21 @@ footer {
   left:0;
   bottom:0;
   -moz-opacity: 0.8;
-  opacity:.30;
   margin:auto;
+  background-repeat:no-repeat;
 }
+
+#popBox2 .close{
+  text-align: right;
+  margin-right: 5px;
+  background-color: #F8F8F8;
+}
+/*鍏抽棴鎸夐挳*/
+#popBox2 .close a {
+  text-decoration: none;
+  color: #2D2C3B;
+}
+
 .button:hover {background-color: #3e8e41}
 
 .button:active {

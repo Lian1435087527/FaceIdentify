@@ -522,6 +522,7 @@ function list(prefix) {
 
 	}
 function chushihua() {
+	allcheck=[];
     for(let xj=0;xj< Math.ceil(j / 10);xj++){
         allcheck.push(0);
     }
@@ -885,11 +886,14 @@ function downloadImg(downloadLink,blobname){
                          console.log(content);
                          saveAs(content, file_name);
                      });
+                 //todo=[]
+                 //chushihua()
+                 listfile(prename)
              }
          });
 
      }
-
+	
 
 
  }
@@ -974,7 +978,8 @@ function deleted_rea(blobname,isfull) {
             alert ("删除失败");
         } else {
 if(isfull==true)
-{listfile(prename);}
+{listfile(prename);
+chushihua()}
 
 
         }
