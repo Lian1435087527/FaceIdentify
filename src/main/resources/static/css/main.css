@@ -7591,8 +7591,8 @@ footer {
   display: none;
   background-image: url("images/loadforuse.gif");
   z-index: 11;
-  height: 400px;
-  width: 500px;
+  height: 300px;
+  width: 300px;
   position:fixed;
   top:0;
   right:0;
