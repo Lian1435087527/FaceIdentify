@@ -7481,7 +7481,7 @@ footer {
             z-index: 10;
             -moz-opacity: 0.8;
             opacity:.80;
-            filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+            filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
         }
 #popBox {
             display: none;
@@ -7514,7 +7514,7 @@ footer {
             background-color: #F8F8F8;
         }
  
-        /*关闭按钮*/
+        /*鍏抽棴鎸夐挳*/
         #popBox .close a {
             text-decoration: none;
             color: #2D2C3B;
@@ -7522,6 +7522,7 @@ footer {
 #popBox .content{
   position:relative;
 }
+
 #popLayer1 {
   display: none;
   background-color: #B3B3B3;
@@ -7533,7 +7534,7 @@ footer {
   z-index: 10;
   -moz-opacity: 0.8;
   opacity:.30;
-  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+  filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
 }
 #popBox1 {
   display: none;
@@ -7555,7 +7556,7 @@ footer {
   background-color: #F8F8F8;
 }
 
-/*关闭按钮*/
+/*鍏抽棴鎸夐挳*/
 #popBox1 .close a {
   text-decoration: none;
   color: #2D2C3B;
@@ -7584,7 +7585,7 @@ footer {
   left: 0;
   z-index: 10;
 
-  filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+  filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
 }
 #popBox2{
   display: none;
@@ -7598,9 +7599,21 @@ footer {
   left:0;
   bottom:0;
   -moz-opacity: 0.8;
-  opacity:.30;
   margin:auto;
+  background-repeat:no-repeat;
 }
+
+#popBox2 .close{
+  text-align: right;
+  margin-right: 5px;
+  background-color: #F8F8F8;
+}
+/*鍏抽棴鎸夐挳*/
+#popBox2 .close a {
+  text-decoration: none;
+  color: #2D2C3B;
+}
+
 .button:hover {background-color: #3e8e41}
 
 .button:active {
@@ -7608,7 +7621,6 @@ footer {
 
   transform: translateY(4px);
 }
-
 #ImgpopLayer {
   display: none;
   background-color: #B3B3B3;
@@ -7650,5 +7662,8 @@ footer {
   position:relative;
 }
 #yuantu{
-  width: 100%; height: 100%; max-height: 640px; min-height: 640px
+  width: 45%; height: 100%; max-height: 640px; min-height: 640px
+}
+#fankui{
+  width: 45%; height: 100%; max-height: 640px; min-height: 640px
 }

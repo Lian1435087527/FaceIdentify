@@ -20,13 +20,12 @@
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
  <script>
      document.onkeydown=function(ev){
-
+     
          var ev=ev||window.event
 
          if(ev.which==13){
              login();
          }
-
      }
 	function register(){
 		var userName=document.getElementById('userName').value;
@@ -81,7 +80,7 @@
 					localStorage.setItem("token",data.token);
 					localStorage.setItem("nuid",data.userid);
                     localStorage.setItem("role",data.role)
-					window.location.href="index.html";
+             		window.location.href="index.html";
 				}}}
 
 		)}
@@ -99,7 +98,7 @@
         
     <div class="row">
         <div class="col-md-12 center login-header">
-            <h2>Welcome， Administrator</h2>
+            <h2>Welcome To 3DAICloud</h2>
         </div>
         <!--/span-->
     </div><!--/row-->

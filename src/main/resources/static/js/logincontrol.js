@@ -9,7 +9,7 @@ function logout(){
 		if(flag==true){
 			localStorage.setItem("nuid",null);
 			localStorage.setItem("token",null);
-			window.location.href="login1.html";
+			window.location.href="/";
 		}
 		}
 }

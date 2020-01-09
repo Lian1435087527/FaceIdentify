@@ -167,7 +167,6 @@
 
                               <iframe src="" name="show" style="width:0;height:0"></iframe>
 
-
                               <div class="wrap">
                                   <aside id="left">
                                       <div id="dirlist">
@@ -210,7 +209,7 @@
 
                                   </aside>
                               </div>
-
+								
                               <div id="popLayer" ></div>
                               <div id="popBox" >
                                   <div class="close">
@@ -236,6 +235,12 @@
 
                               <input id="picurl" style="display: none"/>
 
+							
+
+
+
+
+                              </div>
                               <div id="ImgpopLayer" ></div>
                               <div id="ImgpopBox" >
                                   <div class="close">
@@ -248,12 +253,6 @@
                                   </div>
                               </div>
 
-
-
-
-                              </div>
-
-
                       </div>
                   </div>
 
@@ -261,7 +260,6 @@
               </div>
           </div>
         </div>
-
 
 
 
@@ -524,10 +522,11 @@ function list(prefix) {
 
 	}
 function chushihua() {
+	allcheck=[];
     for(let xj=0;xj< Math.ceil(j / 10);xj++){
         allcheck.push(0);
     }
-
+    //console.log(allcheck);
 }
 
 	
@@ -560,12 +559,11 @@ function chushihua() {
             let blob=blobname[i];
             let index1 = blob.lastIndexOf("/");
             let sub_blob = blob.substring(index1+1);
-
-
+   
         	table.innerHTML +=
                 `<tr>
         <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/></td>
-         <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
+        <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
         <td > <div class="dropdown">
       <button class="dropbtn">操作</button>
         <div class="dropdown-content">
@@ -667,8 +665,9 @@ function listfile(dir){
          list(dir);
 
 
-
+		
        document.getElementById("page").value=1;
+       page=1;
 		//console.log(j);
 
 		j=0;
@@ -887,11 +886,14 @@ function downloadImg(downloadLink,blobname){
                          console.log(content);
                          saveAs(content, file_name);
                      });
+                 //todo=[]
+                 //chushihua()
+                 listfile(prename)
              }
          });
 
      }
-
+	
 
 
  }
@@ -976,7 +978,8 @@ function deleted_rea(blobname,isfull) {
             alert ("删除失败");
         } else {
 if(isfull==true)
-{listfile(prename);}
+{listfile(prename);
+chushihua()}
 
 
         }
@@ -1296,9 +1299,9 @@ function rename(downloadLink,blobname){
         popBox.style.display = "block";
         popLayer.style.display = "block";
         var Imgnamelabel=document.getElementById("Imgshowname");
-        Imgnamelabel.innerText=blobname;
+        Imgnamelabel.innerText="name:"+blobname;
         var Imgurllabel=document.getElementById("Imgshowurl");
-        Imgurllabel.innerText=downloadLink;
+        Imgurllabel.innerText="url:"+downloadLink;
         document.getElementById("Imgshowimage").src=downloadLink;
 
     }
@@ -1307,6 +1310,7 @@ function rename(downloadLink,blobname){
         var popLayer = document.getElementById("ImgpopLayer");
         popBox.style.display = "none";
         popLayer.style.display = "none";
+        document.getElementById("Imgshowimage").src="";
     }
 
 </script>

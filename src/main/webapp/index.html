@@ -18,103 +18,71 @@
 <!-->
 
 <html lang="en">
-  
-  <!--
+
+<!--
 <![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <title>
-      3d智能云
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- bootstrap css -->
-    
-    <link href="/icomoon/style.css" rel="stylesheet">
-    <!--[if lte IE 7]>
+<head>
+<meta charset="utf-8">
+<title>3d智能云</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- bootstrap css -->
+
+<link href="/icomoon/style.css" rel="stylesheet">
+<!--[if lte IE 7]>
     <script src="css/icomoon-font/lte-ie7.js">
     </script>
     <![endif]-->
-  <link href="/css/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet">
-  <link href="/css/wysiwyg/wysiwyg-color.css" rel="stylesheet">
-  <link href="/css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
-  <link href="/css/charts-graphs.css" rel="stylesheet">
-  <link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <a href="#" class="logo">
-        <img src="images/logo10.jpg" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary" id='nuser'>
-          
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#" onclick="editP()">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-            <a href="#" >
-              Account Settings
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="logout()">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-      <ul class="mini-nav">
-        
-      </ul>
-      
-    </header>
-    <div class="container-fluid">
+<link href="/css/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet">
+<link href="/css/wysiwyg/wysiwyg-color.css" rel="stylesheet">
+<link href="/css/main.css" rel="stylesheet">
+<!-- Important. For Theming change primary-color variable in main.css  -->
+<link href="/css/charts-graphs.css" rel="stylesheet">
+<link href="/css/faceDetect.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<header>
+		<a href="#" class="logo"> <img src="images/logo10.jpg" alt="logo" />
+		</a>
+		<div class="btn-group">
+			<button class="btn btn-primary" id='nuser'></button>
+			<button data-toggle="dropdown"
+				class="btn btn-primary dropdown-toggle">
+				<span class="caret"> </span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="#" onclick="editP()"> Edit Profile </a></li>
+				<li><a href="#"> Account Settings </a></li>
+				<li><a href="#" onclick="logout()"> Logout </a></li>
+			</ul>
+		</div>
+		<ul class="mini-nav">
 
-      <div class="dashboard-container">
-        <div class="top-nav" id="top-nav">
-          <ul id="tpnv">
-            <li>
-              <a href="index.html" class="selected" id="ce0">
-                
-                                                     在线活体检测
-              </a>
-            </li>
-            <template id="notfortour">
-            <li>
-              <a onclick="load_home(this)" class="" id="ce1">
-                
-                                                   上传数据
-              </a>
-            </li>
-            </template>
-            <template id="fortour">
-            <li>
-              <a onclick="load_home(this)" class="" id="ce2">
-                
-                下载数据
-              </a>
-            </li>
-            </template>
-            <template id="fordev">
-            <li>
-              <a onclick="load_home(this)" class="" id="ce3">
+		</ul>
 
-                下载数据
-              </a>
-            </li>
-              </template>
+	</header>
+	<div class="container-fluid">
 
-           <!-- <li>
+		<div class="dashboard-container">
+			<div class="top-nav" id="top-nav">
+				<ul id="tpnv">
+					<li><a href="index.html" class="selected" id="ce0"> 在线活体检测
+					</a></li>
+					<template id="notfortour">
+					<li><a onclick="load_home(this)" class="" id="ce1"> 上传数据 </a>
+					</li>
+					</template>
+					<template id="fortour">
+					<li><a onclick="load_home(this)" class="" id="ce2"> 下载数据 </a>
+					</li>
+					</template>
+					<template id="fordev">
+					<li><a onclick="load_home(this)" class="" id="ce3"> 下载数据 </a>
+					</li>
+					</template>
+
+					<!-- <li>
               <a onclick="load_home(this)" class="" id="ce3">
                
                  上传模型
@@ -139,68 +107,62 @@
               </a>
             </li>-->
 
-           
-          </ul>
-          <div class="clearfix">
-          </div>
-        </div>
-       
 
-            
-    </div>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
 
-    <div class="dashboard-wrapper" id="htbody">
-      <div class="left-sidebar">
-        <div class="row-fluid">
-          <div class="span12">
-            <div class="widget">
-              <div class="widget-header">
-                <div class="title">
 
-                  模型调用
-                  <span class="mini-title">
-                        请注意模型与文件的匹配
-                      </span>
-                </div>
-                <span class="tools">
-                      <a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a>
-                    </span>
-              </div>
-              <div class="widget-body" >
-                <div class="HolyGrail-body">
-                  <main class=HolyGrail-body>
-                    <img id="yuantu" src="/images/kk1.jpg" alt="原图片" >
-                    <img id="fankui" src="/images/kk1.jpg" alt="返回图" >
-                  </main>
 
-                  <nav class="HolyGrail-nav">
+		</div>
 
-                    <label>选择模型</label>
-                    <select id="select-name">
+		<div class="dashboard-wrapper" id="htbody">
+			<div class="left-sidebar">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="widget">
+							<div class="widget-header">
+								<div class="title">
 
-                      <option value="2">facelivenessirsl</option>
+									模型调用 <span class="mini-title"> 默认输入图片规格为480*640 </span>
+								</div>
+								<span class="tools"> <a class="fs1" aria-hidden="true"
+									data-icon="&#xe090;"></a>
+								</span>
+							</div>
+							<div class="widget-body">
+								<div class="HolyGrail-body">
+									<main class=HolyGrail-body>
+										<div ></div><label>选择模型</label> <select id="select-name" style="display: inline">
 
-                    </select>
-                    <input type="file" id="fileinput" style="display: none"/>
-                    <button id="filebt" class="button" onclick="uploading()">Up by localfile</button>
-                  </nav>
-                  <aside class="HolyGrail-ads">
+											<option value="2">facelivenessirsl</option>
 
-                    <label style="display: inline">input url:</label>
-                    <input id="picurl" type="text" style="display: inline"/>
-                    <button id="upload-url" class="button" onclick="upload1()"  style="display: inline">Up by url</button>
-                  </aside>
-                  <div id="popLayer" ></div>
-                  <div id="popBox" >
-                    <div class="close">
-                      <a href="javascript:void(0)" id="closemove" onclick="closeBox()">关闭</a>
-                    </div>
-                    <div class="content" style="margin:5px auto 6px auto;width: 70%" >
-                      <label>运算中，请等待</label>
+										</select> <input type="file" id="fileinput" style="display: none" />
+										</div>
+										<img id="yuantu" src="/images/kk1.jpg" alt="原图片" width="480"
+											height="640"> <img id="fankui" src="/images/kk1.jpg"
+											alt="返回图" width="480" height="640">
+									</main>
 
-                    </div>
-                  </div>
-                </div>
+									<nav class="HolyGrail-nav">
+
+										
+										<button id="filebt" class="button" onclick="uploading()">Upload Localfile</button>
+										<label style="display: inline">input url:</label> <input
+											id="picurl" type="text" style="display: inline" />
+										<button id="upload-url" class="button" onclick="upload1()"
+											style="display: inline">Upload URL</button>
+									</nav>
+									
+									<div id="popLayer2"></div>
+									<div id="popBox2">
+									<div class="close">
+										<a href="javascript:void(0)" id="closemove"
+											onclick="closeBox()">关闭</a>
+									</div>
+									</div>
+																		
+								</div>
 
 
 
@@ -212,58 +174,54 @@
 
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-           
-    <footer>
-      <p>
-        &copy; reinlight 2019
-      </p>
-    </footer>
-    
-    <script src="js/wysiwyg/wysihtml5-0.3.0.js">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<p>&copy; reinlight 2019</p>
+	</footer>
+
+	<script src="js/wysiwyg/wysihtml5-0.3.0.js">
     </script>
-    <script src="js/jquery.min.js">
+	<script src="js/jquery.min.js">
     </script>
-    <script src="js/bootstrap.js">
+	<script src="js/bootstrap.js">
     </script>
-    <script src="js/wysiwyg/bootstrap-wysihtml5.js">
+	<script src="js/wysiwyg/bootstrap-wysihtml5.js">
     </script>
-    <script src="js/jquery.scrollUp.js">
-    </script>
-    
-    
-    
-    <!-- Google Visualization JS -->
-  
-    
-    <!-- Easy Pie Chart JS -->
-    <script src="js/jquery.easy-pie-chart.js">
-    </script>
-    
-    <!-- Sparkline JS -->
-    <script src="js/jquery.sparkline.js">
-    </script>
-    
-    <!-- Tiny Scrollbar JS -->
-    <script src="js/tiny-scrollbar.js">
+	<script src="js/jquery.scrollUp.js">
     </script>
 
 
-    <script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
+
+	<!-- Google Visualization JS -->
+
+
+	<!-- Easy Pie Chart JS -->
+	<script src="js/jquery.easy-pie-chart.js">
+    </script>
+
+	<!-- Sparkline JS -->
+	<script src="js/jquery.sparkline.js">
+    </script>
+
+	<!-- Tiny Scrollbar JS -->
+	<script src="js/tiny-scrollbar.js">
+    </script>
+
+
+	<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
       var obj=document.getElementById('nuser');
       var nusername=localStorage.getItem("nuid");
       obj.innerHTML=nusername;
      function displayforrole(){
-
        let nrole=localStorage.getItem("role");
-
        switch(nrole){
          case "0":
 
@@ -274,7 +232,7 @@
                    document.importNode(content, true));
            break;
          case "1":
-
+        	 
            var content = document.querySelector('#fordev').content;
            // 更新 template DOM 中的内容。
            var content1=document.querySelector('#notfortour').content;
@@ -359,8 +317,8 @@ function load_home(ele) {
 	}
 function editP() {
   window.location.herf="editP.html";
-
 }
+
       var downloadlink=null;
       const account = {
         name: "cs1f9abf47a9b73x49c3x9c1",
@@ -381,10 +339,10 @@ function editP() {
 
       function upload()
       {
-        var popBox = document.getElementById("popBox");
-        var popLayer = document.getElementById("popLayer");
-        popBox.style.display = "block";
-        popLayer.style.display = "block";
+    	  let popLayer = document.getElementById("popLayer2");
+    	   let popbox = document.getElementById("popBox2");
+    	    popLayer.style.display = "block";
+    	    popbox.style.display="block";
         //alert('正在上传，请勿退出');
         let filename=null;
 
@@ -427,10 +385,10 @@ function editP() {
         }  }
 
       function upload1() {
-        var popBox = document.getElementById("popBox");
-        var popLayer = document.getElementById("popLayer");
-        popBox.style.display = "block";
-        popLayer.style.display = "block";
+    	  let popLayer = document.getElementById("popLayer2");
+    	   let popbox = document.getElementById("popBox2");
+    	    popLayer.style.display = "block";
+    	    popbox.style.display="block";
         let downloadlink=document.getElementById("picurl").value;
         if (downloadlink==null){
           alert("url 错误");
@@ -455,7 +413,8 @@ function editP() {
 
                   success : function(data) {
                     document.getElementById("fankui").src="https://cs1f9abf47a9b73x49c3x9c1.blob.core.windows.net/apioutput/"+data.id+"/output.jpg";
-                    alert(data.face_liveness);
+                    //alert(data.face_liveness);
+                    
                     $("#closemove").click();
                     if(blobname=="///"){}
                     else {
@@ -479,8 +438,8 @@ function editP() {
 
           }});}
       function closeBox() {
-        var popBox = document.getElementById("popBox");
-        var popLayer = document.getElementById("popLayer");
+        var popBox = document.getElementById("popBox2");
+        var popLayer = document.getElementById("popLayer2");
         popBox.style.display = "none";
         popLayer.style.display = "none";
       }
@@ -513,9 +472,9 @@ function editP() {
 
 
     </script>
-    
-    
- <script src="js/logincontrol.js">
-    </script> 
+
+
+	<script src="js/logincontrol.js">
+    </script>
 </body>
 </html>

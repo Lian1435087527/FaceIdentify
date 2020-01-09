@@ -211,7 +211,17 @@
                         <div id="popBox2"></div>
 
                         <input id="picurl" style="display: none"/>
-
+						<div id="ImgpopLayer" ></div>
+                              <div id="ImgpopBox" >
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="Imgshow" onclick="closeImgBox()">关闭</a>
+                                  </div>
+                                  <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                      <label id="Imgshowname"></label>
+                                      <label id="Imgshowurl"></label>
+                                      <img id="Imgshowimage" width="480" height="640"src=""  alt="展示图片" style="position: relative"/>
+                                  </div>
+                              </div>
 
 
 
@@ -507,7 +517,7 @@
             table.innerHTML +=
                 `<tr>
         <td ><input  type="checkbox" id='${chosen[i]}' value="" onclick="checksum(this.id)"/></td>
-        <td>${sub_blob}</td>
+        <td ><a onclick="showImg('${downloadLink[i]}','${sub_blob}')">${sub_blob}</a></td>
         <td > <div class="dropdown">
       <button class="dropbtn">操作</button>
         <div class="dropdown-content">
@@ -902,7 +912,25 @@
             console.log("todo"+todo);
         }
     }
+    function showImg(downloadLink,blobname){
+        var popBox = document.getElementById("ImgpopBox");
+        var popLayer = document.getElementById("ImgpopLayer");
+        popBox.style.display = "block";
+        popLayer.style.display = "block";
+        var Imgnamelabel=document.getElementById("Imgshowname");
+        Imgnamelabel.innerText="name:"+blobname;
+        var Imgurllabel=document.getElementById("Imgshowurl");
+        Imgurllabel.innerText="url:"+downloadLink;
+        document.getElementById("Imgshowimage").src=downloadLink;
 
+    }
+    function closeImgBox(){
+        var popBox = document.getElementById("ImgpopBox");
+        var popLayer = document.getElementById("ImgpopLayer");
+        popBox.style.display = "none";
+        popLayer.style.display = "none";
+        document.getElementById("Imgshowimage").src="";
+    }
 
 
 

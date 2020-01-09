@@ -28,17 +28,22 @@ public class HttpUtil {
      * @throws Exception
      */
     public static String post(String requestUrl, String authorization, String contentType, String params)
-            throws Exception {
+             {
         String encoding = "UTF-8";
         if (requestUrl.contains("nlp")) {
             encoding = "GBK";
         }
+       
         return HttpUtil.postGeneralUrl(requestUrl, authorization, contentType, params, encoding);
+        
     }
 
 
     public static String postGeneralUrl(String generalUrl,String authorization, String contentType, String params, String encoding)
-            throws Exception {
+             {
+    	String result = "";
+    	String statecode="";
+    	try {
         URL url = new URL(generalUrl);
         // 打开和URL之间的连�?
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -59,6 +64,7 @@ public class HttpUtil {
 
         // 建立实际的连�?
         connection.connect();
+        statecode+=connection.getResponseCode();
         // 获取�?有响应头字段
         Map<String, List<String>> headers = connection.getHeaderFields();
         // 遍历�?有的响应头字�?
@@ -69,13 +75,17 @@ public class HttpUtil {
         BufferedReader in = null;
         in = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), encoding));
-        String result = "";
         String getLine;
         while ((getLine = in.readLine()) != null) {
             result += getLine;
         }
         in.close();
+        
         System.err.println("result:" + result);
+    	}catch(Exception e)
+    	{
+    		return "{\"errorcode\":\""+statecode+"\"}";
+    	}
         return result;
     }
 }
