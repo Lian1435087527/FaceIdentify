@@ -58,7 +58,9 @@ function login(){
 
                 localStorage.setItem("token",data.token);
                 localStorage.setItem("nuid",data.userid);
-                localStorage.setItem("role",data.role)
+                localStorage.setItem("role",data.role);
+                localStorage.setItem("npwd",data.password);
+
                 window.location.href="index.html";
             }}}
 

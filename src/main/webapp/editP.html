@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="js/jquery.min.js">
+</script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,49 +10,59 @@
 <div id="poplayer"></div>
 <div id="popbox">
     <label>输入原密码：</label>
-    <input type="text"  style="display: inline" id="yuan1"/></div></br>
+    <input type="password"  style="display: inline" id="yuan1"  /></div></br>
     <label>输入新密码：</label>
-    <input type="text"  style="display: inline" id="xin1"/></div></br>
+    <input type="password"  style="display: inline" id="xin1"  /></div></br>
     <label>确认新密码：</label>
-    <input type="text"  style="display: inline" id="xin2"/></div></br>
-    <button id="confirm" onclick="confirming">确定修改</button>
+    <input type="password"  style="display: inline" id="xin2" /></div></br>
+
 </div>
 <button id="repassword" onclick="repass()">修改密码</button>
 <script>
     function repass() {
-        $("poplayer").style.display=block;
-        $("popbox").style.display=block;
-        document.getElementById('uploadfile-button').addEventListener('click', () =>{
+       console.log(localStorage.getItem("npwd"));
+        console.log(document.getElementById("yuan1").value);
+        console.log(document.getElementById("xin1").value);
+        console.log(document.getElementById("xin2").value);
+        if(document.getElementById("yuan1").value!=localStorage.getItem("npwd")){
+            alert("密码错误！");
+        }
         if(document.getElementById("yuan1").value==null||document.getElementById("xin1").value==null||document.getElementById("xin2").value==null){
             alert("不能为空！");
         }
         else if(document.getElementById("xin1").value!=document.getElementById("xin2").value){
             alert("两次密码不匹配！");
         }
+        else if(document.getElementById("xin1").value==localStorage.getItem("npwd"))
+        {
+            alert("不能为原密码！");
+        }
         else{
             let newpwd=document.getElementById("xin1").value;
+            let uid=localStorage.getItem("nuid");
             $.ajax({
                 type : 'POST',
                 url : "/changepwd",
                 dataType:"json",
                 //contentType:"application/json;charset=UTF-8",
-                data:{'newpwd':JSON.stringify(notodata)},
+                data:{'uid':uid,
+                    'newpwd':newpwd},
 
 
                 success : function(data) {
                     if(data.state==1){
 
-                  alert("密码错误！");
+                  alert("修改失败！");
                     }
                     else{
                         alert("修改成功!");
                     }
 
                 }
-            })
+            });
         }
 
-    });}
+    }
 
 </script>
 </body>

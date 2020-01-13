@@ -325,7 +325,7 @@ function startup(){
 
                                 if(successnum==len-1){
                                     append(file.name);
-                                    append("upload is finished!");
+                                    alert("upload is finished!");
                                     getdir1(dir+"/"+finow[0],kkpid);
 
 

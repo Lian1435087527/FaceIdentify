@@ -7522,7 +7522,43 @@ footer {
 #popBox .content{
   position:relative;
 }
+#popLayer3 {
+  display: none;
+  background-color: #B3B3B3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);/* 鍙敮鎸両E6銆�7銆�8銆�9 */
+}
+#popBox3 {
+  display: none;
+  background-color: #FFFFFF;
+  z-index: 11;
+  width: 80%;
+  height: 80%;
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  margin:auto;
+}
+#popBox3 .close{
+  text-align: right;
+  margin-right: 5px;
+  background-color: #F8F8F8;
+}
 
+/*鍏抽棴鎸夐挳*/
+#popBox3 .close a {
+  text-decoration: none;
+  color: #2D2C3B;
+}
 #popLayer1 {
   display: none;
   background-color: #B3B3B3;

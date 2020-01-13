@@ -36,6 +36,7 @@ public class logincontroller {
                  Return.put("token", token);
                  Return.put("userid", userForBase.getuser_id());
                  Return.put("role",userForBase.getrole());
+                 Return.put("password",userForBase.getpassword());
              }
          }
 		return Return;

@@ -200,7 +200,7 @@
 
 
 
-                                          <button id="down" class=button onclick="copy_p()">copy</button>
+                                          <button id="copy" class=button onclick="copy_p()">copy</button>
                                           <button id="move" class=button onclick="move_p()">move</button>
                                       <template id="foradmin1">
                                           <button id="deleted" class=button onclick="deleted_p()">delete</button>
@@ -219,6 +219,7 @@
                                       <label>请选择要移到的文件夹</label>
                                       <ul id="treeDemo1" class="ztree"></ul>
                                       <button id="confirm">确定</button>
+
                                   </div>
                               </div>
                               <div id="popLayer1" ></div>
@@ -232,10 +233,21 @@
                               </div>
                               <div id="popLayer2" ></div>
                               <div id="popBox2"></div>
+                              <div id="popLayer3" ></div>
+                              <div id="popBox3" >
+                                  <div class="close">
+                                      <a href="javascript:void(0)" id="closemove3" onclick="closeBox3()">关闭</a>
+                                  </div>
+                                  <div class="content" style="margin:5px auto 6px auto;width: 70%">
+                                      <label>请选择要复制到的文件夹</label>
+                                      <ul id="treeDemo3" class="ztree"></ul>
 
+                                      <button id="confirm3">确定</button>
+                                  </div>
+                              </div>
                               <input id="picurl" style="display: none"/>
 
-							
+
 
 
 
@@ -286,7 +298,7 @@
     <script src="/js/azure-storage.blob.min.js" charset="utf-8">
     </script>
 
-<script src="/js/downloadforall.min.js">
+<script src="/js/downloadforall.js">
 
 
 </script>

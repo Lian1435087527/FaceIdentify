@@ -9,7 +9,13 @@ function logout(){
 		if(flag==true){
 			localStorage.setItem("nuid",null);
 			localStorage.setItem("token",null);
+			localStorage.setItem("role",null);
+			localStorage.setItem("password",null);
 			window.location.href="/";
 		}
 		}
+}
+function editP() {
+
+       window.location.href="editP.html";
 }

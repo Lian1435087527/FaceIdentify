@@ -96,9 +96,7 @@ function load_home(ele) {
 
     }
 };
-function editP() {
-    window.location.herf="editP.html";
-};
+
 
 var downloadlink=null;
 const account = {

@@ -9,5 +9,5 @@ public interface Userdao {
     
 	 public String identify(String user_id);
 	 public String getToken(User user);
-    
+	public int chanpwd(String uid,String newpwd);
 }

@@ -25,6 +25,7 @@ var nodes = [];
 
 var zTreeObj;
 var zTreeObj1;
+var zTreeObj3;
 // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
 var setting = {
     data:{//表示tree的数据格式
@@ -71,7 +72,28 @@ var setting1 = {
     }
 };
 // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-
+var setting3 = {
+    data:{//表示tree的数据格式
+        simpleData:{
+            enable:true,//表示使用简单数据模式
+            idKey:"id",//设置之后id为在简单数据模式中的父子节点关联的桥梁
+            pidKey:"pId",//设置之后pid为在简单数据模式中的父子节点关联的桥梁和id互相对应
+            rootId:"null"//pid为null的表示根节点
+        }
+    },
+    view:{//表示tree的显示状态
+        selectMulti:false//表示禁止多选
+    },
+    check:{//表示tree的节点在点击时的相关设置
+        enable:false,//是否显示radio/checkbox
+        chkStyle:"checkbox",//值为checkbox或者radio表示
+        checkboxType:{p:"",s:""},//表示父子节点的联动效果
+        radioType:"level"//设置tree的分组
+    },
+    callback:{//表示tree的一些事件处理函数
+        onClick:chosenode3
+    }
+};
 window.onload=gtree();
 function gtree(){
     nodes=[];
@@ -140,6 +162,25 @@ function chosenode1(event,treeId,treeNode) {
 
         if(treeNode.getParentNode()!=null){
             prename1=treeNode.getParentNode().name+'/'+prename1;
+
+            getpath(treeNode.getParentNode());
+        }
+        else{
+
+
+
+        }};
+    getpath(treeNode);
+
+
+
+};
+function chosenode3(event,treeId,treeNode) {
+    prename3=treeNode.name;
+    function getpath(treeNode){
+
+        if(treeNode.getParentNode()!=null){
+            prename3=treeNode.getParentNode().name+'/'+prename3;
 
             getpath(treeNode.getParentNode());
         }
@@ -347,7 +388,7 @@ const render = function () {
     }
     let id="allcheck"+page;
 
-    table0.innerHTML= `<tr> <td><button class="button"  id=${id} value=${page} onclick="allcheck1(page)">全选</button></td>    </tr>`;
+    table0.innerHTML= `<tr> <td><button class="button"  id='${id}' value='${page}' onclick="allcheck1(page)">全选</button></td>    </tr>`;
 
 };
 function copyurl(downloadlink){
@@ -405,11 +446,11 @@ function allcheck1(page){
         num2 = j - num1 * (page - 1);
     }
     let id="allcheck"+page;
-
+  let index=document.getElementById(id).value-1;
 //console.log(allcheck[document.getElementById(id).value-1]);
-    if(allcheck[document.getElementById(id).value-1]==0) {
+    if(allcheck[index]==0) {
 
-        allcheck[document.getElementById(id).value-1]=1;
+        allcheck[index]=1;
 
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
 
@@ -422,7 +463,7 @@ function allcheck1(page){
     }
     else {
 
-        allcheck[document.getElementById(id).value-1]=0;
+        allcheck[index]=0;
 
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
             if($("#"+i).prop('checked')){
@@ -478,6 +519,7 @@ function move(downloadLink,blobname){
     });};
 
 function movereal(downloadLink,blobname,isfull){
+    console.log("movereal");
     if(prename1==null){
         alert("未选择文件夹");
     }
@@ -530,6 +572,12 @@ function closeBox1() {
     popBox.style.display = "none";
     popLayer.style.display = "none";
 };
+function closeBox3() {
+    var popBox = document.getElementById("popBox3");
+    var popLayer = document.getElementById("popLayer3");
+    popBox.style.display = "none";
+    popLayer.style.display = "none";
+};
 
 function downloadImg(downloadLink,blobname){
     let subti=downloadLink.lastIndexOf(".");
@@ -574,6 +622,7 @@ function downloadImg(downloadLink,blobname){
 };
 
 function download_p() {
+
     gets_all();
     let zip = new JSZip();//*****创建实例，zip是对象实例
     let file_name = 'pic.zip';
@@ -581,8 +630,11 @@ function download_p() {
 
     for(let i=0;i<todo.length;i++){
         let fname=blobname[todo[i]];
+        let lsuffix=fname.lastIndexOf(".");
+        if (fname.substring(lsuffix + 1) == "jpg" || fname.substring(lsuffix + 1) == "png") {
         //对每一个图片链接获取base64的数据，并使用回调函数处理
         getBase64Image(downloadLink[todo[i]],blobname[todo[i]],function(dataURL){
+
             //对获取的图片base64数据进行处理
 
             let img_arr = dataURL.split(',');
@@ -602,7 +654,12 @@ function download_p() {
                 //chushihua()
                 listfile(prename);
             }
-        });
+        });}
+        else{
+            alert("包含非图片数据！");
+            break;
+        }
+
 
     }
 
@@ -612,29 +669,32 @@ function download_p() {
 function getBase64Image(downloadLink,picname,callback) {
     let lsuffix=picname.lastIndexOf(".");
     let realsuffix;
-    if(picname.substring(lsuffix+1)=="jpg"){
-        realsuffix="jpeg";
-    }
-    else {
-        realsuffix = "png";
-    }
-    var img = new Image();
-    img.src = downloadLink;
-    // 必须设置，否则canvas中的内容无法转换为blob
-    img.setAttribute('crossOrigin', 'Anonymous');
-    img.onload = function(){
-        var canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext('2d');
-        // 将img中的内容画到画布上
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        var dataURL = canvas.toDataURL("image/"+realsuffix);//使用canvas获取图片的base64数据
 
-        callback?callback(dataURL):null; //调用回调函数
 
-    };
+        if (picname.substring(lsuffix + 1) == "jpg") {
+            realsuffix = "jpeg";
+        } else {
+            realsuffix = "png";
+        }
+        var img = new Image();
+        img.src = downloadLink;
+        // 必须设置，否则canvas中的内容无法转换为blob
+        img.setAttribute('crossOrigin', 'Anonymous');
+        img.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            // 将img中的内容画到画布上
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            let dataURL = canvas.toDataURL("image/" + realsuffix);//使用canvas获取图片的base64数据
+
+            callback ? callback(dataURL) : null; //调用回调函数
+
+        };
+
 
 };
 
@@ -698,7 +758,7 @@ function deleted_rea(blobname,isfull) {
 
         }
 
-    });
+    })
 
 
 };
@@ -724,7 +784,7 @@ function deletedir(){
             }}
 
 
-    })
+    });
 
 
     blobService.listBlobsSegmentedWithPrefix('modelblob1',prename+'/', null, (error, results,response) => {
@@ -856,7 +916,7 @@ function gets_all() {
 
 function copyreal(downloadLink,blobname) {
 
-    let dir=prename1;
+    let dir=prename3;
     let url =downloadLink;
     let blob=blobname;
     let index1 = blob.lastIndexOf("/");
@@ -876,7 +936,7 @@ function copyreal(downloadLink,blobname) {
                     }
                     else {
 
-                        $("#closemove").click();
+                        $("#closemove3").click();
 
 
 
@@ -917,6 +977,7 @@ function deleted_p() {
 
     }};
 function move_p() {
+
     zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
     var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
@@ -928,10 +989,12 @@ function move_p() {
         for(let m=0;m<todo.length;m++) {
             //console.log("移动启动");
             if(m==todo.length-1){
+
                 movereal(downloadLink[todo[m]],blobname[todo[m]],true);
 
             }
             else{
+
                 movereal(downloadLink[todo[m]],blobname[todo[m]],false);
             }
         }
@@ -942,15 +1005,16 @@ function move_p() {
     //console.log(todo);
 };
 function copy_p() {
-    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
-    var popBox = document.getElementById("popBox");
-    var popLayer = document.getElementById("popLayer");
+    console.log("copyp");
+    zTreeObj3 = $.fn.zTree.init($("#treeDemo3"), setting3, nodes);
+    var popBox = document.getElementById("popBox3");
+    var popLayer = document.getElementById("popLayer3");
     popBox.style.display = "block";
     popLayer.style.display = "block";
 
     gets_all();
 
-    document.getElementById('confirm').addEventListener('click', () => {
+    document.getElementById('confirm3').addEventListener('click', () => {
 
         for(let m=0;m<todo.length;m++) {
 
@@ -958,7 +1022,7 @@ function copy_p() {
 
         }
         //todo=[];
-        listfile(prename);
+        //listfile(prename);
     });
 
 

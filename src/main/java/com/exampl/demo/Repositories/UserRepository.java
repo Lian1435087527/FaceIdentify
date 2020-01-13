@@ -21,7 +21,7 @@ public class UserRepository implements Userdao{
 	    private static final String SQL_FIND_NAME_BY_NAME = "SELECT user_id FROM myUser WHERE user_id = :user_id";
 	    private static final String SQL_INSERT = "INSERT INTO myUser (user_id, password, role) values(:user_id, :password ,:role)";
 	    //private static final String SQL_DELETE_BY_ID = "DELETE FROM myUser WHERE ID = :id";
-
+	    private static final String SQL_UPDATE_PWD="UPDATE myUser SET password = :newpwd WHERE user_id = :user_id ";
 	    private static final BeanPropertyRowMapper<User> ROW_MAPPER = new BeanPropertyRowMapper<>(User.class);
 	  
 	    @Autowired
@@ -82,5 +82,17 @@ public class UserRepository implements Userdao{
 	        return token;
 	    }
 
-	    
+
+	public int chanpwd(String user_id,String newpwd) {
+
+		final SqlParameterSource paramSource1 = new MapSqlParameterSource().addValue("user_id",user_id).addValue("newpwd",newpwd);
+		try {
+			jdbcTemplate.update(SQL_UPDATE_PWD,paramSource1);
+		}
+		catch(EmptyResultDataAccessException ex){
+			return 1;
+		};
+
+		return 0;
 	}
+}
