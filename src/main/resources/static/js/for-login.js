@@ -5,7 +5,7 @@ document.onkeydown=function(ev){
     if(ev.which==13){
         login();
     }
-}
+};
 function register(){
     var userName=document.getElementById('userName').value;
     var userPw=document.getElementById('userPw').value;
@@ -30,7 +30,7 @@ function register(){
 
             }}}
 
-    )}
+    )};
 function login(){
     var userName=document.getElementById('userName').value;
     var userPw=document.getElementById('userPw').value;
