@@ -43,6 +43,7 @@ function ptree() {
         success : function(data) {
             if(data.state==1){
                 zTreeObj = $.fn.zTree.destroy("treeDemo");
+                notodata=[];
                 gtree();
 
             }
@@ -156,14 +157,7 @@ function chosenode(event,treeId,treeNode) {
 
 
 var stacode;
-
-const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
-
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(localStorage.getItem("blobUri"), localStorage.getItem("sas"));
 /*document.getElementById('create-button').addEventListener('click', () => {
 
 blobService.createContainerIfNotExists('mycontainer',  (error, container) => {
@@ -233,15 +227,16 @@ document.getElementById('uploadfile-button').addEventListener('click', () =>{
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
     popLayer.style.display = "block";
-    stacode=1;});
+    stacode=1;
+    document.getElementById('upload1').value="";});
 document.getElementById('uploaddir-button').addEventListener('click', () =>{
     document.getElementById("filelist").innerHTML="";
     var popBox = document.getElementById("popBox");
     var popLayer = document.getElementById("popLayer");
     popBox.style.display = "block";
     popLayer.style.display = "block";
-    document.getElementById("upload2").click();
-
+    document.getElementById('upload2').value="";
+    document.getElementById("upload2").click();  
     stacode=2;});
 
 
@@ -273,7 +268,8 @@ function startup(){
 
                             if(successnum==len-1){
                                 append(file.name);
-                                append("upload is finished!");
+                                alert("upload is finished!");
+                                npid=null;
                                 // $("#closemove").click();
                             }
                             else {successnum++;
@@ -325,12 +321,11 @@ function startup(){
 
                                 if(successnum==len-1){
                                     append(file.name);
+                                    
                                     alert("upload is finished!");
+                                    npid=null;
                                     getdir1(dir+"/"+finow[0],kkpid);
-
-
-
-
+         
                                     // $("#closemove").click();
                                 }
                                 else {successnum++;
