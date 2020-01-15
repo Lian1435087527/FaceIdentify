@@ -69,8 +69,7 @@ public class MLendpointcontroller {
 		}
 		ModelMap Return = new ModelMap();
 		Return.put("message", ret);
-		return Return;
-	
+		return Return;	
 	}
 
 	@SuppressWarnings({ "static-access", "deprecation" })
