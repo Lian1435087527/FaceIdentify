@@ -27,11 +27,14 @@ function displayforrole(){
 
             var content = document.querySelector('#fordev').content;
             var content1 = document.querySelector('#notfortour').content;
+            var content2 =document.querySelector("#foradmin").content;
             // 更新 template DOM 中的内容。
             document.querySelector('#tpnv').appendChild(
                 document.importNode(content1, true));
             document.querySelector('#tpnv').appendChild(
                 document.importNode(content, true));
+            document.querySelector('#tpnv').appendChild(
+                document.importNode(content2, true));
 
             break;
     }};
@@ -78,7 +81,7 @@ function load_home(ele) {
             $("#ce3").attr("class", "selected");
             break;
         case "ce4":
-            document.getElementById("htbody").innerHTML = '<object type="text/html" data="faceapi.html" width="100%" height=700px></object>';
+            document.getElementById("htbody").innerHTML = '<object type="text/html" data="mlcontroller.html" width="100%" height=700px></object>';
             $("#ce4").attr("class", "selected");
             break;
         case "ce5":
@@ -99,17 +102,14 @@ function load_home(ele) {
 
 
 var downloadlink=null;
-const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(localStorage.getItem("blobUri"), localStorage.getItem("sas"));
 var dir=null;
-//var filename=null;
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+
 
 var status=0;
 function uploading(){
+    document.getElementById("yuantu").src="images/kk3.jpg";
+    document.getElementById("fankui").src="images/kk3.jpg";
     document.getElementById("fileinput").click();
 }
 document.getElementById("fileinput").addEventListener("change",function () {
@@ -145,7 +145,7 @@ function upload()
                     filename=file.name;
 
 
-                    console.log(filename);
+
 
                     blobService.listBlobsSegmentedWithPrefix('modelblob1',"picformodel"+'/'+filename, null, (error, results) => {
                         if (error) {

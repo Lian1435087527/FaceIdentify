@@ -73,7 +73,7 @@ function gtree(){
 
             else{
                 tre1=data.tree;
-                console.log(data.tree);
+
                 maketree();
                 zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, nodes);
             }}}
@@ -103,7 +103,7 @@ function chosenode(event,treeId,treeNode) {
             getpath(treeNode.getParentNode());
         }
         else{
-            console.log(prename);
+
             listfile(prename);
 
         }}
@@ -123,7 +123,7 @@ function chosenode1(event,treeId,treeNode) {
             getpath(treeNode.getParentNode());
         }
         else{
-            console.log(prename1);
+
 
 
         }}
@@ -139,13 +139,7 @@ const next = document.getElementById('next');
 const pages = document.getElementById('pages');
 const table0=document.getElementById('table0');
 var checkp=0;
-const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
-
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(localStorage.getItem("blobUri"), localStorage.getItem("sas"));
 //默认设定每页十
 let num1 = 10;
 //定义一个变量保存每页真实应该展示的数量
@@ -218,7 +212,7 @@ function chushihua() {
     for(let xj=0;xj< Math.ceil(j / 10);xj++){
         allcheck.push(0);
     }
-    console.log(allcheck);
+
 };
 
 
@@ -288,7 +282,7 @@ const render = function () {
 
 };
 function copyurl(downloadlink){
-    console.log(downloadlink);
+
     new ClipboardJS('.button', {
         text: function() {
             return downloadlink;
@@ -450,7 +444,7 @@ function downloadImg(downloadLink,blobname){
 
     }
     else{
-        console.log("download启动");
+
 
         let url =downloadLink;
         let a = document.createElement("a");          // 创建一个a节点插入的document
@@ -461,6 +455,7 @@ function downloadImg(downloadLink,blobname){
 };
 
 function download_p() {
+
     gets_all();
     let zip = new JSZip();//*****创建实例，zip是对象实例
     let file_name = 'pic.zip';
@@ -468,26 +463,36 @@ function download_p() {
 
     for(let i=0;i<todo.length;i++){
         let fname=blobname[todo[i]];
-        //对每一个图片链接获取base64的数据，并使用回调函数处理
-        getBase64Image(downloadLink[todo[i]],blobname[todo[i]],function(dataURL){
-            //对获取的图片base64数据进行处理
+        let lsuffix=fname.lastIndexOf(".");
+        if (fname.substring(lsuffix + 1) == "jpg" || fname.substring(lsuffix + 1) == "png") {
+            //对每一个图片链接获取base64的数据，并使用回调函数处理
+            getBase64Image(downloadLink[todo[i]],blobname[todo[i]],function(dataURL){
 
-            let img_arr = dataURL.split(',');
-            console.log(img_arr[0]);
+                //对获取的图片base64数据进行处理
 
-            zip.file(fname,img_arr[1],{base64: true});
-            k++;
+                let img_arr = dataURL.split(',');
 
-            console.log(k);
-            console.log(todo.length);
-            if(k==todo.length){//当所有图片都已经生成打包并保存zip
-                zip.generateAsync({type:"blob"})
-                    .then(function(content) {
-                        console.log(content);
-                        saveAs(content, file_name);
-                    });
-            }
-        });
+
+                zip.file(fname,img_arr[1],{base64: true});
+                k++;
+
+
+                if(k==todo.length){//当所有图片都已经生成打包并保存zip
+                    zip.generateAsync({type:"blob"})
+                        .then(function(content) {
+
+                            saveAs(content, file_name);
+                        });
+                    //todo=[]
+                    //chushihua()
+                    listfile(prename);
+                }
+            });}
+        else{
+            alert("包含非图片数据！");
+            break;
+        }
+
 
     }
 
@@ -497,17 +502,19 @@ function download_p() {
 function getBase64Image(downloadLink,picname,callback) {
     let lsuffix=picname.lastIndexOf(".");
     let realsuffix;
-    if(picname.substring(lsuffix+1)=="jpg"){
-        realsuffix="jpeg";
-    }
-    else {
+
+
+
+    if (picname.substring(lsuffix + 1) == "jpg") {
+        realsuffix = "jpeg";
+    } else {
         realsuffix = "png";
     }
     var img = new Image();
     img.src = downloadLink;
     // 必须设置，否则canvas中的内容无法转换为blob
     img.setAttribute('crossOrigin', 'Anonymous');
-    img.onload = function(){
+    img.onload = function () {
         var canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
@@ -515,11 +522,12 @@ function getBase64Image(downloadLink,picname,callback) {
         // 将img中的内容画到画布上
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        var dataURL = canvas.toDataURL("image/"+realsuffix);//使用canvas获取图片的base64数据
+        let dataURL = canvas.toDataURL("image/" + realsuffix);//使用canvas获取图片的base64数据
 
-        callback?callback(dataURL):null; //调用回调函数
+        callback ? callback(dataURL) : null; //调用回调函数
 
-    }
+    };
+
 
 };
 
@@ -581,7 +589,7 @@ function checkdefine(){
 
 function gets_all_plus(page_d){
     let pageing=false;
-    console.log(page_d);
+
     let zj=todo.length,zy=todo.length;
     //获取旧页面信息的起止下标
     for(let z=0;z<todo.length;z++){
@@ -598,7 +606,7 @@ function gets_all_plus(page_d){
     }
 
 
-    console.log(zj,zy);
+
     //删除旧页面已选值
     todo.splice(zj,zy-zj);
     for(let k=0;k<j;k++){
@@ -632,7 +640,7 @@ function gets_all_plus(page_d){
 
 
         }}
-    console.log(todo);
+
 
 
 }
@@ -643,7 +651,7 @@ function gets_all() {
         if(todo[f]<0){
             todo.splice(f,1);
         }
-        console.log("todo"+todo);
+
     }
 }
 function showImg(downloadLink,blobname){

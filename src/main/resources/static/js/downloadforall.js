@@ -201,13 +201,7 @@ const next = document.getElementById('next');
 const pages = document.getElementById('pages');
 const table0=document.getElementById('table0');
 var checkp=0;
-const account = {
-    name: "cs1f9abf47a9b73x49c3x9c1",
-    sas: "?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-07-08T17:12:05Z&st=2019-11-06T09:12:05Z&spr=https&sig=fGDtdhwB%2BvA3ayl443p4OIfM0Vxwj%2BNp%2Fb%2BLudKDfN4%3D"
-};
-
-const blobUri = 'https://' + account.name + '.blob.core.windows.net';
-const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+const blobService = AzureStorage.Blob.createBlobServiceWithSas(localStorage.getItem("blobUri"), localStorage.getItem("sas"));
 //默认设定每页十
 let num1 = 10;
 //定义一个变量保存每页真实应该展示的数量
@@ -449,7 +443,7 @@ function allcheck1(page){
   let index=document.getElementById(id).value-1;
 //console.log(allcheck[document.getElementById(id).value-1]);
     if(allcheck[index]==0) {
-
+        document.getElementById(id).innerHTML="取消全选";
         allcheck[index]=1;
 
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
@@ -464,7 +458,7 @@ function allcheck1(page){
     else {
 
         allcheck[index]=0;
-
+        document.getElementById(id).innerHTML="全选";
         for (let i = num1 * (page - 1); i < num2 + num1 * (page - 1); i++) {
             if($("#"+i).prop('checked')){
                 $("#"+i).prop("checked", false);
@@ -505,60 +499,7 @@ next.onclick = function () {
     }
 };
 
-function move(downloadLink,blobname){
-    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
-    var popBox = document.getElementById("popBox");
-    var popLayer = document.getElementById("popLayer");
-    popBox.style.display = "block";
-    popLayer.style.display = "block";
-    var downloadLink1=downloadLink;
-    var blobname1=blobname;
-    document.getElementById('confirm').addEventListener('click', () => {
-        movereal(downloadLink1,blobname1);
 
-    });};
-
-function movereal(downloadLink,blobname,isfull){
-    console.log("movereal");
-    if(prename1==null){
-        alert("未选择文件夹");
-    }
-    else{
-
-        let dir=prename1;
-        let url =downloadLink;
-        let blob=blobname;
-        let index1 = blob.lastIndexOf("/");
-        let sub_blob = blob.substring(index1+1);
-
-
-        blobService.createBlockBlobFromText('modelblob1',dir+"/"+sub_blob,"tee",(error, Response) => {
-            if (error) {
-                // Handle list blobs error
-            } else {
-
-                // console.log(Response);
-                blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
-                    if (error) {
-                        alert("error");
-                    }
-                    else {
-                        //deleted_rea(blob);
-                        $("#closemove").click();
-                        deleted_rea(blob,isfull);
-
-
-
-                    }
-                });
-
-
-
-            }
-
-        });
-
-    }	};
 
 function closeBox() {
     var popBox = document.getElementById("popBox");
@@ -741,6 +682,63 @@ function deleted(blobname) {
 
     }
 };
+function move(downloadLink,blobname){
+    zTreeObj1 = $.fn.zTree.init($("#treeDemo1"), setting1, nodes);
+    var popBox = document.getElementById("popBox");
+    var popLayer = document.getElementById("popLayer");
+    popBox.style.display = "block";
+    popLayer.style.display = "block";
+    var downloadLink1=downloadLink;
+    var blobname1=blobname;
+    document.getElementById('confirm').addEventListener('click', () => {
+        movereal(downloadLink1,blobname1,true);
+
+    });};
+
+function movereal(downloadLink,blobname,isfull){
+
+    if(prename1==null){
+        alert("未选择文件夹");
+    }
+    else{
+
+        let dir=prename1;
+        let url =downloadLink;
+        let blob=blobname;
+        let index1 = blob.lastIndexOf("/");
+        let sub_blob = blob.substring(index1+1);
+
+
+        blobService.createBlockBlobFromText('modelblob1',dir+"/"+sub_blob,"tee",(error, Response) => {
+            if (error) {
+                // Handle list blobs error
+            } else {
+
+                // console.log(Response);
+                blobService.startCopyBlob(url, 'modelblob1', dir+"/"+sub_blob, (error,results) => {
+                    if (error) {
+                        alert("error");
+                        console.log(error);
+                    }
+                    else {
+                        //deleted_rea(blob);
+                       console.log(results);
+                        deleted_rea(blob,isfull);
+
+
+
+                    }
+                });
+
+
+
+            }
+
+        });
+
+    }	};
+var xx=0;
+var jj=0;
 function deleted_rea(blobname,isfull) {
 
 
@@ -750,10 +748,17 @@ function deleted_rea(blobname,isfull) {
             alert ("删除失败");
         } else {
             if(isfull==true)
-            {listfile(prename);
+
+            {
+                console.log("delete is finished"+xx);
+                xx++;
+                listfile(prename);
                 chushihua();
             }
-            else{}
+            else{
+                console.log("delete is not finished"+jj);
+                jj++;
+            }
 
 
         }
@@ -1005,7 +1010,7 @@ function move_p() {
     //console.log(todo);
 };
 function copy_p() {
-    console.log("copyp");
+
     zTreeObj3 = $.fn.zTree.init($("#treeDemo3"), setting3, nodes);
     var popBox = document.getElementById("popBox3");
     var popLayer = document.getElementById("popLayer3");

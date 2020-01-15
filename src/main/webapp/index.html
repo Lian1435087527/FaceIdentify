@@ -75,7 +75,10 @@
 					<li><a onclick="load_home(this)" class="" id="ce3"> 下载数据 </a>
 					</li>
 					</template>
-
+					<template id="foradmin">
+						<li><a onclick="load_home(this)" class="" id="ce4"> 虚拟机控制 </a>
+						</li>
+					</template>
 					<!-- <li>
               <a onclick="load_home(this)" class="" id="ce3">
                
@@ -127,15 +130,16 @@
 							<div class="widget-body">
 								<div class="HolyGrail-body">
 									<main class=HolyGrail-body>
-										<div ></div><label>选择模型</label> <select id="select-name" style="display: inline">
-
+										<div ></div><label style="display:inline;">选择模型</label>
+										<select id="select-name" style="display: inline">
 											<option value="2">facelivenessirsl</option>
 
-										</select> <input type="file" id="fileinput" style="display: none" />
-										</div>
-										<img id="yuantu" src="/images/kk1.jpg" alt="原图片" width="480"
-											height="640"> <img id="fankui" src="/images/kk1.jpg"
-											alt="返回图" width="480" height="640">
+										</select>
+										<input type="file" id="fileinput" style="display: none" />
+									</br>
+
+										<img id="yuantu" src="images/kk3.jpg" alt="原图片" width="480" height="640">
+								<img id="fankui" src="images/kk3.jpg" alt="返回图" width="480" height="640">
 									</main>
 
 									<nav class="HolyGrail-nav">
@@ -209,7 +213,7 @@
 
 
 	<script src="/js/azure-storage.blob.min.js" charset="utf-8"></script>
-	<script src="js/for-index.min.js">
+	<script src="js/for-index.js">
 
 
 
